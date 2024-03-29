@@ -18,12 +18,24 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	all {
+		exclude(group = "ch.qos.logback", module = "logback-classic")
+		exclude(group = "ch.qos.logback", module = "logback-core")
+	}
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.junit.jupiter:junit-jupiter")
+	testImplementation(platform("org.junit:junit-bom:5.9.3"))
+	runtimeOnly("org.neo4j.driver:neo4j-java-driver")
+	testRuntimeOnly("org.neo4j.test:neo4j-harness:4.3.7")
 }
 
 tasks.withType<KotlinCompile> {
