@@ -18,12 +18,12 @@ repositories {
 	mavenCentral()
 }
 
-configurations {
-	all {
-		exclude(group = "ch.qos.logback", module = "logback-classic")
-		exclude(group = "ch.qos.logback", module = "logback-core")
-	}
-}
+//configurations {
+//	all {
+//		exclude(group = "ch.qos.logback", module = "logback-classic")
+//		exclude(group = "ch.qos.logback", module = "logback-core")
+//	}
+//}
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")

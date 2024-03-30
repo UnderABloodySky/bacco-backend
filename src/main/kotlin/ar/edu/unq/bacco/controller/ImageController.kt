@@ -28,7 +28,8 @@ class ImageController {
             uploadDir.mkdir()
             Files.copy(file.inputStream, Paths.get(uploadDir.absolutePath, fileName), StandardCopyOption.REPLACE_EXISTING)
             val filePath = "/uploads/$fileName"
-            return ResponseEntity(filePath, HttpStatus.OK)
+            // TODO: consume external API to analyze image and get the beverage name
+            return ResponseEntity("Fernet", HttpStatus.OK)
         } catch (e: Exception) {
             return ResponseEntity("Error al cargar el archivo", HttpStatus.INTERNAL_SERVER_ERROR)
         }
