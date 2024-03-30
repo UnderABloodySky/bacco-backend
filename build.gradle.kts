@@ -7,7 +7,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.23"
 }
 
-group = "com.example"
+group = "ar.edu.unq.bacco"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -30,11 +30,15 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("commons-fileupload:commons-fileupload:1.4")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testImplementation(platform("org.junit:junit-bom:5.9.3"))
 	runtimeOnly("org.neo4j.driver:neo4j-java-driver")
+
 	testRuntimeOnly("org.neo4j.test:neo4j-harness:4.3.7")
 }
 
