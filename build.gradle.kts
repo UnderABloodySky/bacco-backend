@@ -36,6 +36,10 @@ dependencies {
 	runtimeOnly("org.neo4j.driver:neo4j-java-driver")
 	implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
 	testRuntimeOnly("org.neo4j.test:neo4j-harness:4.3.7")
+
+	implementation("com.google.cloud:google-cloud-vision:3.36.0")
+	implementation(platform("org.springframework.cloud:spring-cloud-gcp-dependencies:1.2.3.RELEASE"))
+	implementation("org.springframework.cloud:spring-cloud-gcp-starter-vision")
 }
 
 tasks.withType<KotlinCompile> {

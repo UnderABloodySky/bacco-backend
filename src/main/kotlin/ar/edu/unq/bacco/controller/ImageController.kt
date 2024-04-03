@@ -1,5 +1,6 @@
 package ar.edu.unq.bacco.controller
 
+import ar.edu.unq.bacco.utils.Mediator
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -22,16 +23,17 @@ class ImageController {
             return ResponseEntity("Por favor, selecciona un archivo", HttpStatus.BAD_REQUEST)
         }
 
-        try {
+        return try {
             val fileName = "${System.currentTimeMillis()}_${file.originalFilename}"
             val uploadDir = File("uploads")
             uploadDir.mkdir()
             Files.copy(file.inputStream, Paths.get(uploadDir.absolutePath, fileName), StandardCopyOption.REPLACE_EXISTING)
-            val filePath = "/uploads/$fileName"
-            // TODO: consume external API to analyze image and get the beverage name
-            return ResponseEntity("Fernet", HttpStatus.OK)
+            val filePath = "D:/UNQUI/TIP/bacco-backend/uploads/$fileName"
+            val beverage = Mediator().detectBeverage(filePath)
+            // TODO: get list of recipes
+            ResponseEntity(beverage, HttpStatus.OK)
         } catch (e: Exception) {
-            return ResponseEntity("Error al cargar el archivo", HttpStatus.INTERNAL_SERVER_ERROR)
+            ResponseEntity("Error al cargar el archivo", HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 }
