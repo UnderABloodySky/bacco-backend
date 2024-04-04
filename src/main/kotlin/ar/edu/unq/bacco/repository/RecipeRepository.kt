@@ -11,7 +11,8 @@ interface RecipeRepository : Neo4jRepository<Recipe, Long>{
     @Query("MATCH (r:Recipe)-[:HAS_BEVERAGE]->(b:Beverage) WHERE b.name = {name} RETURN r")
     fun findByBeverageName(name: String): Iterable<Recipe>
 
-    @Query("MATCH (r:Recipe)-[:HAS_BEVERAGE]->(b:Beverage) WHERE ALL(bev IN $0 WHERE bev IN [b.name]) RETURN r")
+
+    @Query("MATCH (r:Recipe)-[:HAS_BEVERAGE]->(b:Beverage) WHERE ALL(bev IN b.name WHERE bev IN $0) RETURN DISTINCT r")
     fun findRecipesByBeverageNames(beverageNames: List<String>): List<Recipe>
 
 }
