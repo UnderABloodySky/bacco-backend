@@ -23,5 +23,7 @@ enum class Beverages {
     GRAPPA,
     AMARETTO,
     CAMPARI,
-    ANIS
+    ANIS,
+    TONICA,
+    COCACOLA
 }
