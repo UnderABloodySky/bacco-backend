@@ -1,14 +1,11 @@
 package ar.edu.unq.bacco.controller
 
-import ar.edu.unq.bacco.service.BeverageService
-import ar.edu.unq.bacco.service.UserService
+import ar.edu.unq.bacco.model.Recipe
+import ar.edu.unq.bacco.service.RecipeService
 import ar.edu.unq.bacco.utils.Mediator
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.nio.file.Files
@@ -17,7 +14,7 @@ import java.nio.file.StandardCopyOption
 
 @RestController
 @RequestMapping("/imgs")
-class ImageController(private val beverageService: BeverageService) {
+class RecipeController(private val recipeService: RecipeService) {
 
     @PostMapping("/upload")
     fun uploadImage(@RequestParam("file") file: MultipartFile): ResponseEntity<String> {
@@ -33,10 +30,15 @@ class ImageController(private val beverageService: BeverageService) {
             val filePath = "D:/UNQUI/TIP/bacco-backend/uploads/$fileName"
             val beverage = Mediator().detectBeverage(filePath)
             // TODO: get list of recipes
-            beverageService.findRecipesByBeverage(beverage)
+            recipeService.findRecipesByBeverage(beverage)
             ResponseEntity(beverage, HttpStatus.OK)
         } catch (e: Exception) {
             ResponseEntity("Error al cargar el archivo", HttpStatus.INTERNAL_SERVER_ERROR)
         }
+    }
+
+    @PostMapping("/recipes/filter")
+    fun filterRecipesByBeverages(@RequestBody beverageNames: List<String>): List<Recipe> {
+        return recipeService.filterRecipesByBeverages(beverageNames)
     }
 }
