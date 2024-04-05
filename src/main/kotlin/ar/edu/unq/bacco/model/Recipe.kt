@@ -10,6 +10,6 @@ class Recipe (
     @Id @GeneratedValue var id: Long? = null,
     val name: String,
 
-    @Relationship(type = "HAS_BEVERAGE", direction = Relationship.Direction.OUTGOING)
+    @Relationship(type = "HAS_BEVERAGES", direction = Relationship.Direction.OUTGOING)
     val beverages: MutableSet<Beverage> = mutableSetOf()
 )

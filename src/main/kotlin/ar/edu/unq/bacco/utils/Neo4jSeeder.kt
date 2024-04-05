@@ -11,20 +11,23 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
 
     fun seedDatabase() {
         if (recipeRepository.count() == 0L && beverageRepository.count() == 0L) {
-            val fernet = Beverage(name = "Fernet")
-            val aguaTonica = Beverage(name = "Tonica")
-            val cocaCola = Beverage(name = "CocaCola")
-            val gin = Beverage(name = "Gin")
-            val ron = Beverage(name= "Ron")
+            val fernet = Beverage(name = "FERNET")
+            val aguaTonica = Beverage(name = "TONICA")
+            val cocaCola = Beverage(name = "COCACOLA")
+            val gin = Beverage(name = "GIN")
+            val ron = Beverage(name= "RON")
 
             beverageRepository.save(fernet)
             beverageRepository.save(aguaTonica)
             beverageRepository.save(gin)
+            beverageRepository.save(ron)
+            beverageRepository.save(cocaCola)
+
 
             val fernandito = Recipe(name = "Ferne", beverages = mutableSetOf(cocaCola, fernet))
             val ginTonic = Recipe(name = "Gin Tonic", beverages = mutableSetOf(gin, aguaTonica))
             val cubaLibre = Recipe(name = "Cubra Libre", beverages = mutableSetOf(cocaCola, ron))
-            val cosaRara = Recipe(name="Cosa Rara y Fea", beverages = mutableSetOf(fernet, aguaTonica, cocaCola, gin, ron))
+            val cosaRara = Recipe(name="Cosa Rara y Fea", beverages = mutableSetOf(fernet, cocaCola, gin, ron))
 
             recipeRepository.save(fernandito)
             recipeRepository.save(ginTonic)
