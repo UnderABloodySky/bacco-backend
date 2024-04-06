@@ -18,10 +18,23 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
             val gin = Beverage(name = "GIN")
             val ron = Beverage(name = "RON")
             val cerveza = Beverage(name = "CERVEZA")
+            val aperitivo = Beverage(name = "APERITIVO")
 
-            beverageRepository.saveAll(listOf(fernet, aguaTonica, cocaCola, gin, ron, cerveza))
+            beverageRepository.saveAll(listOf(fernet, aguaTonica, cocaCola, gin, ron, cerveza, aperitivo))
 
-            val fernandito = Recipe(name = "Ferne")
+            val soloAperitivo = Recipe(name = "Solo aperitivo")
+            soloAperitivo.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
+
+            val aperitivoYCerveza = Recipe(name = "Aperitivo y cerveza")
+            aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
+            aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
+
+            val aperitivoCervezaYFernet = Recipe(name = "Aperitivo, cerveza y Fernet")
+            aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
+            aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
+            aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+
+            val fernandito = Recipe(name = "Fernet")
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
 
@@ -29,7 +42,7 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = gin))
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
 
-            val cubaLibre = Recipe(name = "Cubra Libre")
+            val cubaLibre = Recipe(name = "Cuba Libre")
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = ron))
 
@@ -46,7 +59,8 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
             val michelada = Recipe(name = "Michelada")
             michelada.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
 
-            recipeRepository.saveAll(listOf(fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada))
+            recipeRepository.saveAll(listOf(soloAperitivo, aperitivoCervezaYFernet, aperitivoYCerveza,
+                    fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada))
         }
     }
 
