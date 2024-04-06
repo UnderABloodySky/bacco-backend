@@ -12,6 +12,8 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
 
     fun seedDatabase() {
         if (recipeRepository.count() == 0L && beverageRepository.count() == 0L) {
+            val description = "“Ebis vendae eaqui solupta turera prepe parum ut estrum, cus as nient aut aut pa nost, consed ut reroribus ex ea dolor as secestrum qui con preprae sequam ipsaeperum is ipsamus aectibustior accae perovit quas as modipsunt ut volorro beatemolenis veremporum quianda perchil es quam eum"
+
             val fernet = Beverage(name = "FERNET")
             val aguaTonica = Beverage(name = "TONICA")
             val cocaCola = Beverage(name = "COCACOLA")
@@ -22,41 +24,41 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
 
             beverageRepository.saveAll(listOf(fernet, aguaTonica, cocaCola, gin, ron, cerveza, aperitivo))
 
-            val soloAperitivo = Recipe(name = "Solo aperitivo")
+            val soloAperitivo = Recipe(name = "Solo aperitivo", description = description)
             soloAperitivo.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
 
-            val aperitivoYCerveza = Recipe(name = "Aperitivo y cerveza")
+            val aperitivoYCerveza = Recipe(name = "Aperitivo y cerveza", description = description)
             aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
             aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
 
-            val aperitivoCervezaYFernet = Recipe(name = "Aperitivo, cerveza y Fernet")
+            val aperitivoCervezaYFernet = Recipe(name = "Aperitivo, cerveza y Fernet", description = description)
             aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
             aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
             aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = fernet))
 
-            val fernandito = Recipe(name = "Fernet")
+            val fernandito = Recipe(name = "Fernet", description = description)
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
 
-            val ginTonic = Recipe(name = "Gin Tonic")
+            val ginTonic = Recipe(name = "Gin Tonic", description = description)
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = gin))
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
 
-            val cubaLibre = Recipe(name = "Cuba Libre")
+            val cubaLibre = Recipe(name = "Cuba Libre", description = description)
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = ron))
 
-            val cosaRara = Recipe(name = "Cosa Rara y Fea")
+            val cosaRara = Recipe(name = "Cosa Rara y Fea", description = description)
             cosaRara.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             cosaRara.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             cosaRara.beverages.add(RecipeBeverageRelationship(beverage = gin))
             cosaRara.beverages.add(RecipeBeverageRelationship(beverage = ron))
 
-            val cosaFea = Recipe(name = "Cosa Fea")
+            val cosaFea = Recipe(name = "Cosa Fea", description = description)
             cosaFea.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
             cosaFea.beverages.add(RecipeBeverageRelationship(beverage = fernet))
 
-            val michelada = Recipe(name = "Michelada")
+            val michelada = Recipe(name = "Michelada", description = description)
             michelada.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
 
             recipeRepository.saveAll(listOf(soloAperitivo, aperitivoCervezaYFernet, aperitivoYCerveza,
