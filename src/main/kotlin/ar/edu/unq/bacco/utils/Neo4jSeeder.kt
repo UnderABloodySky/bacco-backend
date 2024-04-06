@@ -2,6 +2,7 @@ package ar.edu.unq.bacco.utils
 
 import ar.edu.unq.bacco.model.Beverage
 import ar.edu.unq.bacco.model.Recipe
+import ar.edu.unq.bacco.model.RecipeBeverageRelationship
 import ar.edu.unq.bacco.repository.BeverageRepository
 import ar.edu.unq.bacco.repository.RecipeRepository
 import org.springframework.stereotype.Component
@@ -15,24 +16,37 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
             val aguaTonica = Beverage(name = "TONICA")
             val cocaCola = Beverage(name = "COCACOLA")
             val gin = Beverage(name = "GIN")
-            val ron = Beverage(name= "RON")
+            val ron = Beverage(name = "RON")
+            val cerveza = Beverage(name = "CERVEZA")
 
-            beverageRepository.save(fernet)
-            beverageRepository.save(aguaTonica)
-            beverageRepository.save(gin)
-            beverageRepository.save(ron)
-            beverageRepository.save(cocaCola)
+            beverageRepository.saveAll(listOf(fernet, aguaTonica, cocaCola, gin, ron, cerveza))
 
+            val fernandito = Recipe(name = "Ferne")
+            fernandito.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            fernandito.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
 
-            val fernandito = Recipe(name = "Ferne", beverages = mutableSetOf(cocaCola, fernet))
-            val ginTonic = Recipe(name = "Gin Tonic", beverages = mutableSetOf(gin, aguaTonica))
-            val cubaLibre = Recipe(name = "Cubra Libre", beverages = mutableSetOf(cocaCola, ron))
-            val cosaRara = Recipe(name="Cosa Rara y Fea", beverages = mutableSetOf(fernet, cocaCola, gin, ron))
+            val ginTonic = Recipe(name = "Gin Tonic")
+            ginTonic.beverages.add(RecipeBeverageRelationship(beverage = gin))
+            ginTonic.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
 
-            recipeRepository.save(fernandito)
-            recipeRepository.save(ginTonic)
-            recipeRepository.save(cubaLibre)
-            recipeRepository.save(cosaRara)
+            val cubaLibre = Recipe(name = "Cubra Libre")
+            cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
+            cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = ron))
+
+            val cosaRara = Recipe(name = "Cosa Rara y Fea")
+            cosaRara.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            cosaRara.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
+            cosaRara.beverages.add(RecipeBeverageRelationship(beverage = gin))
+            cosaRara.beverages.add(RecipeBeverageRelationship(beverage = ron))
+
+            val cosaFea = Recipe(name = "Cosa Fea")
+            cosaFea.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
+            cosaFea.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+
+            val michelada = Recipe(name = "Michelada")
+            michelada.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
+
+            recipeRepository.saveAll(listOf(fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada))
         }
     }
 

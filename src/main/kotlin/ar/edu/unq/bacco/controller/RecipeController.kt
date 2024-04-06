@@ -1,6 +1,7 @@
 package ar.edu.unq.bacco.controller
 
 import ar.edu.unq.bacco.model.Beverage
+import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.service.RecipeService
 import ar.edu.unq.bacco.utils.Mediator
@@ -30,8 +31,6 @@ class RecipeController(private val recipeService: RecipeService) {
             Files.copy(file.inputStream, Paths.get(uploadDir.absolutePath, fileName), StandardCopyOption.REPLACE_EXISTING)
             val filePath = "D:/UNQUI/TIP/bacco-backend/uploads/$fileName"
             val beverage = Mediator().detectBeverage(filePath)
-
-            //Todo: Cambiar el tipo de retorno de este mensaje a ResponseEntity<List<Recipe>> una vez que este terminado
             ResponseEntity(beverage, HttpStatus.OK)
         } catch (e: Exception) {
             ResponseEntity("Error al cargar el archivo", HttpStatus.INTERNAL_SERVER_ERROR)

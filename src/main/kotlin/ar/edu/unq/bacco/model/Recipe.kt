@@ -11,5 +11,5 @@ class Recipe (
     val name: String,
 
     @Relationship(type = "HAS_BEVERAGES", direction = Relationship.Direction.OUTGOING)
-    val beverages: MutableSet<Beverage> = mutableSetOf()
+    val beverages: MutableSet<RecipeBeverageRelationship> = mutableSetOf()
 )

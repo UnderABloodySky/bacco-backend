@@ -22,9 +22,9 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @ExtendWith(SpringExtension::class)
 @ActiveProfiles("test")
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@Transactional
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserControllerTest {
 
     @Autowired
