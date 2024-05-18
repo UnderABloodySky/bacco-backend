@@ -41,7 +41,7 @@ class RecipeController(private val recipeService: RecipeService) {
 
             // Preparar la solicitud HTTP para enviar la imagen al backend Django
             val httpClient = HttpClients.createDefault()
-            val postRequest = HttpPost("http://localhost:8000/upload_photo")
+            val postRequest = HttpPost("http://localhost:8000/upload-photo")
 
             // Construir el cuerpo de la solicitud con la imagen
             val fileBody = FileBody(File(filePath), ContentType.DEFAULT_BINARY)
