@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 @Service
 class BeverageService(private val beverageRepository: BeverageRepository) {
 
-    fun findBeveragesByName(name: String): List<Beverage> {
+    fun findBeveragesByName(name: String = ""): List<Beverage> {
         return beverageRepository.findByNameContainingIgnoreCase(name)
     }
 }

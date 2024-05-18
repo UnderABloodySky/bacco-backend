@@ -35,7 +35,7 @@ class RecipeController(private val recipeService: RecipeService) {
             val uploadDir = File("uploads")
             uploadDir.mkdir()
             Files.copy(file.inputStream, Paths.get(uploadDir.absolutePath, fileName), StandardCopyOption.REPLACE_EXISTING)
-            val filePath = "D:/UNQUI/TIP/bacco-backend/uploads/$fileName"
+            val filePath = "/home/laboratorio/Escritorio/bacco-backend/uploads/$fileName"//"D:/UNQUI/TIP/bacco-backend/uploads/$fileName"
             //val beverage = Mediator().detectBeverage(filePath)
 
 

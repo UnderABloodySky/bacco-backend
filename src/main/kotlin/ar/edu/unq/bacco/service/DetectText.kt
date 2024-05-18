@@ -9,6 +9,7 @@ import java.io.FileInputStream
 import java.io.IOException
 
 object DetectText {
+    /*
     @Throws(IOException::class)
     fun detectText(filePath: String?): List<String> {
         val credentialsPath = "D:\\UNQUI\\TIP\\bacco-backend\\src\\main\\resources\\bacco-back-dbdda54eb3a7.json"
@@ -20,7 +21,7 @@ object DetectText {
         return ImageAnnotatorClient.create(settings).use { client ->
             detectText(client, filePath)
         }
-    }
+    }*/
 
     @Throws(IOException::class)
     fun detectText(client: ImageAnnotatorClient, filePath: String?): List<String> {
