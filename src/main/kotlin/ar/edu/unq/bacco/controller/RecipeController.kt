@@ -35,7 +35,7 @@ class RecipeController(private val recipeService: RecipeService) {
             val uploadDir = File("uploads")
             uploadDir.mkdir()
             Files.copy(file.inputStream, Paths.get(uploadDir.absolutePath, fileName), StandardCopyOption.REPLACE_EXISTING)
-            val filePath = "/home/laboratorio/Escritorio/bacco-backend/uploads/$fileName"//"D:/UNQUI/TIP/bacco-backend/uploads/$fileName"
+            val filePath = "D:/UNQUI/TIP/bacco-backend/uploads/$fileName"
             //val beverage = Mediator().detectBeverage(filePath)
 
 
@@ -52,12 +52,14 @@ class RecipeController(private val recipeService: RecipeService) {
 
             // Enviar la solicitud al backend Django
             val response: HttpResponse = httpClient.execute(postRequest)
+            val responseEntity = response.entity
+            val responseString = responseEntity.content.bufferedReader().use { it.readText() }
 
             // Manejar la respuesta del backend Django
             if (response.statusLine.statusCode == HttpStatus.OK.value()) {
-                ResponseEntity("Imagen cargada exitosamente en el backend Django", HttpStatus.OK)
+                ResponseEntity(responseString, HttpStatus.OK)
             } else {
-                ResponseEntity("Error al cargar la imagen en el backend Django", HttpStatus.INTERNAL_SERVER_ERROR)
+                ResponseEntity(responseString, HttpStatus.INTERNAL_SERVER_ERROR)
             }
         } catch (e: IOException) {
             ResponseEntity("Error al cargar el archivo", HttpStatus.INTERNAL_SERVER_ERROR)
