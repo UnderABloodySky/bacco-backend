@@ -3,14 +3,17 @@ package ar.edu.unq.bacco.utils
 import ar.edu.unq.bacco.model.Beverage
 import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.model.RecipeBeverageRelationship
+import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.repository.BeverageRepository
 import ar.edu.unq.bacco.repository.RecipeRepository
+import ar.edu.unq.bacco.repository.UserRepository
 import org.springframework.stereotype.Component
 
 @Component
-class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val beverageRepository: BeverageRepository) {
+class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val beverageRepository: BeverageRepository, private val userRepository : UserRepository) {
 
     fun seedDatabase() {
+        System.out.println("START POPULATION OF DB")
         if (recipeRepository.count() == 0L && beverageRepository.count() == 0L) {
             val description = "“Ebis vendae eaqui solupta turera prepe parum ut estrum, cus as nient aut aut pa nost, consed ut reroribus ex ea dolor as secestrum qui con preprae sequam ipsaeperum is ipsamus aectibustior accae perovit quas as modipsunt ut volorro beatemolenis veremporum quianda perchil es quam eum"
 
@@ -25,8 +28,9 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
             val gancia = Beverage(name="VINO")
             val whiskey = Beverage(name="WHISKEY")
             val vino = Beverage(name="vino")
+            val beverages = listOf(fernet, aguaTonica, cocaCola, gin, ron, cerveza, aperitivo, licor, gancia, whiskey, vino)
 
-            beverageRepository.saveAll(listOf(fernet, aguaTonica, cocaCola, gin, ron, cerveza, aperitivo, licor, gancia, whiskey, vino))
+            beverageRepository.saveAll(beverages)
 
             val soloAperitivo = Recipe(name = "Solo aperitivo", description = description)
             soloAperitivo.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
@@ -69,14 +73,26 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
             caranchito.beverages.add(RecipeBeverageRelationship(beverage = vino))
             caranchito.beverages.add(RecipeBeverageRelationship(beverage = ron))
 
-            recipeRepository.saveAll(listOf(soloAperitivo, aperitivoCervezaYFernet, aperitivoYCerveza,
-                    fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada))
+            val recipes = listOf(soloAperitivo, aperitivoCervezaYFernet, aperitivoYCerveza,
+                fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada)
+
+            recipeRepository.saveAll(recipes)
+
+            val user0 = User(name = "HValenzuela")
+            val user1 = User(name = "fedecame")
+            val user2 = User(name = "test")
+            val users = listOf(user0, user1, user2)
+
+            userRepository.saveAll(users)
         }
+        println("END POPULATION OF DB")
     }
 
     fun clearDatabase() {
+        println("START CLEAR DATABASE")
         recipeRepository.deleteAll()
         beverageRepository.deleteAll()
-        println("Todas las entidades han sido eliminadas de la base de datos.")
+        userRepository.deleteAll()
+        println("END CLEAR DATABASE")
     }
 }

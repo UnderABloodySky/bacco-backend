@@ -18,12 +18,14 @@ repositories {
 	mavenCentral()
 }
 
-//configurations {
-//	all {
-//		exclude(group = "ch.qos.logback", module = "logback-classic")
-//		exclude(group = "ch.qos.logback", module = "logback-core")
-//	}
-//}
+/*
+configurations {
+	all {
+		exclude(group = "ch.qos.logback", module = "logback-classic")
+		exclude(group = "ch.qos.logback", module = "logback-core")
+	}
+}
+*/
 
 dependencies {
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
@@ -37,11 +39,9 @@ dependencies {
 	testImplementation(platform("org.junit:junit-bom:5.9.3"))
 	runtimeOnly("org.neo4j.driver:neo4j-java-driver")
 	implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
-	testRuntimeOnly("org.neo4j.test:neo4j-harness:4.3.7")
 
-	implementation("com.google.cloud:google-cloud-vision:3.36.0")
-	implementation(platform("org.springframework.cloud:spring-cloud-gcp-dependencies:1.2.3.RELEASE"))
-	implementation("org.springframework.cloud:spring-cloud-gcp-starter-vision")
+	implementation("org.springframework.data:spring-data-neo4j:7.3.0")
+	testRuntimeOnly("org.neo4j.test:neo4j-harness:4.3.7")
 }
 
 tasks.withType<KotlinCompile> {
