@@ -26,6 +26,8 @@ repositories {
 //}
 
 dependencies {
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	implementation("org.apache.httpcomponents:httpmime:4.5.13")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
