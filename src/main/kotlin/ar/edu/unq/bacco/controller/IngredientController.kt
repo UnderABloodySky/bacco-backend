@@ -1,6 +1,5 @@
 package ar.edu.unq.bacco.controller
 
-import ar.edu.unq.bacco.model.Beverage
 import ar.edu.unq.bacco.model.Ingredient
 import ar.edu.unq.bacco.service.IngredientService
 import org.springframework.beans.factory.annotation.Autowired
