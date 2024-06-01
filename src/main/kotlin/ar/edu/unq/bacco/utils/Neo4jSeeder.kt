@@ -17,17 +17,17 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
         if (recipeRepository.count() == 0L && beverageRepository.count() == 0L) {
             val description = "“Ebis vendae eaqui solupta turera prepe parum ut estrum, cus as nient aut aut pa nost, consed ut reroribus ex ea dolor as secestrum qui con preprae sequam ipsaeperum is ipsamus aectibustior accae perovit quas as modipsunt ut volorro beatemolenis veremporum quianda perchil es quam eum"
 
-            val fernet = Beverage(name = "FERNET")
-            val aguaTonica = Beverage(name = "TONICA")
-            val cocaCola = Beverage(name = "COCACOLA")
-            val gin = Beverage(name = "GIN")
-            val ron = Beverage(name = "RON")
-            val cerveza = Beverage(name = "CERVEZA")
-            val aperitivo = Beverage(name = "APERITIVO")
-            val licor = Beverage(name = "LICOR")
-            val gancia = Beverage(name="VINO")
-            val whiskey = Beverage(name="WHISKEY")
-            val vino = Beverage(name="vino")
+            val fernet = Beverage(name = "FERNET", description = "El sabor auténtico de Cordoba y Argentina")
+            val aguaTonica = Beverage(name = "TONICA", description = "Refrescante y versátil")
+            val cocaCola = Beverage(name = "COCACOLA", description = "La chispa que necesitas")
+            val gin = Beverage(name = "GIN", description = "La chispa que necesitas")
+            val ron = Beverage(name = "RON", description = "Una aventura caribeña en tu vaso")
+            val cerveza = Beverage(name = "CERVEZA", description = "La tradición en cada burbuja")
+            val aperitivo = Beverage(name = "APERITIVO", description = "El toque perfecto antes de la cena")
+            val licor = Beverage(name = "LICOR", description = "Dulce tentación en cada gota")
+            val gancia = Beverage(name="GANCIA", description = "El espíritu italiano en tu copa")
+            val whiskey = Beverage(name="WHISKEY", description = "Destilado de distinción y carácter")
+            val vino = Beverage(name="VINO", description = "Elegancia embotellada")
             val beverages = listOf(fernet, aguaTonica, cocaCola, gin, ron, cerveza, aperitivo, licor, gancia, whiskey, vino)
 
             beverageRepository.saveAll(beverages)
