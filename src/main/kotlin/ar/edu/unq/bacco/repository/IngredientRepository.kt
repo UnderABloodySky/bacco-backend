@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 
 @Repository
-interface IngredientRepository : Neo4jRepository<Ingredient, Long>
+interface IngredientRepository : Neo4jRepository<Ingredient, Long>{
+    fun findByNameContainingIgnoreCase(name: String): List<Ingredient>
+}

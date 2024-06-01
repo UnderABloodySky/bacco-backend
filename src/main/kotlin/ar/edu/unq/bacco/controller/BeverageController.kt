@@ -10,6 +10,7 @@ import org.apache.http.entity.mime.MultipartEntity
 import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.entity.mime.content.FileBody
 import org.apache.http.impl.client.HttpClients
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -26,7 +27,7 @@ import java.nio.file.StandardCopyOption
 
 @RestController
 @RequestMapping("/beverages")
-class BeverageController(private val beverageService: BeverageService) {
+class BeverageController(@Autowired private val beverageService: BeverageService) {
 
     @Value("\${django.backend.url.retrain}")
     private lateinit var djangoRetrainUrl: String
