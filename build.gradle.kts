@@ -30,6 +30,16 @@ dependencies {
 	implementation("org.slf4j:slf4j-nop") {
 		exclude(group = "org.slf4j", module = "slf4j-api")
 	}
+	implementation("org.apache.httpcomponents:httpclient") {
+		exclude(group = "commons-logging", module = "commons-logging")
+	}
+	implementation("commons-logging:commons-logging") {
+		exclude(group = "commons-logging", module = "commons-logging")
+	}
+	implementation("org.neo4j.test:neo4j-harness"){
+		exclude(group = "commons-logging", module = "commons-logging")
+	}
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("com.h2database:h2")
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
