@@ -4,26 +4,16 @@ import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.service.UserService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.transaction.annotation.Transactional
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@ExtendWith(SpringExtension::class)
-@ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Transactional
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 class UserControllerTest {
 
     @Autowired
@@ -36,7 +26,7 @@ class UserControllerTest {
     fun testCreateMockUser() {
         val userServiceMock = mock(UserService::class.java)
         val userController = UserController(userServiceMock)
-        val anUser = User(name="John Coltrane") // Proporciona solo el nombre, el ID se generará automáticamente
+        val anUser = User(name="John Coltrane")
 
         `when`(userServiceMock.save(anUser)).thenReturn(anUser)
 

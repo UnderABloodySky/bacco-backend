@@ -18,16 +18,18 @@ repositories {
 	mavenCentral()
 }
 
-/*
 configurations {
 	all {
+		exclude(group = "org.slf4j", module = "slf4j-log4j12")
 		exclude(group = "ch.qos.logback", module = "logback-classic")
 		exclude(group = "ch.qos.logback", module = "logback-core")
 	}
 }
-*/
 
 dependencies {
+	implementation("org.slf4j:slf4j-nop") {
+		exclude(group = "org.slf4j", module = "slf4j-api")
+	}
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("com.h2database:h2")
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
