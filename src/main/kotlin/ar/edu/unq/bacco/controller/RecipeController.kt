@@ -32,7 +32,10 @@ class RecipeController(private val recipeService: RecipeService) {
 
 
     @GetMapping("/recipes")
-    fun filterRecipesByBeverages(@RequestParam beverageNames: List<String>): List<Recipe> {
-        return recipeService.filterRecipesByBeverages(beverageNames)
+    fun filterRecipes(
+        @RequestParam(required = false, defaultValue = "") beverageNames: List<String>?,
+        @RequestParam(required = false, defaultValue = "") ingredientNames: List<String>?
+    ): List<Recipe> {
+        return recipeService.filterRecipesByBeveragesOrIngredients(beverageNames.orEmpty(), ingredientNames.orEmpty())
     }
 }
