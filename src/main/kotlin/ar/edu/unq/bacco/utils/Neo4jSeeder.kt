@@ -1,16 +1,19 @@
 package ar.edu.unq.bacco.utils
 
-import ar.edu.unq.bacco.model.Beverage
-import ar.edu.unq.bacco.model.Recipe
-import ar.edu.unq.bacco.model.RecipeBeverageRelationship
-import ar.edu.unq.bacco.model.User
+import ar.edu.unq.bacco.model.*
 import ar.edu.unq.bacco.repository.BeverageRepository
+import ar.edu.unq.bacco.repository.IngredientRepository
 import ar.edu.unq.bacco.repository.RecipeRepository
 import ar.edu.unq.bacco.repository.UserRepository
 import org.springframework.stereotype.Component
 
 @Component
-class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val beverageRepository: BeverageRepository, private val userRepository : UserRepository) {
+class Neo4jSeeder(
+    private val recipeRepository: RecipeRepository,
+    private val beverageRepository: BeverageRepository,
+    private val userRepository: UserRepository,
+    private val ingredientRepository: IngredientRepository
+) {
 
     fun seedDatabase() {
         System.out.println("START POPULATION OF DB")
@@ -32,8 +35,29 @@ class Neo4jSeeder(private val recipeRepository: RecipeRepository, private val be
 
             beverageRepository.saveAll(beverages)
 
+            val pimienta = Ingredient(name = "Pimienta", description = "Toque de intensidad y sabor")
+            val hielo = Ingredient(name = "Hielo", description = "Frescura garantizada en cada sorbo")
+            val sal = Ingredient(name = "Sal", description = "Equilibrio perfecto para tu paladar")
+            val leche = Ingredient(name = "Leche", description = "Suavidad inigualable en cada trago")
+            val azucar = Ingredient(name = "Azucar", description = "Dulzura exquisita para deleitar tus sentidos")
+            val menta = Ingredient(name = "Menta", description = "Frescor natural y refrescante")
+            val jengibre = Ingredient(name = "Jengibre", description = "Toque picante y revitalizante")
+            val pomelo = Ingredient(name = "Pomelo", description = "Refrescante y lleno de vitalidad")
+            val limon = Ingredient(name = "Limon", description = "Acidez refrescante y cítrica")
+            val naranja = Ingredient(name = "Naranja", description = "Dulzura cítrica y energizante")
+            val pepino = Ingredient(name = "Pepino", description = "Refrescante y crujiente")
+            val frutilla = Ingredient(name = "Frutilla", description = "Dulzura jugosa y deliciosa")
+            val arandanos = Ingredient(name = "Arandanos", description = "Antioxidante natural y exquisito sabor")
+            val frutosRojos = Ingredient(name = "Frutos rojos", description = "Vibrante y lleno de sabor")
+            val aceitunas = Ingredient(name = "Aceitunas", description = "Toque mediterráneo de autenticidad")
+            val hibiscus = Ingredient(name = "Hibiscus", description = "Roja como la sangre")
+            val ingredients = listOf(pimienta, hielo, sal, leche, azucar, menta, jengibre, pomelo, limon, naranja, pepino, frutilla, aceitunas, frutosRojos, arandanos, hibiscus)
+
+            ingredientRepository.saveAll(ingredients)
+
             val soloAperitivo = Recipe(name = "Solo aperitivo", description = description)
             soloAperitivo.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
+            soloAperitivo.ingredients.add(RecipeIngredientRelationship(ingredient = pimienta))
 
             val aperitivoYCerveza = Recipe(name = "Aperitivo y cerveza", description = description)
             aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
