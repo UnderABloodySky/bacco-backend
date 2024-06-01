@@ -58,44 +58,61 @@ class Neo4jSeeder(
             val soloAperitivo = Recipe(name = "Solo aperitivo", description = description)
             soloAperitivo.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
             soloAperitivo.ingredients.add(RecipeIngredientRelationship(ingredient = pimienta))
+            soloAperitivo.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
 
             val aperitivoYCerveza = Recipe(name = "Aperitivo y cerveza", description = description)
             aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
             aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
+            aperitivoYCerveza.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val aperitivoCervezaYFernet = Recipe(name = "Aperitivo, cerveza y Fernet", description = description)
             aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
             aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
             aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            aperitivoCervezaYFernet.ingredients.add(RecipeIngredientRelationship(ingredient = hibiscus))
+            aperitivoCervezaYFernet.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+            aperitivoCervezaYFernet.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
 
             val fernandito = Recipe(name = "Fernet", description = description)
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
+            fernandito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val ginTonic = Recipe(name = "Gin Tonic", description = description)
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = gin))
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
+            ginTonic.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+            ginTonic.ingredients.add(RecipeIngredientRelationship(ingredient = pepino))
 
             val cubaLibre = Recipe(name = "Cuba Libre", description = description)
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = ron))
+            cubaLibre.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+            cubaLibre.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val cosaRara = Recipe(name = "Cosa Rara y Fea", description = description)
             cosaRara.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             cosaRara.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             cosaRara.beverages.add(RecipeBeverageRelationship(beverage = gin))
             cosaRara.beverages.add(RecipeBeverageRelationship(beverage = ron))
+            cosaRara.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val cosaFea = Recipe(name = "Cosa Fea", description = description)
             cosaFea.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
             cosaFea.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            cosaFea.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            cosaFea.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val michelada = Recipe(name = "Michelada", description = description)
             michelada.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
+            michelada.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+            michelada.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val caranchito = Recipe(name = "Caranchito", description = description)
             caranchito.beverages.add(RecipeBeverageRelationship(beverage = vino))
             caranchito.beverages.add(RecipeBeverageRelationship(beverage = ron))
+            caranchito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val recipes = listOf(soloAperitivo, aperitivoCervezaYFernet, aperitivoYCerveza,
                 fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada)
