@@ -101,7 +101,7 @@ class Neo4jSeeder(
             val cosaFea = Recipe(name = "Cosa Fea", description = description)
             cosaFea.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
             cosaFea.beverages.add(RecipeBeverageRelationship(beverage = fernet))
-            cosaFea.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            cosaFea.beverages.add(RecipeBeverageRelationship(beverage = ron))
             cosaFea.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val michelada = Recipe(name = "Michelada", description = description)
