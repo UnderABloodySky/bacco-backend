@@ -22,6 +22,12 @@ configurations.all {
 	exclude(group = "commons-logging")
 }
 dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("com.h2database:h2")
+	runtimeOnly("com.h2database:h2")
+
+	//testImplementation("org.neo4j.test:neo4j-harness:4.4.3")
+	//testImplementation("org.neo4j:neo4j-ogm-embedded-driver:3.2.24")
 
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
 	implementation("org.apache.httpcomponents:httpmime:4.5.13")
