@@ -5,6 +5,6 @@ import org.springframework.data.neo4j.repository.Neo4jRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface BeverageRepository : Neo4jRepository<Beverage, String>{
+interface BeverageRepository : Neo4jRepository<Beverage, Long>{
     fun findByNameContainingIgnoreCase(name: String): List<Beverage>
 }

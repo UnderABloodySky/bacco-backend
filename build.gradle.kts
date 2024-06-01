@@ -18,30 +18,11 @@ repositories {
 	mavenCentral()
 }
 
-configurations {
-	all {
-		exclude(group = "org.slf4j", module = "slf4j-log4j12")
-		exclude(group = "ch.qos.logback", module = "logback-classic")
-		exclude(group = "ch.qos.logback", module = "logback-core")
-	}
+configurations.all {
+	exclude(group = "commons-logging")
 }
-
 dependencies {
-	implementation("org.slf4j:slf4j-nop") {
-		exclude(group = "org.slf4j", module = "slf4j-api")
-	}
-	implementation("org.apache.httpcomponents:httpclient") {
-		exclude(group = "commons-logging", module = "commons-logging")
-	}
-	implementation("commons-logging:commons-logging") {
-		exclude(group = "commons-logging", module = "commons-logging")
-	}
-	implementation("org.neo4j.test:neo4j-harness"){
-		exclude(group = "commons-logging", module = "commons-logging")
-	}
 
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	runtimeOnly("com.h2database:h2")
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
 	implementation("org.apache.httpcomponents:httpmime:4.5.13")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -53,9 +34,7 @@ dependencies {
 	testImplementation(platform("org.junit:junit-bom:5.9.3"))
 	runtimeOnly("org.neo4j.driver:neo4j-java-driver")
 	implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
-
-	implementation("org.springframework.data:spring-data-neo4j:7.3.0")
-	testRuntimeOnly("org.neo4j.test:neo4j-harness:4.3.7")
+	implementation("org.springframework.data:spring-data-neo4j")
 }
 
 tasks.withType<KotlinCompile> {
