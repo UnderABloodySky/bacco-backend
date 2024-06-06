@@ -45,4 +45,9 @@ class UserControllerTest {
         assertEquals(HttpStatus.OK, response.statusCode)
         assertEquals(user, response.body)
     }
+
+    @Test
+    fun test(){
+
+    }
 }
