@@ -23,8 +23,8 @@ configurations.all {
 }
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("com.h2database:h2")
-	runtimeOnly("com.h2database:h2")
+	//implementation("com.h2database:h2")
+	//runtimeOnly("com.h2database:h2")
 
 	//testImplementation("org.neo4j.test:neo4j-harness:4.4.3")
 	//testImplementation("org.neo4j:neo4j-ogm-embedded-driver:3.2.24")
@@ -48,8 +48,11 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs += "-Xjsr305=strict"
 		jvmTarget = "17"
 	}
+
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	systemProperty("spring.profiles.active", "test")
+	systemProperty("spring.config.location", "classpath:application-test.properties")
 }
