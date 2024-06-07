@@ -9,4 +9,5 @@ open class Ingredient(
     @Id @GeneratedValue
     var id: Long? = null,
     val name: String = "",
-    val description : String = "")
+    val description : String = "",
+    var imagePath: String? = null,)

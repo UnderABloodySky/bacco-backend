@@ -10,6 +10,7 @@ class Recipe (
     @Id @GeneratedValue var id: Long? = null,
     val name: String,
     val description: String,
+    var imagePath: String? = null,
 
     @Relationship(type = "HAS_BEVERAGES", direction = Relationship.Direction.OUTGOING)
     val beverages: MutableSet<RecipeBeverageRelationship> = mutableSetOf(),
