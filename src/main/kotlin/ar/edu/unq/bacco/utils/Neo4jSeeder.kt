@@ -133,6 +133,7 @@ class Neo4jSeeder(
         println("START CLEAR DATABASE")
         recipeRepository.deleteAll()
         beverageRepository.deleteAll()
+        ingredientRepository.deleteAll()
         userRepository.deleteAll()
         println("END CLEAR DATABASE")
     }
