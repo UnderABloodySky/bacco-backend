@@ -18,14 +18,19 @@ repositories {
 	mavenCentral()
 }
 
-//configurations {
-//	all {
-//		exclude(group = "ch.qos.logback", module = "logback-classic")
-//		exclude(group = "ch.qos.logback", module = "logback-core")
-//	}
-//}
-
+configurations.all {
+	exclude(group = "commons-logging")
+}
 dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("com.h2database:h2")
+	runtimeOnly("com.h2database:h2")
+
+	//testImplementation("org.neo4j.test:neo4j-harness:4.4.3")
+	//testImplementation("org.neo4j:neo4j-ogm-embedded-driver:3.2.24")
+
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	implementation("org.apache.httpcomponents:httpmime:4.5.13")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -35,11 +40,7 @@ dependencies {
 	testImplementation(platform("org.junit:junit-bom:5.9.3"))
 	runtimeOnly("org.neo4j.driver:neo4j-java-driver")
 	implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
-	testRuntimeOnly("org.neo4j.test:neo4j-harness:4.3.7")
-
-	implementation("com.google.cloud:google-cloud-vision:3.36.0")
-	implementation(platform("org.springframework.cloud:spring-cloud-gcp-dependencies:1.2.3.RELEASE"))
-	implementation("org.springframework.cloud:spring-cloud-gcp-starter-vision")
+	implementation("org.springframework.data:spring-data-neo4j")
 }
 
 tasks.withType<KotlinCompile> {

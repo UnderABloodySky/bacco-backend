@@ -9,8 +9,11 @@ import org.springframework.data.neo4j.core.schema.Relationship
 class Recipe (
     @Id @GeneratedValue var id: Long? = null,
     val name: String,
-    val description : String,
+    val description: String,
 
     @Relationship(type = "HAS_BEVERAGES", direction = Relationship.Direction.OUTGOING)
-    val beverages: MutableSet<RecipeBeverageRelationship> = mutableSetOf()
+    val beverages: MutableSet<RecipeBeverageRelationship> = mutableSetOf(),
+
+    @Relationship(type = "HAS_INGREDIENTS", direction = Relationship.Direction.OUTGOING)
+    val ingredients: MutableSet<RecipeIngredientRelationship> = mutableSetOf()
 )

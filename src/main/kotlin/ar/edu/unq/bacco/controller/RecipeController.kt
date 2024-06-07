@@ -1,45 +1,41 @@
 package ar.edu.unq.bacco.controller
 
-import ar.edu.unq.bacco.model.Beverage
-import ar.edu.unq.bacco.model.DTO.RecipeDTO
+
 import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.service.RecipeService
-import ar.edu.unq.bacco.utils.Mediator
+import ar.edu.unq.bacco.utils.MediatorBaccoCNN
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
+import java.io.IOException
 
 @RestController
 @RequestMapping("/imgs")
 class RecipeController(private val recipeService: RecipeService) {
+
+    //@Value("\${django.backend.url}")
+    //private lateinit var djangoBackendUrl: String
 
     @PostMapping("/upload")
     fun uploadImage(@RequestParam("file") file: MultipartFile): ResponseEntity<String> {
         if (file.isEmpty) {
             return ResponseEntity("Por favor, selecciona un archivo", HttpStatus.BAD_REQUEST)
         }
-
         return try {
-            val fileName = "${System.currentTimeMillis()}_${file.originalFilename}"
-            val uploadDir = File("uploads")
-            uploadDir.mkdir()
-            Files.copy(file.inputStream, Paths.get(uploadDir.absolutePath, fileName), StandardCopyOption.REPLACE_EXISTING)
-            val filePath = "D:/UNQUI/TIP/bacco-backend/uploads/$fileName"
-            val beverage = Mediator().detectBeverage(filePath)
-            ResponseEntity(beverage, HttpStatus.OK)
-        } catch (e: Exception) {
-            ResponseEntity("Error al cargar el archivo", HttpStatus.INTERNAL_SERVER_ERROR)
+            MediatorBaccoCNN().detectBeverage(file)
+        }
+        catch (e: IOException) {
+                ResponseEntity("Error al cargar el archivo", HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
 
     @GetMapping("/recipes")
-    fun filterRecipesByBeverages(@RequestParam beverageNames: List<String>): List<Recipe> {
-        return recipeService.filterRecipesByBeverages(beverageNames)
+    fun filterRecipes(
+        @RequestParam(required = false, defaultValue = "") beverageNames: List<String>?,
+        @RequestParam(required = false, defaultValue = "") ingredientNames: List<String>?
+    ): List<Recipe> {
+        return recipeService.filterRecipesByBeveragesOrIngredients(beverageNames.orEmpty(), ingredientNames.orEmpty())
     }
 }
