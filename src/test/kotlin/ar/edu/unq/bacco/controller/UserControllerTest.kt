@@ -6,13 +6,15 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.springframework.boot.test.autoconfigure.data.neo4j.AutoConfigureDataNeo4j
+import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.TestPropertySource
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@TestPropertySource(locations = ["classpath:application-test.properties"])
 @ActiveProfiles("test")
 class UserControllerTest {
 
@@ -42,5 +44,10 @@ class UserControllerTest {
 
         assertEquals(HttpStatus.OK, response.statusCode)
         assertEquals(user, response.body)
+    }
+
+    @Test
+    fun test(){
+
     }
 }
