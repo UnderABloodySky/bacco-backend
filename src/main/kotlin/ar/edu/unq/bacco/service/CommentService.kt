@@ -15,15 +15,12 @@ class CommentService(
     private val commentRepository: CommentRepository,
     private val userRepository: UserRepository,
     private val recipeRepository: RecipeRepository,
-    @Qualifier("transactionManager")
-    private val transactionManager: PlatformTransactionManager
 ) {
-    @Transactional("transactionManager")
     fun addComment(commentDTO: CommentDTO): Comment? {
         val user = userRepository.findById(commentDTO.userId).orElseThrow { RuntimeException("User not found") }
         val recipe = recipeRepository.findById(commentDTO.recipeId).orElseThrow { RuntimeException("Recipe not found") }
 
-        val comment = Comment(content = commentDTO.content, user = user, recipe = recipe)
+        val comment = Comment(content = commentDTO.content, user = user)
         recipe.comments.add(comment)
         recipeRepository.save(recipe)
         return commentRepository.save(comment)

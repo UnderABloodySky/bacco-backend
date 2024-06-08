@@ -1,10 +1,7 @@
 package ar.edu.unq.bacco.utils
 
 import ar.edu.unq.bacco.model.*
-import ar.edu.unq.bacco.repository.BeverageRepository
-import ar.edu.unq.bacco.repository.IngredientRepository
-import ar.edu.unq.bacco.repository.RecipeRepository
-import ar.edu.unq.bacco.repository.UserRepository
+import ar.edu.unq.bacco.repository.*
 import org.springframework.stereotype.Component
 
 @Component
@@ -12,7 +9,8 @@ class Neo4jSeeder(
     private val recipeRepository: RecipeRepository,
     private val beverageRepository: BeverageRepository,
     private val userRepository: UserRepository,
-    private val ingredientRepository: IngredientRepository
+    private val ingredientRepository: IngredientRepository,
+    private val commentRepository: CommentRepository
 ) {
 
     fun seedDatabase() {
@@ -135,6 +133,7 @@ class Neo4jSeeder(
         beverageRepository.deleteAll()
         ingredientRepository.deleteAll()
         userRepository.deleteAll()
+        commentRepository.deleteAll()
         println("END CLEAR DATABASE")
     }
 }

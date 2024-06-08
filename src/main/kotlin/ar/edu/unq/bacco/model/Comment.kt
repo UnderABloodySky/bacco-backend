@@ -17,9 +17,5 @@ class Comment(
     var id: Long? = null,
     var content: String,
     @Relationship(type = "COMMENTED_BY", direction = Relationship.Direction.OUTGOING)
-    var user: User,
-
-    @Relationship(type = "COMMENT_ON", direction = Relationship.Direction.OUTGOING)
-    @JsonBackReference
-    @JsonIgnore
-    var recipe: Recipe)
+    var user: User
+)

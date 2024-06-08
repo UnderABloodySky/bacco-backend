@@ -1,6 +1,8 @@
 package ar.edu.unq.bacco.controller
 
 import ar.edu.unq.bacco.model.User
+import ar.edu.unq.bacco.service.RecipeService
+import ar.edu.unq.bacco.service.UserService
 import ar.edu.unq.bacco.service.interfaces.UserServiceI
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -16,8 +18,9 @@ class UserControllerTest {
 
     @Test
     fun testCreateMockUser() {
-        val userServiceMock = mock(UserServiceI::class.java)
-        val userController = UserController(userServiceMock)
+        val userServiceMock = mock(UserService::class.java)
+        val recipeServiceMock = mock(RecipeService::class.java)
+        val userController = UserController(userServiceMock, recipeServiceMock)
         val anUser = User(name = "John Coltrane")
 
         `when`(userServiceMock.save(anUser)).thenReturn(anUser)
@@ -30,8 +33,9 @@ class UserControllerTest {
 
     @Test
     fun testGetMockUserById() {
-        val userServiceMock = mock(UserServiceI::class.java)
-        val userController = UserController(userServiceMock)
+        val userServiceMock = mock(UserService::class.java)
+        val recipeServiceMock = mock(RecipeService::class.java)
+        val userController = UserController(userServiceMock, recipeServiceMock)
         val user = User(name = "Louis Amstrong")
 
         `when`(userServiceMock.findById(1L)).thenReturn(user)
