@@ -28,7 +28,7 @@ import java.nio.file.StandardCopyOption
 @RestController
 @RequestMapping("/beverages")
 class BeverageController(
-    @Autowired private val beverageService: BeverageService,
+    private val beverageService: BeverageService,
     @Value("\${django.backend.url.retrain}") private var djangoRetrainUrl: String = "http://localhost:8000/upload-photo-for-retrain",
 ) {
     @GetMapping("/search")
