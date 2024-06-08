@@ -15,7 +15,7 @@ class Neo4jSeeder(
 ) {
 
     fun seedDatabase() {
-        System.out.println("START POPULATION OF DB")
+       println("START POPULATION OF DB")
         if (recipeRepository.count() == 0L && beverageRepository.count() == 0L) {
             val description = "“Ebis vendae eaqui solupta turera prepe parum ut estrum, cus as nient aut aut pa nost, consed ut reroribus ex ea dolor as secestrum qui con preprae sequam ipsaeperum is ipsamus aectibustior accae perovit quas as modipsunt ut volorro beatemolenis veremporum quianda perchil es quam eum"
 
