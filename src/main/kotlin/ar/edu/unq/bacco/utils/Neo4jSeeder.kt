@@ -47,9 +47,9 @@ class Neo4jSeeder(
             val pepino = Ingredient(name = "PEPINO", description = "Refrescante y crujiente", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
             val frutilla = Ingredient(name = "FRUTILLA", description = "Dulzura jugosa y deliciosa", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
             val arandanos = Ingredient(name = "ARANDANOS", description = "Antioxidante natural y exquisito sabor", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
-            val frutosRojos = Ingredient(name = "FRUTOS ROJOS", description = "Vibrante y lleno de sabor", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
-            val aceitunas = Ingredient(name = "ACEITUNAS", description = "Toque mediterráneo de autenticidad", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
-            val hibiscus = Ingredient(name = "HIBISCUS", description = "Roja como la sangre", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
+            val frutosRojos = Ingredient(name = "FRUTOS ROJOS", description = "Vibrante y lleno de sabor", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
+            val aceitunas = Ingredient(name = "ACEITUNAS", description = "Toque mediterráneo de autenticidad", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
+            val hibiscus = Ingredient(name = "HIBISCUS", description = "Roja como la sangre", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
             val ingredients = listOf(pimienta, hielo, sal, leche, azucar, menta, jengibre, pomelo, limon, naranja, pepino, frutilla, aceitunas, frutosRojos, arandanos, hibiscus)
 
             ingredientRepository.saveAll(ingredients)
