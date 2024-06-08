@@ -23,11 +23,6 @@ configurations.all {
 }
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	//implementation("com.h2database:h2")
-	//runtimeOnly("com.h2database:h2")
-
-	//testImplementation("org.neo4j.test:neo4j-harness:4.4.3")
-	//testImplementation("org.neo4j:neo4j-ogm-embedded-driver:3.2.24")
 
 	implementation("org.apache.httpcomponents:httpclient:4.5.13")
 	implementation("org.apache.httpcomponents:httpmime:4.5.13")
@@ -41,6 +36,16 @@ dependencies {
 	runtimeOnly("org.neo4j.driver:neo4j-java-driver")
 	implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
 	implementation("org.springframework.data:spring-data-neo4j")
+
+	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+	testImplementation("com.tngtech.archunit:archunit-junit5:0.14.1")
+	testImplementation("com.tngtech.archunit:archunit:0.14.1")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 }
 
 tasks.withType<KotlinCompile> {

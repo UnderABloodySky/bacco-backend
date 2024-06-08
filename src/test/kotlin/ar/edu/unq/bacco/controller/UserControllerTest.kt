@@ -1,15 +1,11 @@
 package ar.edu.unq.bacco.controller
 
 import ar.edu.unq.bacco.model.User
-import ar.edu.unq.bacco.service.UserService
+import ar.edu.unq.bacco.service.interfaces.UserServiceI
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
-import org.springframework.boot.test.autoconfigure.data.neo4j.AutoConfigureDataNeo4j
-import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestPropertySource
@@ -20,7 +16,7 @@ class UserControllerTest {
 
     @Test
     fun testCreateMockUser() {
-        val userServiceMock = mock(UserService::class.java)
+        val userServiceMock = mock(UserServiceI::class.java)
         val userController = UserController(userServiceMock)
         val anUser = User(name = "John Coltrane")
 
@@ -34,7 +30,7 @@ class UserControllerTest {
 
     @Test
     fun testGetMockUserById() {
-        val userServiceMock = mock(UserService::class.java)
+        val userServiceMock = mock(UserServiceI::class.java)
         val userController = UserController(userServiceMock)
         val user = User(name = "Louis Amstrong")
 
