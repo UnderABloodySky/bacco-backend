@@ -1,5 +1,9 @@
 package ar.edu.unq.bacco.model
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonManagedReference
+import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import org.springframework.data.neo4j.core.schema.GeneratedValue
 import org.springframework.data.neo4j.core.schema.Id
 import org.springframework.data.neo4j.core.schema.Node
@@ -7,6 +11,7 @@ import org.springframework.data.neo4j.core.schema.Relationship
 
 
 @Node
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
 class Recipe (
     @Id @GeneratedValue var id: Long? = null,
     val name: String,
@@ -24,5 +29,6 @@ class Recipe (
     val ingredients: MutableSet<RecipeIngredientRelationship> = mutableSetOf(),
 
     @Relationship(type = "HAS_COMMENTS", direction = Relationship.Direction.OUTGOING)
-    val comments: MutableSet<Comment> = mutableSetOf()
+    @JsonManagedReference
+    var comments: MutableSet<Comment> = mutableSetOf()
 )
