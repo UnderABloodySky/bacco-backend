@@ -10,7 +10,8 @@ class Neo4jSeeder(
     private val beverageRepository: BeverageRepository,
     private val userRepository: UserRepository,
     private val ingredientRepository: IngredientRepository,
-    private val commentRepository: CommentRepository
+    private val commentRepository: CommentRepository,
+    private val ratingRepository: RatingRepository
 ) {
 
     fun seedDatabase() {
@@ -134,6 +135,7 @@ class Neo4jSeeder(
         ingredientRepository.deleteAll()
         userRepository.deleteAll()
         commentRepository.deleteAll()
+        ratingRepository.deleteAll()
         println("END CLEAR DATABASE")
     }
 }
