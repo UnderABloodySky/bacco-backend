@@ -61,7 +61,9 @@ class RecipeService(private val recipeRepository : RecipeRepository, private val
         return  recipeRepository.save(newRecipe)
     }
 
-
+    fun getRecipeById(id: Long): Recipe? {
+        return recipeRepository.findById(id).get()
+    }
 }
 
 

@@ -41,6 +41,12 @@ class RecipeController(private val recipeService: RecipeService) {
         return recipeService.filterRecipesByBeveragesOrIngredients(beverageNames.orEmpty(), ingredientNames.orEmpty())
     }
 
+    @GetMapping("/recipe/{id}")
+    fun getRecipe(@PathVariable id: Long): ResponseEntity<Recipe> {
+        return ResponseEntity(recipeService.getRecipeById(id), HttpStatus.OK)
+    }
+
+
     @PostMapping("/recipe")
     fun createRecipe(@RequestBody aRecipeDTO: RecipeDTO): ResponseEntity<Any> {
         try{
