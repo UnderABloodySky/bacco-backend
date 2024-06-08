@@ -1,10 +1,7 @@
 package ar.edu.unq.bacco.service
 
+import ar.edu.unq.bacco.model.*
 import ar.edu.unq.bacco.model.DTO.RecipeDTO
-import ar.edu.unq.bacco.model.Ingredient
-import ar.edu.unq.bacco.model.Recipe
-import ar.edu.unq.bacco.model.RecipeBeverageRelationship
-import ar.edu.unq.bacco.model.RecipeIngredientRelationship
 import ar.edu.unq.bacco.repository.BeverageRepository
 import ar.edu.unq.bacco.repository.IngredientRepository
 import ar.edu.unq.bacco.repository.RecipeRepository
@@ -46,13 +43,16 @@ class RecipeService(private val recipeRepository : RecipeRepository, private val
         return allRecipes
     }
 
-    fun save(aRecipeDTO: RecipeDTO): Recipe?{
+    fun save(aRecipeDTO: RecipeDTO, user: User? = null): Recipe?{
         val name = aRecipeDTO.name
         val description = aRecipeDTO.description
         val ingredients = aRecipeDTO.ingredients.stream().map { str -> ingredientRepository.findByNameContainingIgnoreCase(str)}.toList()
         val beverages = aRecipeDTO.beverages.stream().map { str -> beverageRepository.findByNameContainingIgnoreCase(str)}.toList()
 
         val newRecipe = Recipe(name = name, description = description)
+        if(user != null){
+            newRecipe.user = user
+        }
         val ingredientsRelationships = ingredients.stream().map{ ing -> RecipeIngredientRelationship(ingredient = ing.get(0))}.toList()
         val beveragesRelationships =  beverages.stream().map{ bev -> RecipeBeverageRelationship(beverage = bev.get(0))}.toList()
         newRecipe.beverages.addAll(beveragesRelationships)

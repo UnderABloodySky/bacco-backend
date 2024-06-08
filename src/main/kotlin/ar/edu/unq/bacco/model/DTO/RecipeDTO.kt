@@ -5,6 +5,4 @@ data class RecipeDTO(
     val description: String,
     val beverages: List<String>,
     val ingredients: List<String>,
-) {
-
-}
+)
