@@ -10,7 +10,7 @@ class Recipe (
     @Id @GeneratedValue var id: Long? = null,
     val name: String,
     val description: String,
-    var imagePath: String? = null,
+    var imagePath: String? = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/no_image.png",
 
     @Relationship(type = "HAS_BEVERAGES", direction = Relationship.Direction.OUTGOING)
     val beverages: MutableSet<RecipeBeverageRelationship> = mutableSetOf(),
