@@ -5,6 +5,7 @@ import org.springframework.data.neo4j.core.schema.Id
 import org.springframework.data.neo4j.core.schema.Node
 import org.springframework.data.neo4j.core.schema.Relationship
 
+
 @Node
 class Recipe (
     @Id @GeneratedValue var id: Long? = null,
@@ -20,5 +21,8 @@ class Recipe (
     val beverages: MutableSet<RecipeBeverageRelationship> = mutableSetOf(),
 
     @Relationship(type = "HAS_INGREDIENTS", direction = Relationship.Direction.OUTGOING)
-    val ingredients: MutableSet<RecipeIngredientRelationship> = mutableSetOf()
+    val ingredients: MutableSet<RecipeIngredientRelationship> = mutableSetOf(),
+
+    @Relationship(type = "HAS_COMMENTS", direction = Relationship.Direction.OUTGOING)
+    val comments: MutableSet<Comment> = mutableSetOf()
 )
