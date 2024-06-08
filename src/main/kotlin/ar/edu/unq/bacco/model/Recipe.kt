@@ -30,5 +30,32 @@ class Recipe (
 
     @Relationship(type = "HAS_COMMENTS", direction = Relationship.Direction.OUTGOING)
     @JsonManagedReference
-    var comments: MutableSet<Comment> = mutableSetOf()
-)
+    var comments: MutableSet<Comment> = mutableSetOf(),
+
+    @Relationship(type = "RATED", direction = Relationship.Direction.OUTGOING)
+    val ratings: MutableSet<Rating> = mutableSetOf()) {
+
+    fun rate(user: User, score: Int): Rating {
+        if (score in 0..5) {
+            val existingRating = ratings.find { it.user.id == user.id }
+            if (existingRating != null) {
+                existingRating.score = score
+                return existingRating
+            } else {
+                val rating = Rating(user = user, score = score)
+                ratings.add(rating)
+                return rating
+            }
+        } else {
+            throw IllegalArgumentException("Score must be between 0 and 5")
+        }
+    }
+
+    fun averageRating(): Double {
+        return if (ratings.isNotEmpty()) {
+            ratings.map { it.score }.average()
+        } else {
+            0.0
+        }
+    }
+}
