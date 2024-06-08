@@ -1,6 +1,7 @@
 package ar.edu.unq.bacco.controller
 
 
+import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.service.RecipeService
@@ -40,9 +41,15 @@ class RecipeController(private val recipeService: RecipeService) {
         return recipeService.filterRecipesByBeveragesOrIngredients(beverageNames.orEmpty(), ingredientNames.orEmpty())
     }
 
-    @PostMapping
-    fun createRecipe(@RequestBody anUser: User) {
-        //val savedUser = recipeService.save(anUser)
-        //return ResponseEntity.status(HttpStatus.CREATED).body(savedUser)
+    @PostMapping("/recipe")
+    fun createRecipe(@RequestBody aRecipeDTO: RecipeDTO): ResponseEntity<Any> {
+        try{
+            val savedRecipe = recipeService.save(aRecipeDTO)
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedRecipe)
+        }
+        catch(e: Exception){
+            return ResponseEntity("Campos incorrectos", HttpStatus.BAD_REQUEST)
+        }
+
     }
 }

@@ -1,12 +1,18 @@
 package ar.edu.unq.bacco.service
 
+import ar.edu.unq.bacco.model.DTO.RecipeDTO
+import ar.edu.unq.bacco.model.Ingredient
 import ar.edu.unq.bacco.model.Recipe
+import ar.edu.unq.bacco.model.RecipeBeverageRelationship
+import ar.edu.unq.bacco.model.RecipeIngredientRelationship
+import ar.edu.unq.bacco.repository.BeverageRepository
+import ar.edu.unq.bacco.repository.IngredientRepository
 import ar.edu.unq.bacco.repository.RecipeRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class RecipeService(private val recipeRepository : RecipeRepository) {
+class RecipeService(private val recipeRepository : RecipeRepository, private val ingredientRepository: IngredientRepository, private val beverageRepository: BeverageRepository) {
 
     fun filterRecipesByBeverages(beverageNames: List<String>): List<Recipe> {
         val listCaps = beverageNames.map { str -> str.uppercase(Locale.getDefault()) }
@@ -39,6 +45,23 @@ class RecipeService(private val recipeRepository : RecipeRepository) {
         val allRecipes = (recipesByBeverages + recipesByIngredients).distinctBy { it.id }
         return allRecipes
     }
+
+    fun save(aRecipeDTO: RecipeDTO): Recipe?{
+        val name = aRecipeDTO.name
+        val description = aRecipeDTO.description
+        val ingredients = aRecipeDTO.ingredients.stream().map { str -> ingredientRepository.findByNameContainingIgnoreCase(str)}.toList()
+        val beverages = aRecipeDTO.beverages.stream().map { str -> beverageRepository.findByNameContainingIgnoreCase(str)}.toList()
+
+        val newRecipe = Recipe(name = name, description = description)
+        val ingredientsRelationships = ingredients.stream().map{ ing -> RecipeIngredientRelationship(ingredient = ing.get(0))}.toList()
+        val beveragesRelationships =  beverages.stream().map{ bev -> RecipeBeverageRelationship(beverage = bev.get(0))}.toList()
+        newRecipe.beverages.addAll(beveragesRelationships)
+        newRecipe.ingredients.addAll(ingredientsRelationships)
+
+        return  recipeRepository.save(newRecipe)
+    }
+
+
 }
 
 
