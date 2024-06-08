@@ -2,6 +2,7 @@ package ar.edu.unq.bacco.controller
 
 
 import ar.edu.unq.bacco.model.Recipe
+import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.service.RecipeService
 import ar.edu.unq.bacco.utils.MediatorBaccoCNN
 import org.springframework.http.HttpStatus
@@ -37,5 +38,11 @@ class RecipeController(private val recipeService: RecipeService) {
         @RequestParam(required = false, defaultValue = "") ingredientNames: List<String>?
     ): List<Recipe> {
         return recipeService.filterRecipesByBeveragesOrIngredients(beverageNames.orEmpty(), ingredientNames.orEmpty())
+    }
+
+    @PostMapping
+    fun createRecipe(@RequestBody anUser: User): ResponseEntity<User> {
+        val savedUser = recipeService.save(anUser)
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser)
     }
 }
