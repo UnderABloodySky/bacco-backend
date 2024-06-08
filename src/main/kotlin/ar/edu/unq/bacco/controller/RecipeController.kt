@@ -41,8 +41,8 @@ class RecipeController(private val recipeService: RecipeService) {
     }
 
     @PostMapping
-    fun createRecipe(@RequestBody anUser: User): ResponseEntity<User> {
-        val savedUser = recipeService.save(anUser)
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser)
+    fun createRecipe(@RequestBody anUser: User) {
+        //val savedUser = recipeService.save(anUser)
+        //return ResponseEntity.status(HttpStatus.CREATED).body(savedUser)
     }
 }
