@@ -22,10 +22,32 @@ configurations.all {
 	exclude(group = "commons-logging")
 }
 dependencies {
+	dependencies {
+		implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+		implementation("org.springframework.boot:spring-boot-starter-web")
+		implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+		implementation("org.jetbrains.kotlin:kotlin-reflect")
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+		runtimeOnly("org.neo4j.driver:neo4j-java-driver")
+		implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
+		implementation("org.springframework.data:spring-data-neo4j")
+
+		testImplementation("org.springframework.boot:spring-boot-starter-test") {
+			exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+		}
+		testImplementation(platform("org.junit:junit-bom:5.9.3"))
+		testImplementation("org.junit.jupiter:junit-jupiter-api")
+		testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+		testImplementation("com.tngtech.archunit:archunit-junit5:0.14.1")
+		testImplementation("com.tngtech.archunit:archunit:0.14.1")
+		implementation("org.apache.httpcomponents:httpclient:4.5.13")
+		implementation("org.apache.httpcomponents:httpmime:4.5.13")
+	}
+	/*
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-	implementation("org.apache.httpcomponents:httpclient:4.5.13")
-	implementation("org.apache.httpcomponents:httpmime:4.5.13")
+
+
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -45,7 +67,7 @@ dependencies {
 	testImplementation("com.tngtech.archunit:archunit-junit5:0.14.1")
 	testImplementation("com.tngtech.archunit:archunit:0.14.1")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
-	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")*/
 }
 
 tasks.withType<KotlinCompile> {

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class BeverageService(@Autowired private val beverageRepository: BeverageRepository) {
+class BeverageService @Autowired constructor( var beverageRepository: BeverageRepository) {
 
     fun findBeveragesByName(name: String = ""): List<Beverage> {
         return beverageRepository.findByNameContainingIgnoreCase(name)

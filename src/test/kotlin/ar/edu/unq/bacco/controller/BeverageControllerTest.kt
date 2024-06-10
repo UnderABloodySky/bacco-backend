@@ -30,7 +30,7 @@ class BeverageControllerTest {
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        beverageController = BeverageController(beverageService, "http://localhost:8000/upload-photo-for-retrain")
+        beverageController = BeverageController(beverageService)
     }
 
     @Test

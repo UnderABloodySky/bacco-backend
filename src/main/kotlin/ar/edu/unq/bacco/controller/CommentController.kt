@@ -3,6 +3,7 @@ package ar.edu.unq.bacco.controller
 import ar.edu.unq.bacco.model.Comment
 import ar.edu.unq.bacco.model.DTO.CommentDTO
 import ar.edu.unq.bacco.service.CommentService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/comments")
-class CommentController(
-    private val commentService: CommentService
+class CommentController @Autowired constructor(
+    private var commentService: CommentService
 ) {
     @PostMapping
     fun addComment(@RequestBody commentDTO: CommentDTO): ResponseEntity<Comment> {

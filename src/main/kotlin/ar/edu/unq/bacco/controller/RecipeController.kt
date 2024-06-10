@@ -6,6 +6,7 @@ import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.service.RecipeService
 import ar.edu.unq.bacco.utils.MediatorBaccoCNN
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -14,7 +15,7 @@ import java.io.IOException
 
 @RestController
 @RequestMapping("/imgs")
-class RecipeController(private val recipeService: RecipeService) {
+class RecipeController @Autowired constructor(private var recipeService: RecipeService) {
 
     //@Value("\${django.backend.url}")
     //private lateinit var djangoBackendUrl: String

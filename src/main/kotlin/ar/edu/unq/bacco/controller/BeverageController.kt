@@ -10,7 +10,12 @@ import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.entity.mime.content.FileBody
 import org.apache.http.entity.mime.content.StringBody
 import org.apache.http.impl.client.HttpClients
-import org.springframework.beans.factory.annotation.Autowired
+/*
+import org.apache.http.entity.mime.MultipartEntityBuilder
+import org.apache.http.entity.mime.content.FileBody
+import org.apache.http.entity.mime.content.StringBody
+import org.apache.http.impl.client.HttpClients
+*/import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -27,10 +32,13 @@ import java.nio.file.StandardCopyOption
 
 @RestController
 @RequestMapping("/beverages")
-class BeverageController(
-    private val beverageService: BeverageService,
-    @Value("\${django.backend.url.retrain}") private var djangoRetrainUrl: String = "http://localhost:8000/upload-photo-for-retrain",
+class BeverageController @Autowired constructor(
+    private var beverageService: BeverageService
 ) {
+
+    //@Value("\${django.backend.url.retrain}")
+    private var djangoRetrainUrl: String = "http://localhost:8000/upload-photo-for-retrain"
+
     @GetMapping("/search")
     fun getBeveragesByName(@RequestParam name: String): List<Beverage> {
         return beverageService.findBeveragesByName(name)
