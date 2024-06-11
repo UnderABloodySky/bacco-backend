@@ -2,11 +2,9 @@ package ar.edu.unq.bacco.utils
 
 import ar.edu.unq.bacco.model.*
 import ar.edu.unq.bacco.repository.*
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
 @Component
-@Profile("dev")
 class Neo4jSeeder(
     private val recipeRepository: RecipeRepository,
     private val beverageRepository: BeverageRepository,

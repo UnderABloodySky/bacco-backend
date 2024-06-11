@@ -5,11 +5,12 @@ import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import ar.edu.unq.bacco.repository.BeverageRepository
 import ar.edu.unq.bacco.repository.IngredientRepository
 import ar.edu.unq.bacco.repository.RecipeRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class RecipeService(private val recipeRepository : RecipeRepository, private val ingredientRepository: IngredientRepository, private val beverageRepository: BeverageRepository) {
+class RecipeService @Autowired constructor (private var recipeRepository : RecipeRepository, private var ingredientRepository: IngredientRepository, private var beverageRepository: BeverageRepository) {
 
     fun filterRecipesByBeverages(beverageNames: List<String>): List<Recipe> {
         val listCaps = beverageNames.map { str -> str.uppercase(Locale.getDefault()) }
@@ -53,8 +54,8 @@ class RecipeService(private val recipeRepository : RecipeRepository, private val
         if(user != null){
             newRecipe.user = user
         }
-        val ingredientsRelationships = ingredients.stream().map{ ing -> RecipeIngredientRelationship(ingredient = ing.get(0))}.toList()
-        val beveragesRelationships =  beverages.stream().map{ bev -> RecipeBeverageRelationship(beverage = bev.get(0))}.toList()
+        val ingredientsRelationships = ingredients.stream().map{ ing -> RecipeIngredientRelationship(ingredient = ing[0])}.toList()
+        val beveragesRelationships =  beverages.stream().map{ bev -> RecipeBeverageRelationship(beverage = bev[0])}.toList()
         newRecipe.beverages.addAll(beveragesRelationships)
         newRecipe.ingredients.addAll(ingredientsRelationships)
 

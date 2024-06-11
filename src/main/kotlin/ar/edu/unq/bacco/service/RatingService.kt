@@ -4,14 +4,14 @@ import ar.edu.unq.bacco.model.Rating
 import ar.edu.unq.bacco.repository.RatingRepository
 import ar.edu.unq.bacco.repository.RecipeRepository
 import ar.edu.unq.bacco.repository.UserRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class RatingService(
-    private val recipeRepository: RecipeRepository,
-    private val userRepository: UserRepository,
-    private val ratingRepository: RatingRepository
-) {
+class RatingService @Autowired constructor(
+    private var recipeRepository: RecipeRepository,
+    private var userRepository: UserRepository,
+    private var ratingRepository: RatingRepository) {
 
     fun rateRecipe(recipeId: Long, userId: Long, score: Int): Rating {
         val recipe = recipeRepository.findById(recipeId)
