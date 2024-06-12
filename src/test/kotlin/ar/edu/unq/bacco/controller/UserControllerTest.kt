@@ -5,7 +5,6 @@ import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.service.RecipeService
 import ar.edu.unq.bacco.service.UserService
-import org.apache.http.HttpStatus
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -57,7 +56,6 @@ class UserControllerTest {
     private lateinit var userNoPersist: User
     private lateinit var userPersist: User
     private lateinit var recipeDTO: RecipeDTO
-    private lateinit var recipe: Recipe
 
     @BeforeEach
     fun setUp() {
