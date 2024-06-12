@@ -1,6 +1,8 @@
 package ar.edu.unq.bacco.service
 import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.repository.UserRepository
+import ar.edu.unq.bacco.service.exception.BeveragesOrIngredientsNullBadRequestException
+import ar.edu.unq.bacco.service.exception.UserNotFoundException
 import ar.edu.unq.bacco.service.interfaces.UserServiceI
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -13,7 +15,11 @@ class UserService  @Autowired constructor (private var anUserRepository: UserRep
         return anUserRepository.save(anUser)
     }
 
-    override fun findById(id: Long): User? {
-        return anUserRepository.findById(id).orElse(null)
+    override fun findById(id: Long): User {
+        val response = anUserRepository.findById(id)
+        if(!response.isPresent){
+            throw UserNotFoundException(id)
+        }
+        return response.get()
     }
 }

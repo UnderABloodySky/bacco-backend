@@ -5,6 +5,8 @@ import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import ar.edu.unq.bacco.repository.BeverageRepository
 import ar.edu.unq.bacco.repository.IngredientRepository
 import ar.edu.unq.bacco.repository.RecipeRepository
+import ar.edu.unq.bacco.service.exception.BeveragesOrIngredientsNullBadRequestException
+import ar.edu.unq.bacco.utils.Validator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
@@ -45,11 +47,13 @@ class RecipeService @Autowired constructor (private var recipeRepository : Recip
     }
 
     fun save(aRecipeDTO: RecipeDTO, user: User? = null): Recipe?{
+        if(!Validator().isValidateRecipeDTO(aRecipeDTO)){
+            throw BeveragesOrIngredientsNullBadRequestException()
+        }
         val name = aRecipeDTO.name
         val description = aRecipeDTO.description
         val ingredients = aRecipeDTO.ingredients.stream().map { str -> ingredientRepository.findByNameContainingIgnoreCase(str)}.toList()
         val beverages = aRecipeDTO.beverages.stream().map { str -> beverageRepository.findByNameContainingIgnoreCase(str)}.toList()
-
         val newRecipe = Recipe(name = name, description = description)
         if(user != null){
             newRecipe.user = user
@@ -58,7 +62,6 @@ class RecipeService @Autowired constructor (private var recipeRepository : Recip
         val beveragesRelationships =  beverages.stream().map{ bev -> RecipeBeverageRelationship(beverage = bev[0])}.toList()
         newRecipe.beverages.addAll(beveragesRelationships)
         newRecipe.ingredients.addAll(ingredientsRelationships)
-
         return  recipeRepository.save(newRecipe)
     }
 
