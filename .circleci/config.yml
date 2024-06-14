@@ -1,16 +1,14 @@
 version: 2.1
 
 executors:
-  java-executor:
+  kotlin-executor:
     docker:
-      - image: circleci/openjdk:17-jdk  # Imagen válida de OpenJDK provista por CircleCI
-    working_directory: ~/repo
-
+      - image: cimg/openjdk:17.0 # Use an appropriate JDK version
 jobs:
   setup-db:
-    executor: java-executor
+    executor: kotlin-executor
     steps:
-      - setup_remote_docker:  # Habilitar Docker
+      - setup_remote_docker:
           version: 20.10.7
       - run:
           name: Start Neo4j
@@ -19,19 +17,35 @@ jobs:
       - run:
           name: Wait for Neo4j
           command: sleep 20  # Esperar a que Neo4j esté completamente en ejecución
-
   build:
-    executor: java-executor
+    executor: kotlin-executor
     steps:
-      - checkout
-      - run: java --version
+      - checkout # Checkout the code from your repository
       - run:
-          name: Install dependencies
-          command: ./gradlew dependencies
+          name: Setup environment
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y lib32stdc++6
       - run:
-          name: Build project
-          command: ./gradlew build
+          name: Change permissions of gradlew
+          command: chmod +x ./gradlew
+      - run:
+          name: Build and Test
+          command: |
+            ./gradlew clean build
 
+    #  - run:
+    #      name: Generate JaCoCo Report
+    #      command: ./gradlew jacocoTestReport --info
+
+    #  - run:
+    #      name: Analyze on SonarCloud
+    #      command: |
+    #        ./gradlew sonar --info
+
+   #   - run:
+  #        name: Un paso nuevo
+ #         command: ./gradlew build jacocoTestReport sonar --info
   test:
     executor: java-executor
     steps:
@@ -45,6 +59,16 @@ jobs:
       - run:
           name: Run tests
           command: ./gradlew test
+      - store_artifacts:
+          path: app/build/reports/tests # Adjust the path to your test reports
+          destination: test-reports
+# workflows:
+#  version: 2
+#  build_and_test:
+#    jobs:
+#      - build:
+#          context: SonarCloud
+
 
 workflows:
   version: 2
