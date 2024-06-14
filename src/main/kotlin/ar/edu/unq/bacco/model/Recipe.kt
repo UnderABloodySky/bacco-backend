@@ -20,7 +20,7 @@ class Recipe (
     @Relationship(type = "OWNER", direction = Relationship.Direction.OUTGOING)
     var user: User? = null,
 
-    var imagePath: String? = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/no_image.png",
+    var imagePath: String? = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/no_image.png",
 
     @Relationship(type = "HAS_BEVERAGES", direction = Relationship.Direction.OUTGOING)
     val beverages: MutableSet<RecipeBeverageRelationship> = mutableSetOf(),
