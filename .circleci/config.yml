@@ -33,6 +33,12 @@ jobs:
           name: Build and Test
           command: |
             sudo ./gradlew clean build
+      - run:
+          name: Check Neo4j connectivity
+          command: |
+            docker exec neo4j curl http://localhost:7687 
+            docker exec neo4j cat logs/debug.log #
+
 
     #  - run:
     #      name: Generate JaCoCo Report
