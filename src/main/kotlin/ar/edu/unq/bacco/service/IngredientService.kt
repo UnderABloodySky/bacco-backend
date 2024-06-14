@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class IngredientService(@Autowired private val ingredientRepository: IngredientRepository)  {
+class IngredientService @Autowired constructor (private var ingredientRepository: IngredientRepository)  {
     fun findIngredientsByName(name: String = ""): List<Ingredient> {
         return ingredientRepository.findByNameContainingIgnoreCase(name)
     }

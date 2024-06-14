@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/ingredients")
-class IngredientController(@Autowired private val ingredientService: IngredientService) {
+class IngredientController @Autowired constructor(private var ingredientService: IngredientService) {
     @GetMapping("/search")
     fun getBeveragesByName(@RequestParam name: String): List<Ingredient> {
         return ingredientService.findIngredientsByName(name)

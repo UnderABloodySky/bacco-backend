@@ -19,10 +19,13 @@ import java.nio.file.StandardCopyOption
 import org.springframework.http.ResponseEntity as ResponseEntity1
 
 @Component
-class MediatorBaccoCNN(
-    @Value("\${file.path.photos}") private var filePath: String = "D:/UNQUI/TIP/bacco-backend/uploads/",
-    @Value("\${django.backend.url}") private var djangoBackendUrl: String = "http://localhost:8000/upload-photo",
-) {
+class MediatorBaccoCNN {
+
+    //@Value("\${file.path.photos}")
+    private var filePath: String = "D:/UNQUI/TIP/bacco-backend/uploads/"
+    //@Value("\${django.backend.url}")
+    private var djangoBackendUrl: String = "http://localhost:8000/upload-photo"
+
     fun detectBeverage(file: MultipartFile): ResponseEntity<String> {
         val fileName = "${System.currentTimeMillis()}_${file.originalFilename}"
         val uploadDir = File("uploads")

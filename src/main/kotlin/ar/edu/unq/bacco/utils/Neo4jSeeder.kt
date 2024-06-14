@@ -1,10 +1,7 @@
 package ar.edu.unq.bacco.utils
 
 import ar.edu.unq.bacco.model.*
-import ar.edu.unq.bacco.repository.BeverageRepository
-import ar.edu.unq.bacco.repository.IngredientRepository
-import ar.edu.unq.bacco.repository.RecipeRepository
-import ar.edu.unq.bacco.repository.UserRepository
+import ar.edu.unq.bacco.repository.*
 import org.springframework.stereotype.Component
 
 @Component
@@ -12,11 +9,13 @@ class Neo4jSeeder(
     private val recipeRepository: RecipeRepository,
     private val beverageRepository: BeverageRepository,
     private val userRepository: UserRepository,
-    private val ingredientRepository: IngredientRepository
+    private val ingredientRepository: IngredientRepository,
+    private val commentRepository: CommentRepository,
+    private val ratingRepository: RatingRepository
 ) {
 
     fun seedDatabase() {
-        System.out.println("START POPULATION OF DB")
+       println("START POPULATION OF DB")
         if (recipeRepository.count() == 0L && beverageRepository.count() == 0L) {
             val description = "“Ebis vendae eaqui solupta turera prepe parum ut estrum, cus as nient aut aut pa nost, consed ut reroribus ex ea dolor as secestrum qui con preprae sequam ipsaeperum is ipsamus aectibustior accae perovit quas as modipsunt ut volorro beatemolenis veremporum quianda perchil es quam eum"
 
@@ -48,9 +47,9 @@ class Neo4jSeeder(
             val pepino = Ingredient(name = "PEPINO", description = "Refrescante y crujiente", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
             val frutilla = Ingredient(name = "FRUTILLA", description = "Dulzura jugosa y deliciosa", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
             val arandanos = Ingredient(name = "ARANDANOS", description = "Antioxidante natural y exquisito sabor", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
-            val frutosRojos = Ingredient(name = "FRUTOS ROJOS", description = "Vibrante y lleno de sabor", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
-            val aceitunas = Ingredient(name = "ACEITUNAS", description = "Toque mediterráneo de autenticidad", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
-            val hibiscus = Ingredient(name = "HIBISCUS", description = "Roja como la sangre", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
+            val frutosRojos = Ingredient(name = "FRUTOS ROJOS", description = "Vibrante y lleno de sabor", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
+            val aceitunas = Ingredient(name = "ACEITUNAS", description = "Toque mediterráneo de autenticidad", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
+            val hibiscus = Ingredient(name = "HIBISCUS", description = "Roja como la sangre", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/imgs/ingredient/ingredient.jpg")
             val ingredients = listOf(pimienta, hielo, sal, leche, azucar, menta, jengibre, pomelo, limon, naranja, pepino, frutilla, aceitunas, frutosRojos, arandanos, hibiscus)
 
             ingredientRepository.saveAll(ingredients)
@@ -135,6 +134,8 @@ class Neo4jSeeder(
         beverageRepository.deleteAll()
         ingredientRepository.deleteAll()
         userRepository.deleteAll()
+        commentRepository.deleteAll()
+        ratingRepository.deleteAll()
         println("END CLEAR DATABASE")
     }
 }

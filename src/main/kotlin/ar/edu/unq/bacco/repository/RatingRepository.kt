@@ -1,9 +1,10 @@
 package ar.edu.unq.bacco.repository
 
-import ar.edu.unq.bacco.model.User
+import ar.edu.unq.bacco.model.Rating
 import org.springframework.data.neo4j.repository.Neo4jRepository
 import org.springframework.stereotype.Repository
-import java.util.*
 
 @Repository
-interface UserRepository : Neo4jRepository<User, Long>
+interface RatingRepository : Neo4jRepository<Rating, Long> {
+
+}
