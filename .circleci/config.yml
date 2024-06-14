@@ -6,17 +6,12 @@ executors:
       - image: circleci/openjdk:17-jdk
     working_directory: ~/repo
 
-  neo4j-executor:
-    docker:
-      - image: neo4j:latest
-    working_directory: ~/repo
-
 jobs:
   setup-db:
-    executor: neo4j-executor
+    executor: java-executor
     steps:
-      - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.7
       - run:
           name: Start Neo4j
           command: |
