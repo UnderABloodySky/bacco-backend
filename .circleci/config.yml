@@ -47,7 +47,7 @@ jobs:
   #        name: Un paso nuevo
  #         command: ./gradlew build jacocoTestReport sonar --info
   test:
-    executor: java-executor
+    executor: kotlin-executor
     steps:
       - checkout
       - run:
