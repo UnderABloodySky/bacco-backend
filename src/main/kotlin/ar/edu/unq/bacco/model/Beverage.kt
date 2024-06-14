@@ -10,4 +10,5 @@ class Beverage(
     var id : Long? = null,
     var name: String  = "",
     var description: String = "",
+    var imagePath: String? = null,
 )

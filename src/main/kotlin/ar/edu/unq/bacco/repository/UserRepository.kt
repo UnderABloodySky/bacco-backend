@@ -6,7 +6,4 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface UserRepository : Neo4jRepository<User, Long> {
-    fun save(aUser: User): User
-    override fun findById(id: Long): Optional<User>
-}
+interface UserRepository : Neo4jRepository<User, Long>
