@@ -24,6 +24,7 @@ jobs:
     executor: java-executor
     steps:
       - checkout
+      - run: java --version
       - run:
           name: Install dependencies
           command: ./gradlew dependencies
