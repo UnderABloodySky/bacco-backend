@@ -5,7 +5,18 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	kotlin("jvm") version "1.9.23"
 	kotlin("plugin.spring") version "1.9.23"
+//	id("org.sonarqube") version "4.4.1.3373"
 }
+/*
+sonar {
+	properties {
+		property("sonar.projectKey", "bacco_b-acco-backend")
+		property("sonar.organization", "bacco")
+		property("sonar.host.url", "https://sonarcloud.io")
+		property("sonar.login", System.getenv("SONAR_TOKEN"))
+		property("sonar.gradle.skipCompile", "true")
+	}
+}*/
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
@@ -42,6 +53,10 @@ dependencies {
 		testImplementation("com.tngtech.archunit:archunit:0.14.1")
 		implementation("org.apache.httpcomponents:httpclient:4.5.13")
 		implementation("org.apache.httpcomponents:httpmime:4.5.13")
+
+		//implementation("org.springframework.boot:spring-boot-starter-security")
+		//implementation("org.springframework.security:spring-security-crypto")
+		//testImplementation("org.springframework.security:spring-security-test")1
 	}
 	/*
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")

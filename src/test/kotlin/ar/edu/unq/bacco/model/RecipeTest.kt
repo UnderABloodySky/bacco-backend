@@ -52,7 +52,7 @@
             assertThat(recipe.name).isEqualTo(name)
             assertThat(recipe.description).isEqualTo(description)
             assertThat(recipe.user).isEqualTo(user)
-            assertThat(recipe.imagePath).isEqualTo("https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/no_image.png")
+            assertThat(recipe.imagePath).isEqualTo("https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/no_image.png")
         }
 
         @Test
