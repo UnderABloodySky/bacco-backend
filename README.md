@@ -1,3 +1,6 @@
 # bacco-backend
 
-[![CircleCI](https://circleci.com/gh/3cc5cc96-9bc2-4bc2-bb62-331b208a60e1/bacco-backend-2.svg?style=svg)](https://circleci.com/gh/3cc5cc96-9bc2-4bc2-bb62-331b208a60e1/bacco-backend-2)
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/QKaMrJqzuXiuMXHC2bDY5C/RzNCitvxS6FtpvhutFF5j6/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/QKaMrJqzuXiuMXHC2bDY5C/RzNCitvxS6FtpvhutFF5j6/tree/main)
+
+[![CircleCI](https://dl.circleci.com/insights-snapshot/circleci/QKaMrJqzuXiuMXHC2bDY5C/RzNCitvxS6FtpvhutFF5j6/main/generate-config/badge.svg?window=24h)](https://app.circleci.com/insights/circleci/QKaMrJqzuXiuMXHC2bDY5C/RzNCitvxS6FtpvhutFF5j6/workflows/generate-config/overview?branch=main&reporting-window=last-24-hours&insights-snapshot=true)
