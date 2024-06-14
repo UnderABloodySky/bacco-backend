@@ -3,14 +3,14 @@ version: 2.1
 executors:
   java-executor:
     docker:
-      - image: openjdk:17-jdk
+      - image: circleci/openjdk:17-jdk  # Imagen válida de OpenJDK provista por CircleCI
     working_directory: ~/repo
 
 jobs:
   setup-db:
     executor: java-executor
     steps:
-      - setup_remote_docker:
+      - setup_remote_docker:  # Habilitar Docker
           version: 20.10.7
       - run:
           name: Start Neo4j
@@ -18,7 +18,7 @@ jobs:
             docker run -d --name neo4j -p 7687:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:latest
       - run:
           name: Wait for Neo4j
-          command: sleep 20  # Wait for Neo4j to be fully up and running
+          command: sleep 20  # Esperar a que Neo4j esté completamente en ejecución
 
   build:
     executor: java-executor
@@ -40,7 +40,7 @@ jobs:
           command: echo "spring.neo4j.uri=bolt://localhost:7687" >> src/main/resources/application-test.properties
       - run:
           name: Wait for Neo4j
-          command: sleep 20  # Ensure Neo4j is ready before running tests
+          command: sleep 20  # Asegurarse de que Neo4j esté listo antes de ejecutar las pruebas
       - run:
           name: Run tests
           command: ./gradlew test
