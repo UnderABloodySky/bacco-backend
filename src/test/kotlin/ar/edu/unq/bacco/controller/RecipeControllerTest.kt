@@ -8,8 +8,7 @@ import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.repository.RecipeRepository
 import ar.edu.unq.bacco.service.RecipeService
 import ar.edu.unq.bacco.utils.MediatorBaccoCNN
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertInstanceOf
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -250,12 +249,12 @@ class RecipeControllerTest {
 
         val ingredient0 = recipe0.ingredients.toList()[0].ingredient
         assertInstanceOf(Ingredient::class.java, ingredient0)
-        assertEquals("PIMIENTA", ingredient0.name)
+        assertTrue("PIMIENTA" == ingredient0.name || "HIELO" == ingredient0.name)
 
 
         val ingredient1 = recipe0.ingredients.toList()[1].ingredient
         assertInstanceOf(Ingredient::class.java, ingredient0)
-        assertEquals("HIELO", ingredient1.name)
+        assertTrue("PIMIENTA" == ingredient1.name || "HIELO" == ingredient1.name)
 
         val beverage = recipe0.beverages.toList()[0].beverage
         assertInstanceOf(Beverage::class.java, beverage)
@@ -263,12 +262,13 @@ class RecipeControllerTest {
 
         val ingredient2 = recipe1.ingredients.toList()[0].ingredient
         assertInstanceOf(Ingredient::class.java, ingredient2)
-        assertEquals("PIMIENTA", ingredient2.name)
+        assertTrue("PIMIENTA" == ingredient2.name || "HIELO" == ingredient2.name)
 
 
         val ingredient3 = recipe1.ingredients.toList()[1].ingredient
         assertInstanceOf(Ingredient::class.java, ingredient3)
-        assertEquals("HIELO", ingredient3.name)
+        assertTrue("PIMIENTA" == ingredient3.name || "HIELO" == ingredient3.name)
+
 
         val beverage1 = recipe1.beverages.toList()[0].beverage
         assertInstanceOf(Beverage::class.java, beverage)

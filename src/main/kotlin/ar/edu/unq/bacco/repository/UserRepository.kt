@@ -7,6 +7,6 @@ import java.util.*
 
 @Repository
 interface UserRepository : Neo4jRepository<User, Long>{
-    fun findByname(username: String): Optional<User>
+    fun findByName(username: String): Optional<User>
     fun findByEmail(email: String): Optional<User>
 }
