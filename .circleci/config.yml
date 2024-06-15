@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Start Neo4j
           command: |
-            docker run -d --name neo4j -p 7687:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:latest
+            docker run -d --name neo4j -p 7687:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:5.18.1
       - run:
           name: Wait for Neo4j
           command: |
