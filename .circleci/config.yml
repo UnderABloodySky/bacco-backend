@@ -32,7 +32,7 @@ jobs:
           command: docker logs neo4j | grep "Remote interface available at"  # Check Neo4j logs for ready message
       - run:
           name: Copy Neo4j config
-          command: echo "spring.neo4j.uri=bolt://localhost:7687" >> src/main/resources/application-test.properties
+          command: echo "spring.neo4j.uri=bolt://localhost:7687" >> src/test/resources/application-test.properties
       - run:
           name: Build and Test
           command: ./gradlew clean build
