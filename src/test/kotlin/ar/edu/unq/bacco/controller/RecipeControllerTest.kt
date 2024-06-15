@@ -3,10 +3,8 @@ package ar.edu.unq.bacco.controller
 import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import org.springframework.mock.web.MockMultipartFile
 import ar.edu.unq.bacco.model.Recipe
-import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.repository.RecipeRepository
 import ar.edu.unq.bacco.service.RecipeService
-import ar.edu.unq.bacco.service.UserService
 import ar.edu.unq.bacco.utils.MediatorBaccoCNN
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -15,19 +13,17 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.doThrow
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
+import org.mockito.MockitoAnnotations.initMocks
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.transaction.annotation.Transactional
-import java.io.IOException
 
+@Suppress("DEPRECATION")
 @DisplayName("RecipeController's tests")
 @SpringBootTest
 @ActiveProfiles("test")
@@ -53,7 +49,7 @@ class RecipeControllerTest {
 
     @BeforeEach
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        initMocks(this)
         recipeRepository.deleteAll()
     }
 
@@ -153,8 +149,42 @@ class RecipeControllerTest {
     @Test
     @DisplayName("When search recipes by one ingredient that only one recipe contains returns a list with an unique element")
     fun testWhenSearchRecipesByOneIngredientThatOneRecipeContainsReturnsAnListWithUniqueElement(){
-        val recipe = recipeController2.createRecipe(RecipeDTO("a name", "a description", listOf("ron"), listOf("pimienta")))
-        val response = recipeController2.getTotalRecipes()
+        recipeController2.createRecipe(RecipeDTO("a name", "a description", listOf("ron"), listOf("pimienta")))
+        val response = recipeController2.filterRecipes(listOf(), listOf("pimienta"))
         assertEquals(1, response.size)
+    }
+
+    @Test
+    @DisplayName("When search recipes by one ingredient that only one recipe contains returns a list with an unique element")
+    fun testWhenSearchRecipesByOneIngredientThatTwoRecipeContainsReturnsAnListWithTwoElements(){
+        recipeController2.createRecipe(RecipeDTO("a name", "a description", listOf("ron"), listOf("pimienta", "hielo")))
+        recipeController2.createRecipe(RecipeDTO("a name", "a description", listOf("ron", "fernet"), listOf("pimienta", "hielo")))
+        val response = recipeController2.getTotalRecipes()
+        assertEquals(2, response.size)
+    }
+
+
+    @Test
+    @DisplayName("When search recipes by one ingredient that any recipe contains returns an empty list")
+    fun testWhenSearchRecipesByOneBeverageThatAnyRecipeContainsReturnsAnEmptyList(){
+        val response = recipeController2.filterRecipes(listOf("ron"), listOf("leche"))
+        assertEquals(0, response.size)
+    }
+
+    @Test
+    @DisplayName("When search recipes by one ingredient that only one recipe contains returns a list with an unique element")
+    fun testWhenSearchRecipesByOneBeverageThatOneRecipeContainsReturnsAnListWithUniqueElement(){
+        recipeController2.createRecipe(RecipeDTO("a name", "a description", listOf("ron"), listOf("pimienta")))
+        val response = recipeController2.filterRecipes(listOf("ron"), listOf("pimienta"))
+        assertEquals(1, response.size)
+    }
+
+    @Test
+    @DisplayName("When search recipes by one ingredient that only one recipe contains returns a list with an unique element")
+    fun testWhenSearchRecipesByOneBeverageThatTwoRecipeContainsReturnsAnListWithTwoElements(){
+        recipeController2.createRecipe(RecipeDTO("a name", "a description", listOf("ron"), listOf("pimienta", "hielo")))
+        recipeController2.createRecipe(RecipeDTO("a name", "a description", listOf("ron", "fernet"), listOf("pimienta", "hielo")))
+        val response = recipeController2.getTotalRecipes()
+        assertEquals(2, response.size)
     }
 }
