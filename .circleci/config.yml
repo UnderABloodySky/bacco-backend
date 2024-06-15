@@ -4,23 +4,21 @@ executors:
   kotlin-executor:
     docker:
       - image: cimg/openjdk:17.0 # Use an appropriate JDK version
+
 jobs:
-  setup-db:
+  build-and-test:
     executor: kotlin-executor
     steps:
       - setup_remote_docker:
           version: 20.10.7
+      - checkout # Checkout the code from your repository
       - run:
           name: Start Neo4j
           command: |
             docker run -d --name neo4j -p 7687:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:latest
       - run:
           name: Wait for Neo4j
-          command: sleep 20  # Esperar a que Neo4j esté completamente en ejecución
-  build:
-    executor: kotlin-executor
-    steps:
-      - checkout # Checkout the code from your repository
+          command: sleep 20  # Wait for Neo4j to be fully up and running
       - run:
           name: Setup environment
           command: |
@@ -30,60 +28,25 @@ jobs:
           name: Change permissions of gradlew
           command: sudo chmod +x ./gradlew
       - run:
-          name: Build and Test
-          command: |
-            sudo ./gradlew clean build
-      - run:
           name: Check Neo4j connectivity
           command: |
             docker exec neo4j curl http://localhost:7687 
-            docker exec neo4j cat logs/debug.log #
-
-
-    #  - run:
-    #      name: Generate JaCoCo Report
-    #      command: ./gradlew jacocoTestReport --info
-
-    #  - run:
-    #      name: Analyze on SonarCloud
-    #      command: |
-    #        ./gradlew sonar --info
-
-   #   - run:
-  #        name: Un paso nuevo
- #         command: ./gradlew build jacocoTestReport sonar --info
-  test:
-    executor: kotlin-executor
-    steps:
-      - checkout
+            docker exec neo4j cat logs/debug.log
       - run:
           name: Copy Neo4j config
           command: echo "spring.neo4j.uri=bolt://localhost:7687" >> src/main/resources/application-test.properties
       - run:
-          name: Wait for Neo4j
-          command: sleep 20  # Asegurarse de que Neo4j esté listo antes de ejecutar las pruebas
+          name: Build and Test
+          command: ./gradlew clean build
       - run:
           name: Run tests
           command: ./gradlew test
       - store_artifacts:
           path: app/build/reports/tests # Adjust the path to your test reports
           destination: test-reports
-# workflows:
-#  version: 2
-#  build_and_test:
-#    jobs:
-#      - build:
-#          context: SonarCloud
-
 
 workflows:
   version: 2
   build-and-test:
     jobs:
-      - setup-db
-      - build:
-          requires:
-            - setup-db
-      - test:
-          requires:
-            - build
+      - build-and-test
