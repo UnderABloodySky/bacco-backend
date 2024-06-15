@@ -26,23 +26,24 @@ class UserController @Autowired constructor (private var anUserService: UserServ
     fun createUser(@RequestBody anUser: User): ResponseEntity<User?> {
         return try{
             val savedUser = anUserService.save(anUser)
-            ResponseEntity.status(HttpStatus.CREATED).body(savedUser)
+            ResponseEntity(savedUser, HttpStatus.OK)
         }
         catch(ex: UserAlreadyExistsException){
             ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
 
-    @PostMapping("/login")
-    fun loginUser(@RequestBody request: LoginDTO): ResponseEntity<User?>{
-        return try{
-            val user = anUserService.loginUser(request.username, request.password)
-            ResponseEntity(user, HttpStatus.CREATED)
-        }catch(ex: InvalidCredentialsException){
-            ResponseEntity.badRequest().body(null)
-        }catch(ex: UserNotFoundByNameException){
-            ResponseEntity.noContent().build<User?>()
-        }
+    @GetMapping("/login")
+    fun loginUser(@RequestBody request: LoginDTO): ResponseEntity<User?> {
+        return try {
+            val user = anUserService.loginUser(request.name, request.password)
+                ResponseEntity(user, HttpStatus.OK)
+            }
+            catch (ex: InvalidCredentialsException) {
+                ResponseEntity.badRequest().body(null)
+            } catch (ex: UserNotFoundByNameException) {
+                ResponseEntity.noContent().build<User?>()
+            }
     }
 
     @GetMapping("/{id}")

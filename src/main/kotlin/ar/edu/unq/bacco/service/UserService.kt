@@ -41,14 +41,12 @@ class UserService  @Autowired constructor (private var anUserRepository: UserRep
     }
 
     fun loginUser(username: String, password: String): User? {
-        val userA = anUserRepository.findByName(username)
-        println("PASSWORD: " + userA)
 
         val user = anUserRepository.findByName(username)
             .orElseThrow { UserNotFoundByNameException(username) }
 
         println("paswword: " + user.password)
-        if (password == user.password) {
+        if (password != user.password) {
             throw InvalidCredentialsException("Invalid password for user $username")
         }
         return user

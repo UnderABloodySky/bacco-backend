@@ -60,7 +60,7 @@ class UserControllerTest {
     fun testCreateUserReturnsAResponseWith200Code() {
         val otherUser = User(name = "epa", password = "123456789", email="asd@gmail.com")
         val response = userController.createUser(otherUser)
-        assertEquals(HttpStatusCode.valueOf(201), response.statusCode)
+        assertEquals(HttpStatusCode.valueOf(200), response.statusCode)
     }
 
     @Test
@@ -173,6 +173,6 @@ class UserControllerTest {
         userService.save(userPersist)
         val login = LoginDTO(userPersist.name, userPersist.password)
         val response = userController.loginUser(login)
-        assertEquals(HttpStatusCode.valueOf(201), response.statusCode)
+        assertEquals(HttpStatusCode.valueOf(200), response.statusCode)
     }
 }

@@ -1,5 +1,6 @@
 package ar.edu.unq.bacco.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import org.springframework.data.neo4j.core.schema.GeneratedValue
@@ -12,7 +13,7 @@ data class User(
     @Id @GeneratedValue var id: Long? = null,
 
     @field:NotBlank(message = "El nombre no puede estar vacío")
-    var name: String,
+    @Property("name")var name: String,
 
     @field:NotBlank(message = "La password no puede estar vacío")
     @Property("password") var password: String,
