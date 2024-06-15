@@ -1,12 +1,15 @@
 package ar.edu.unq.bacco.controller
 
+import ar.edu.unq.bacco.model.Beverage
 import ar.edu.unq.bacco.model.DTO.RecipeDTO
+import ar.edu.unq.bacco.model.Ingredient
 import org.springframework.mock.web.MockMultipartFile
 import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.repository.RecipeRepository
 import ar.edu.unq.bacco.service.RecipeService
 import ar.edu.unq.bacco.utils.MediatorBaccoCNN
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -186,5 +189,90 @@ class RecipeControllerTest {
         recipeController2.createRecipe(RecipeDTO("a name", "a description", listOf("ron", "fernet"), listOf("pimienta", "hielo")))
         val response = recipeController2.getTotalRecipes()
         assertEquals(2, response.size)
+    }
+
+    //ACA
+
+    @Test
+    @DisplayName("When search recipes by one ingredient that any recipe contains returns an empty list")
+    fun testWhenSearchRecipesByOneIngredientThatAnyRecipeContainsReturnsAnEmptyListObject(){
+        val response = recipeController2.filterRecipes(listOf(), listOf("leche"))
+        assertEquals(listOf<Recipe?>(), response)
+    }
+
+    @Test
+    @DisplayName("When search recipes by one ingredient that only one recipe contains returns a list with an unique element")
+    fun testWhenSearchRecipesByOneIngredientThatOneRecipeContainsReturnsAnListWithUniqueElementObject(){
+        val recipeDTO = RecipeDTO("a name", "a description", listOf("ron"), listOf("pimienta"))
+        recipeController2.createRecipe(recipeDTO)
+        val response = recipeController2.filterRecipes(listOf(), listOf("pimienta"))
+        assertEquals(1, response.size)
+        val recipe = response[0]
+        assertInstanceOf(Recipe::class.java, recipe)
+        assertEquals(recipeDTO.name, recipe!!.name)
+        assertEquals(recipeDTO.description, recipe.description)
+        assertEquals(1, recipe.ingredients.size)
+        assertEquals(1, recipe.beverages.size)
+
+        val ingredient = recipe.ingredients.toList()[0].ingredient
+        assertInstanceOf(Ingredient::class.java, ingredient)
+        assertEquals("PIMIENTA", ingredient.name)
+
+        val beverage = recipe.beverages.toList()[0].beverage
+        assertInstanceOf(Beverage::class.java, beverage)
+        assertEquals("RON", beverage.name)
+    }
+    @Test
+
+    @DisplayName("When search recipes by one ingredient that only one recipe contains returns a list with an unique element")
+    fun testWhenSearchRecipesByOneIngredientThatTwoRecipeContainsReturnsAnListWithTwoElementsObjects(){
+        val recipeDTO0 = RecipeDTO("a name", "a description", listOf("ron"), listOf("pimienta", "hielo"))
+        val recipeDTO1 = RecipeDTO("a name", "a description", listOf("ron", "fernet"), listOf("pimienta", "hielo"))
+        recipeController2.createRecipe(recipeDTO0)
+        recipeController2.createRecipe(recipeDTO1)
+
+        val response = recipeController2.filterRecipes(listOf(), listOf("pimienta"))
+        assertEquals(2, response.size)
+
+        val recipe0 = response[0]
+        assertInstanceOf(Recipe::class.java, recipe0)
+        assertEquals(recipeDTO0.name, recipe0!!.name)
+        assertEquals(recipeDTO0.description, recipe0.description)
+        assertEquals(2, recipe0.ingredients.size)
+        assertEquals(1, recipe0.beverages.size)
+
+        val recipe1 = response[0]
+        assertInstanceOf(Recipe::class.java, recipe1)
+        assertEquals(recipeDTO1.name, recipe1!!.name)
+        assertEquals(recipeDTO1.description, recipe1.description)
+        assertEquals(2, recipe1.ingredients.size)
+        assertEquals(1, recipe1.beverages.size)
+
+        val ingredient0 = recipe0.ingredients.toList()[0].ingredient
+        assertInstanceOf(Ingredient::class.java, ingredient0)
+        assertEquals("PIMIENTA", ingredient0.name)
+
+
+        val ingredient1 = recipe0.ingredients.toList()[1].ingredient
+        assertInstanceOf(Ingredient::class.java, ingredient0)
+        assertEquals("HIELO", ingredient1.name)
+
+        val beverage = recipe0.beverages.toList()[0].beverage
+        assertInstanceOf(Beverage::class.java, beverage)
+        assertEquals("RON", beverage.name)
+
+        val ingredient2 = recipe1.ingredients.toList()[0].ingredient
+        assertInstanceOf(Ingredient::class.java, ingredient2)
+        assertEquals("PIMIENTA", ingredient2.name)
+
+
+        val ingredient3 = recipe1.ingredients.toList()[1].ingredient
+        assertInstanceOf(Ingredient::class.java, ingredient3)
+        assertEquals("HIELO", ingredient3.name)
+
+        val beverage1 = recipe1.beverages.toList()[0].beverage
+        assertInstanceOf(Beverage::class.java, beverage)
+        assertEquals("RON", beverage1.name)
+
     }
 }
