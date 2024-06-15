@@ -18,7 +18,14 @@ jobs:
             docker run -d --name neo4j -p 7687:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:latest
       - run:
           name: Wait for Neo4j
-          command: sleep 20  # Wait for Neo4j to be fully up and running
+          command: |
+            echo "Waiting for Neo4j to be fully up and running..."
+            for i in {1..30}; do
+              nc -zv localhost 7687 && break
+              echo "Waiting..."
+              sleep 5
+            done
+            docker logs neo4j
       - run:
           name: Setup environment
           command: |
@@ -29,7 +36,7 @@ jobs:
           command: sudo chmod +x ./gradlew
       - run:
           name: Check Neo4j logs
-          command: docker logs neo4j | grep "Remote interface available at"  # Check Neo4j logs for ready message
+          command: docker logs neo4j | grep "Remote interface available at"
       - run:
           name: Copy Neo4j config
           command: echo "spring.neo4j.uri=bolt://localhost:7687" >> src/test/resources/application-test.properties
