@@ -28,10 +28,8 @@ jobs:
           name: Change permissions of gradlew
           command: sudo chmod +x ./gradlew
       - run:
-          name: Check Neo4j connectivity
-          command: |
-            docker exec neo4j curl http://localhost:7687 
-            docker exec neo4j cat logs/debug.log
+          name: Check Neo4j logs
+          command: docker logs neo4j | grep "Remote interface available at"  # Check Neo4j logs for ready message
       - run:
           name: Copy Neo4j config
           command: echo "spring.neo4j.uri=bolt://localhost:7687" >> src/main/resources/application-test.properties
