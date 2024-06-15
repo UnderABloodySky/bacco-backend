@@ -54,6 +54,8 @@ dependencies {
 		implementation("org.apache.httpcomponents:httpclient:4.5.13")
 		implementation("org.apache.httpcomponents:httpmime:4.5.13")
 
+		implementation("org.springframework.boot:spring-boot-starter-validation")
+
 		implementation("org.springframework.boot:spring-boot-starter-security")
 		implementation("org.springframework.security:spring-security-crypto")
 		testImplementation("org.springframework.security:spring-security-test")

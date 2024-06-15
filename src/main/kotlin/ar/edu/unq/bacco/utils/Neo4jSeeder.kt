@@ -118,9 +118,9 @@ class Neo4jSeeder(
 
             recipeRepository.saveAll(recipes)
 
-            val user0 = User(name = "HValenzuela")
-            val user1 = User(name = "fedecame")
-            val user2 = User(name = "test")
+            val user0 = User(name = "HValenzuela", password="12345678", email="")
+            val user1 = User(name = "fedecame", password="12345678", email="")
+            val user2 = User(name = "test", password="12345678", email="")
             val users = listOf(user0, user1, user2)
 
             userRepository.saveAll(users)

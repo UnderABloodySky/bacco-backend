@@ -60,7 +60,7 @@ class UserControllerTest {
     @BeforeEach
     fun setUp() {
         userController = UserController(userService, recipeService)
-        userNoPersist = User(name = "Louis Amstrong")
+        userNoPersist = User(name = "Louis Amstrong", password = "", email="")
         userPersist = userService.save(userNoPersist)
         recipeDTO = RecipeDTO("a name", "a description", listOf("GIN"), listOf("HIELO", "HIBISCUS"))
     }
@@ -75,7 +75,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Create an user returns a Response with 200 code")
     fun testCreateUserReturnsAResponseWith200Code() {
-        val otherUser = User(name = "Louis Amstrong")
+        val otherUser = User(name = "Louis Amstrong", password = "", email="")
         val response = userController.createUser(otherUser)
         assertEquals(201, response.statusCodeValue)
     }
@@ -83,7 +83,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Create an user returns a status")
     fun testCreateUserReturnsAStatus() {
-        val otherUser = User(name = "Louis Amstrong")
+        val otherUser = User(name = "Louis Amstrong", password = "", email="")
         val response = userController.createUser(otherUser)
         assertEquals(HttpStatusCode.valueOf(201), response.statusCode)
     }
@@ -91,7 +91,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Find a user by ID returns a correct user when the ID is right")
     fun testFindByUserIdWithCorrectUserReturnAResponseWith200Code() {
-        val otherUser = User(name = "Louis Amstrong")
+        val otherUser = User(name = "Louis Amstrong", password = "", email="")
         userService.save(otherUser)
         println(otherUser.id!!)
         val response = userController.getUserById(otherUser.id!!)
@@ -140,7 +140,7 @@ class UserControllerTest {
     fun testAnUserCannotCreatedARecipeWithoutBeverages() {
         val wrongDTO = RecipeDTO("a name", "a description", listOf(""), listOf("HIBISCUS"))
         val response = userController.addRecipe(userPersist.id!!, wrongDTO)
-        assertEquals(HttpStatusCode.valueOf(201),response.statusCode)
+        assertEquals(HttpStatusCode.valueOf(400),response.statusCode)
     }
 
     @Test

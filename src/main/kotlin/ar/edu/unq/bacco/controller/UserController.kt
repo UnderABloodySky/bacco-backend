@@ -8,6 +8,7 @@ import ar.edu.unq.bacco.service.UserService
 import ar.edu.unq.bacco.service.exception.BeveragesOrIngredientsNullBadRequestException
 import ar.edu.unq.bacco.service.exception.UserNotFoundException
 import jakarta.persistence.EntityNotFoundException
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*
 class UserController @Autowired constructor (private var anUserService: UserService, private var anRecipeService: RecipeService) {
 
     @PostMapping
-    fun createUser(@RequestBody anUser: User): ResponseEntity<User> {
+    fun createUser(@Valid @RequestBody anUser: User): ResponseEntity<User> {
         val savedUser = anUserService.save(anUser)
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser)
     }

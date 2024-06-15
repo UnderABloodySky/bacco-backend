@@ -9,7 +9,7 @@ class CommentTest {
     @Test
     fun createCommentWithNonNullId() {
         val content = "Great recipe!"
-        val user = User(id = 1L, name = "Alice")
+        val user = User(id = 1L, name = "Alice", password = "", email="")
 
         val comment = Comment(content = content, user = user)
 
@@ -21,7 +21,7 @@ class CommentTest {
     @Test
     fun createCommentWithNullId() {
         val content = "Fantastic!"
-        val user = User(id = 2L, name = "Bob")
+        val user = User(id = 2L, name = "Bob", password = "", email="")
 
         val comment = Comment(content = content, user = user, id = null)
 

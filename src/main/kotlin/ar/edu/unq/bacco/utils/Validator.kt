@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component
 @Component
 class Validator {
     fun isValidateRecipeDTO(aRecipeDTO: RecipeDTO): Boolean{
-        return aRecipeDTO.name != "" && aRecipeDTO.description != "" && aRecipeDTO.beverages.isNotEmpty() && aRecipeDTO.ingredients.isNotEmpty()
+        return aRecipeDTO.name != "" && aRecipeDTO.description != "" && aRecipeDTO.beverages.isNotEmpty() && aRecipeDTO.ingredients.isNotEmpty() && !aRecipeDTO.ingredients.contains("") && !aRecipeDTO.beverages.contains("")
     }
 }
