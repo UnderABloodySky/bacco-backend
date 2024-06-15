@@ -21,7 +21,10 @@ jobs:
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
             for i in {1..30}; do
-              nc -zv localhost 7687 && break
+              if nc -z localhost 7687; then
+                echo "Neo4j is up and running."
+                break
+              fi
               echo "Waiting..."
               sleep 5
             done
@@ -38,8 +41,17 @@ jobs:
           name: Check Neo4j logs
           command: docker logs neo4j | grep "Remote interface available at"
       - run:
-          name: Copy Neo4j config
-          command: echo "spring.data.neo4j.database=neo4j" >> src/test/resources/application-test.properties
+          name: Ensure properties file exists
+          command: |
+            if [ ! -f src/test/resources/application-test.properties ]; then
+              echo "Creating src/test/resources/application-test.properties"
+              mkdir -p src/test/resources
+              touch src/test/resources/application-test.properties
+            fi
+      - run:
+          name: Update application-test.properties
+          command: |
+            echo "spring.data.neo4j.database=neo4j" >> src/test/resources/application-test.properties
       - run:
           name: Build and Test
           command: ./gradlew clean build
@@ -47,7 +59,7 @@ jobs:
           name: Run tests
           command: ./gradlew test
       - store_artifacts:
-          path: app/build/reports/tests # Adjust the path to your test reports
+          path: build/reports/tests/test # Adjust the path to your test reports
           destination: test-reports
 
 workflows:
