@@ -58,15 +58,26 @@ class RecipeService @Autowired constructor (private var recipeRepository : Recip
         if(user != null){
             newRecipe.user = user
         }
-        val ingredientsRelationships = ingredients.stream().map{ ing -> RecipeIngredientRelationship(ingredient = ing[0])}.toList()
-        val beveragesRelationships =  beverages.stream().map{ bev -> RecipeBeverageRelationship(beverage = bev[0])}.toList()
-        newRecipe.beverages.addAll(beveragesRelationships)
-        newRecipe.ingredients.addAll(ingredientsRelationships)
-        return  recipeRepository.save(newRecipe)
+        try{
+            val ingredientsRelationships = ingredients.stream().map{ ing -> RecipeIngredientRelationship(ingredient = ing[0])}.toList()
+            val beveragesRelationships =  beverages.stream().map{ bev -> RecipeBeverageRelationship(beverage = bev[0])}.toList()
+            newRecipe.beverages.addAll(beveragesRelationships)
+            newRecipe.ingredients.addAll(ingredientsRelationships)
+            recipeRepository.save(newRecipe)
+            return newRecipe
+        }
+        catch (e: IndexOutOfBoundsException){
+            throw BeveragesOrIngredientsNullBadRequestException()
+        }
+
     }
 
     fun getRecipeById(id: Long): Recipe? {
         return recipeRepository.findById(id).get()
+    }
+
+    fun getTotalrecipes(): List<Recipe> {
+        return recipeRepository.findAll()
     }
 }
 

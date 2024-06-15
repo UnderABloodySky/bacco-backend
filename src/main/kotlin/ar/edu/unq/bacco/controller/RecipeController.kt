@@ -3,8 +3,8 @@ package ar.edu.unq.bacco.controller
 
 import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import ar.edu.unq.bacco.model.Recipe
-import ar.edu.unq.bacco.model.User
 import ar.edu.unq.bacco.service.RecipeService
+import ar.edu.unq.bacco.service.exception.BeveragesOrIngredientsNullBadRequestException
 import ar.edu.unq.bacco.utils.MediatorBaccoCNN
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -33,12 +33,11 @@ class RecipeController @Autowired constructor(private var recipeService: RecipeS
         }
     }
 
-
     @GetMapping("/recipes")
     fun filterRecipes(
         @RequestParam(required = false, defaultValue = "") beverageNames: List<String>?,
         @RequestParam(required = false, defaultValue = "") ingredientNames: List<String>?
-    ): List<Recipe> {
+    ): List<Recipe?> {
         return recipeService.filterRecipesByBeveragesOrIngredients(beverageNames.orEmpty(), ingredientNames.orEmpty())
     }
 
@@ -47,16 +46,19 @@ class RecipeController @Autowired constructor(private var recipeService: RecipeS
         return ResponseEntity(recipeService.getRecipeById(id), HttpStatus.OK)
     }
 
-
     @PostMapping("/recipe")
-    fun createRecipe(@RequestBody aRecipeDTO: RecipeDTO): ResponseEntity<Any> {
+    fun createRecipe(@RequestBody aRecipeDTO: RecipeDTO): ResponseEntity<Recipe?> {
         try{
-            val savedRecipe = recipeService.save(aRecipeDTO)
+            val savedRecipe = recipeService.save(aRecipeDTO, null)
             return ResponseEntity.status(HttpStatus.CREATED).body(savedRecipe)
         }
-        catch(e: Exception){
-            return ResponseEntity("Campos incorrectos", HttpStatus.BAD_REQUEST)
+        catch(e: BeveragesOrIngredientsNullBadRequestException){
+            return ResponseEntity(null, HttpStatus.BAD_REQUEST)
         }
+    }
 
+    @GetMapping("/total_recipes")
+    fun getTotalRecipes(): List<Recipe> {
+        return recipeService.getTotalrecipes()
     }
 }
