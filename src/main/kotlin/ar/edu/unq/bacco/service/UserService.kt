@@ -6,15 +6,11 @@ import ar.edu.unq.bacco.service.interfaces.UserServiceI
 import ar.edu.unq.bacco.utils.Validator
 import org.apache.http.auth.InvalidCredentialsException
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 
 class UserService  @Autowired constructor (private var anUserRepository: UserRepository) : UserServiceI {
-
-    private val passwordEncoder = BCryptPasswordEncoder()
-
 
     override fun save(anUser: User): User {
         val username = anUser.name
@@ -27,16 +23,13 @@ class UserService  @Autowired constructor (private var anUserRepository: UserRep
             throw EmailUserAlreadyExistsException(email)
         }
 
-        val encodedPassword = passwordEncoder.encode(anUser.password)
-        val user = User(name=username, password=encodedPassword, email=email)
+        val user = User(name=username, password=anUser.password, email=email)
         if(Validator().isValidadateUser(user)){
             return anUserRepository.save(anUser)
         }
         else{
             throw UserAlreadyExistsException(username)
         }
-
-
     }
 
     override fun findById(id: Long): User {
@@ -47,14 +40,17 @@ class UserService  @Autowired constructor (private var anUserRepository: UserRep
         return response.get()
     }
 
-    fun loginUser(username: String, password: String): User {
+    fun loginUser(username: String, password: String): User? {
+        val userA = anUserRepository.findByName(username)
+        println("PASSWORD: " + userA)
+
         val user = anUserRepository.findByName(username)
             .orElseThrow { UserNotFoundByNameException(username) }
 
-        if (!passwordEncoder.matches(password, user.password)) {
+        println("paswword: " + user.password)
+        if (password == user.password) {
             throw InvalidCredentialsException("Invalid password for user $username")
         }
-
         return user
     }
 }

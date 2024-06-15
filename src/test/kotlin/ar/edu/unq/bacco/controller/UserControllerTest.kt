@@ -1,5 +1,6 @@
 package ar.edu.unq.bacco.controller
 
+import ar.edu.unq.bacco.model.DTO.LoginDTO
 import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.model.User
@@ -162,5 +163,16 @@ class UserControllerTest {
         assertEquals(recipeDTO.beverages.size, recipe.beverages.size)
         assertEquals(userPersist.id, recipe.user!!.id)
         assertEquals(userPersist, recipe.user)
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("An user can be log")
+    fun testAnUserLog() {
+        val userPersist = User(name="AnUsername", password="12345678", email="asd42@gmail.com")
+        userService.save(userPersist)
+        val login = LoginDTO(userPersist.name, userPersist.password)
+        val response = userController.loginUser(login)
+        assertEquals(HttpStatusCode.valueOf(201), response.statusCode)
     }
 }
