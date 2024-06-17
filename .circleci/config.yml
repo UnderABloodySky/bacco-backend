@@ -21,7 +21,7 @@ jobs:
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
             for i in {1..30}; do
-              if docker exec neo4j cypher-shell -u neo4j -p bacco4321 "RETURN 1" > /dev/null 2>&1; then
+              if docker exec neo4j curl -s http://localhost:7474/browser/; then
                 echo "Neo4j is up and running."
                 break
               fi
@@ -29,6 +29,9 @@ jobs:
               sleep 5
             done
             docker logs neo4j
+      - run:
+          name: Check Neo4j logs
+          command: docker logs neo4j | grep "Remote interface available at"
       - run:
           name: Setup environment
           command: |
@@ -45,16 +48,22 @@ jobs:
               mkdir -p src/test/resources
               touch src/test/resources/application-test.properties
             fi
-            echo "spring.data.neo4j.database=test" >> src/test/resources/application-test.properties
+      - run:
+          name: Update application-test.properties
+          command: |
+            echo "spring.data.neo4j.database=test" > src/test/resources/application-test.properties
             echo "spring.neo4j.uri=bolt://localhost:7687" >> src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
+            echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
+            echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
+            echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
       - run:
           name: Build and Test
           command: ./gradlew clean build --warning-mode all
       - run:
           name: Run tests
-          command: ./gradlew test
+          command: ./gradlew test --warning-mode all
       - store_artifacts:
           path: build/reports/tests/test
           destination: test-reports
