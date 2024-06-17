@@ -3,7 +3,7 @@ version: 2.1
 executors:
   kotlin-executor:
     docker:
-      - image: cimg/openjdk:17.0 # Use an appropriate JDK version
+      - image: cimg/openjdk:17.0
 
 jobs:
   build-and-test:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - setup_remote_docker:
           version: 20.10.7
-      - checkout # Checkout the code from your repository
+      - checkout
       - run:
           name: Start Neo4j
           command: |
@@ -21,7 +21,7 @@ jobs:
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
             for i in {1..30}; do
-              if nc -z localhost 7687; then
+              if docker exec neo4j cypher-shell -u neo4j -p bacco4321 "RETURN 1" > /dev/null 2>&1; then
                 echo "Neo4j is up and running."
                 break
               fi
@@ -38,9 +38,6 @@ jobs:
           name: Change permissions of gradlew
           command: sudo chmod +x ./gradlew
       - run:
-          name: Check Neo4j logs
-          command: docker logs neo4j | grep "Remote interface available at"
-      - run:
           name: Ensure properties file exists
           command: |
             if [ ! -f src/test/resources/application-test.properties ]; then
@@ -48,18 +45,18 @@ jobs:
               mkdir -p src/test/resources
               touch src/test/resources/application-test.properties
             fi
-      - run:
-          name: Update application-test.properties
-          command: |
-            echo "spring.data.neo4j.database=neo4j" >> src/test/resources/application-test.properties
+            echo "spring.data.neo4j.database=test" >> src/test/resources/application-test.properties
+            echo "spring.neo4j.uri=bolt://localhost:7687" >> src/test/resources/application-test.properties
+            echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
+            echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
       - run:
           name: Build and Test
-          command: ./gradlew clean build
+          command: ./gradlew clean build --warning-mode all
       - run:
           name: Run tests
           command: ./gradlew test
       - store_artifacts:
-          path: build/reports/tests/test # Adjust the path to your test reports
+          path: build/reports/tests/test
           destination: test-reports
 
 workflows:
