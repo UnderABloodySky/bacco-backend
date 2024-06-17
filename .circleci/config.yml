@@ -3,51 +3,43 @@ version: 2.1
 executors:
   kotlin-executor:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: circleci/openjdk:17-jdk
 
 jobs:
   build-and-test:
     executor: kotlin-executor
     steps:
-      - checkout
-
-      # Configuración de Neo4j en CircleCI
       - setup_remote_docker:
           version: 20.10.7
-
+      - checkout
       - run:
           name: Start Neo4j
           command: |
             docker run -d --name neo4j -p 7687:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:5.18.1
-
       - run:
-          name: Wait for Neo4j to be fully up and running
+          name: Wait for Neo4j
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
-            for i in {1..120}; do
+            for i in {1..60}; do
               if docker exec neo4j curl -s http://localhost:7474/browser/; then
                 echo "Neo4j is up and running."
                 break
               fi
-              echo "Waiting..."
+              echo "Waiting for Neo4j... attempt $i"
               sleep 5
             done
             docker logs neo4j
-
       - run:
           name: Check Neo4j logs
           command: docker logs neo4j | grep "Remote interface available at"
-
       - run:
           name: Setup environment
           command: |
             sudo apt-get update
             sudo apt-get install -y lib32stdc++6
-
       - run:
           name: Change permissions of gradlew
           command: sudo chmod +x ./gradlew
-
       - run:
           name: Ensure properties file exists
           command: |
@@ -56,7 +48,6 @@ jobs:
               mkdir -p src/test/resources
               touch src/test/resources/application-test.properties
             fi
-
       - run:
           name: Update application-test.properties
           command: |
@@ -67,15 +58,12 @@ jobs:
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
-
       - run:
-          name: Run tests with detailed logging
-          command: |
-            ./gradlew test --warning-mode all \
-              --info --debug \
-              -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG \
-              -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
-
+          name: Build and Test
+          command: ./gradlew clean build --warning-mode all
+      - run:
+          name: Run tests
+          command: ./gradlew test --warning-mode all
       - store_artifacts:
           path: build/reports/tests/test
           destination: test-reports
