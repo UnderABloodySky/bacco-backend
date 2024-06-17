@@ -24,7 +24,7 @@ jobs:
           name: Wait for Neo4j to be fully up and running
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
-            for i in {1..60}; do
+            for i in {1..120}; do
               if docker exec neo4j curl -s http://localhost:7474/browser/; then
                 echo "Neo4j is up and running."
                 break
@@ -69,12 +69,12 @@ jobs:
             echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
 
       - run:
-          name: Build and Test
-          command: ./gradlew clean build --warning-mode all
-
-      - run:
-          name: Run tests
-          command: ./gradlew test --warning-mode all
+          name: Run tests with detailed logging
+          command: |
+            ./gradlew test --warning-mode all \
+              --info --debug \
+              -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG \
+              -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
 
       - store_artifacts:
           path: build/reports/tests/test
