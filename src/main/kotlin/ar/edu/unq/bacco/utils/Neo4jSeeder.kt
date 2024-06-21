@@ -19,7 +19,7 @@ class Neo4jSeeder(
         if (recipeRepository.count() == 0L && beverageRepository.count() == 0L) {
             val description = "“Ebis vendae eaqui solupta turera prepe parum ut estrum, cus as nient aut aut pa nost, consed ut reroribus ex ea dolor as secestrum qui con preprae sequam ipsaeperum is ipsamus aectibustior accae perovit quas as modipsunt ut volorro beatemolenis veremporum quianda perchil es quam eum"
 
-            val fernet = Beverage(name = "FERNET", description = "El sabor auténtico de Cordoba y Argentina", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
+            val fernet = Beverage(name = "FERNET", description = "El sabor auténtico de Cordoba y Argentina", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/fernet.jpg")
             val aguaTonica = Beverage(name = "TONICA", description = "Refrescante y versátil", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
             val cocaCola = Beverage(name = "COCACOLA", description = "La chispa que necesitas", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
             val gin = Beverage(name = "GIN", description = "La chispa que necesitas", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
@@ -73,7 +73,7 @@ class Neo4jSeeder(
             aperitivoCervezaYFernet.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
             aperitivoCervezaYFernet.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
 
-            val fernandito = Recipe(name = "Fernet", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
+            val fernandito = Recipe(name = "Fernet", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/fernet.jpg")
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             fernandito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
