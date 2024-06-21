@@ -10,5 +10,5 @@ data class Rating(
     @Id @GeneratedValue var id: Long? = null,
     @Relationship(type = "RATED_BY", direction = Relationship.Direction.OUTGOING)
     val user: User,
-    var score: Int
+    var score: Double
 )

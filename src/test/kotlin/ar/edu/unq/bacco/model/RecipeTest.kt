@@ -59,7 +59,7 @@
         fun rateRecipe() {
             val user = User(id = 3L, name = "Charlie", password = "", email="")
             val recipe = Recipe(name = "Pasta", description = "Spaghetti recipe")
-            val score = 4
+            val score = 4.0
 
             val rating = recipe.rate(user, score)
 
@@ -74,11 +74,11 @@
             val recipe = Recipe(name = "Salad", description = "Caesar salad recipe")
 
             assertThrows<IllegalArgumentException> {
-                recipe.rate(user, score = -1)
+                recipe.rate(user, score = -1.0)
             }
 
             assertThrows<IllegalArgumentException> {
-                recipe.rate(user, score = 6)
+                recipe.rate(user, score = 6.0)
             }
         }
 
@@ -86,9 +86,9 @@
         fun updateExistingRating() {
             val user = User(id = 5L, name = "Emily", password = "", email="")
             val recipe = Recipe(name = "Soup", description = "Vegetable soup recipe")
-            recipe.rate(user, score = 3)
+            recipe.rate(user, score = 3.0)
 
-            val newScore = 5
+            val newScore = 5.0
             val rating = recipe.rate(user, newScore)
 
             assertThat(rating.user).isEqualTo(user)
@@ -108,8 +108,8 @@
             val user1 = User(id = 6L, name = "Frank", password = "", email="")
             val user2 = User(id = 7L, name = "Grace", password = "", email="")
             val recipe = Recipe(name = "Cake", description = "Chocolate cake recipe")
-            recipe.rate(user1, score = 4)
-            recipe.rate(user2, score = 5)
+            recipe.rate(user1, score = 4.0)
+            recipe.rate(user2, score = 5.0)
 
             assertThat(recipe.averageRating()).isEqualTo(4.5)
         }
