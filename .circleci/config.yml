@@ -122,6 +122,18 @@ jobs:
           command: ls -R build/
 
       - run:
+          name: Verify connection to Neo4j Test
+          command: |
+            echo "Verifying connection to Neo4j Test..."
+            curl -i -u neo4j:bacco4321 http://localhost:7688/browser/
+
+      - run:
+          name: Verify connection to Neo4j dev
+          command: |
+            echo "Verifying connection to Neo4j Test..."
+            curl -i -u neo4j:bacco4321 http://localhost:7687/browser/
+
+      - run:
           name: Run tests with detailed logging
           command: |
             ./gradlew test --warning-mode all \
