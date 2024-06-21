@@ -57,11 +57,9 @@ class BeverageController @Autowired constructor(
                 val filePath = Paths.get(uploadDir.absolutePath, fileName)
                 Files.copy(file.inputStream, filePath, StandardCopyOption.REPLACE_EXISTING)
 
-                // Preparar la solicitud HTTP para enviar la imagen al backend Django
                 val httpClient = HttpClients.createDefault()
                 val postRequest = HttpPost(djangoRetrainUrl)
 
-                // Construir el cuerpo de la solicitud con la imagen
                 val fileBody = FileBody(File(filePath.toString()), ContentType.DEFAULT_BINARY)
                 val beverageBodyPart = StringBody(beverage, ContentType.TEXT_PLAIN)
                 val reqEntity: HttpEntity = MultipartEntityBuilder.create()
@@ -70,13 +68,11 @@ class BeverageController @Autowired constructor(
                     .build()
                 postRequest.entity = reqEntity
 
-                // Enviar la solicitud al backend Django
                 val response: HttpResponse = httpClient.execute(postRequest)
                 val responseEntity = response.entity
                 val responseString = responseEntity.content.bufferedReader().use { it.readText() }
 
 
-                // Manejar la respuesta del backend Django
                 return if (response.statusLine.statusCode == HttpStatus.OK.value()) {
                     ResponseEntity(responseString, HttpStatus.OK)
                 } else {

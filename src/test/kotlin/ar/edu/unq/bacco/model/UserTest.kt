@@ -9,7 +9,7 @@ class UserTest {
     fun createUserWithNonNullId() {
         val id = 1L
         val name = "John Doe"
-        val user = User(id = id, name = name)
+        val user = User(id = id, name = name, password = "", email="")
 
         assertThat(user.id).isEqualTo(id)
         assertThat(user.name).isEqualTo(name)
@@ -18,7 +18,7 @@ class UserTest {
     @Test
     fun createUserWithNullId() {
         val name = "Alice"
-        val user = User(name = name)
+        val user = User(name = name, password = "", email="")
 
         assertThat(user.id).isNull()
         assertThat(user.name).isEqualTo(name)
@@ -27,7 +27,7 @@ class UserTest {
     @Test
     fun updateUserName() {
         val id = 2L
-        val user = User(id = id, name = "Bob")
+        val user = User(id = id, name = "Bob", password = "", email="")
 
         val newName = "Charlie"
         user.name = newName

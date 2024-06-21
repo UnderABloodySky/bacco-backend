@@ -3,11 +3,15 @@ package ar.edu.unq.bacco.controller
 import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import ar.edu.unq.bacco.model.Recipe
 import ar.edu.unq.bacco.model.User
+import ar.edu.unq.bacco.model.DTO.LoginDTO
 import ar.edu.unq.bacco.service.RecipeService
 import ar.edu.unq.bacco.service.UserService
 import ar.edu.unq.bacco.service.exception.BeveragesOrIngredientsNullBadRequestException
+import ar.edu.unq.bacco.service.exception.UserAlreadyExistsException
+import ar.edu.unq.bacco.service.exception.UserNotFoundByNameException
 import ar.edu.unq.bacco.service.exception.UserNotFoundException
-import jakarta.persistence.EntityNotFoundException
+import jakarta.validation.Valid
+import org.apache.http.auth.InvalidCredentialsException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,9 +23,27 @@ import org.springframework.web.bind.annotation.*
 class UserController @Autowired constructor (private var anUserService: UserService, private var anRecipeService: RecipeService) {
 
     @PostMapping
-    fun createUser(@RequestBody anUser: User): ResponseEntity<User> {
-        val savedUser = anUserService.save(anUser)
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser)
+    fun createUser(@RequestBody anUser: User): ResponseEntity<User?> {
+        return try{
+            val savedUser = anUserService.save(anUser)
+            ResponseEntity(savedUser, HttpStatus.OK)
+        }
+        catch(ex: UserAlreadyExistsException){
+            ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @GetMapping("/login")
+    fun loginUser(@RequestBody request: LoginDTO): ResponseEntity<User?> {
+        return try {
+            val user = anUserService.loginUser(request.name, request.password)
+                ResponseEntity(user, HttpStatus.OK)
+            }
+            catch (ex: InvalidCredentialsException) {
+                ResponseEntity.badRequest().body(null)
+            } catch (ex: UserNotFoundByNameException) {
+                ResponseEntity.noContent().build<User?>()
+            }
     }
 
     @GetMapping("/{id}")

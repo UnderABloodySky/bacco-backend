@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface UserRepository : Neo4jRepository<User, Long>
+interface UserRepository : Neo4jRepository<User, Long>{
+    fun findByName(username: String): Optional<User>
+    fun findByEmail(email: String): Optional<User>
+}

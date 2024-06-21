@@ -28,7 +28,7 @@
 
         @Test
         fun createRecipeWithNonNullId() {
-            val user = User(id = 1L, name = "Alice")
+            val user = User(id = 1L, name = "Alice", password = "", email="")
             val name = "Lasagna"
             val description = "Delicious homemade lasagna recipe"
             val imagePath = "https://example.com/lasagna.jpg"
@@ -43,7 +43,7 @@
 
         @Test
         fun createRecipeWithNullId() {
-            val user = User(id = 2L, name = "Bob")
+            val user = User(id = 2L, name = "Bob", password = "", email="")
             val name = "Pizza"
             val description = "Homemade pizza recipe"
             val recipe = Recipe(name = name, description = description, user = user)
@@ -52,12 +52,12 @@
             assertThat(recipe.name).isEqualTo(name)
             assertThat(recipe.description).isEqualTo(description)
             assertThat(recipe.user).isEqualTo(user)
-            assertThat(recipe.imagePath).isEqualTo("https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/deuda_tecnica/assets/no_image.png")
+            assertThat(recipe.imagePath).isEqualTo("https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/no_image.png")
         }
 
         @Test
         fun rateRecipe() {
-            val user = User(id = 3L, name = "Charlie")
+            val user = User(id = 3L, name = "Charlie", password = "", email="")
             val recipe = Recipe(name = "Pasta", description = "Spaghetti recipe")
             val score = 4
 
@@ -70,7 +70,7 @@
 
         @Test
         fun rateRecipeWithInvalidScore() {
-            val user = User(id = 4L, name = "David")
+            val user = User(id = 4L, name = "David", password = "", email="")
             val recipe = Recipe(name = "Salad", description = "Caesar salad recipe")
 
             assertThrows<IllegalArgumentException> {
@@ -84,7 +84,7 @@
 
         @Test
         fun updateExistingRating() {
-            val user = User(id = 5L, name = "Emily")
+            val user = User(id = 5L, name = "Emily", password = "", email="")
             val recipe = Recipe(name = "Soup", description = "Vegetable soup recipe")
             recipe.rate(user, score = 3)
 
@@ -105,8 +105,8 @@
 
         @Test
         fun averageRatingWithRatings() {
-            val user1 = User(id = 6L, name = "Frank")
-            val user2 = User(id = 7L, name = "Grace")
+            val user1 = User(id = 6L, name = "Frank", password = "", email="")
+            val user2 = User(id = 7L, name = "Grace", password = "", email="")
             val recipe = Recipe(name = "Cake", description = "Chocolate cake recipe")
             recipe.rate(user1, score = 4)
             recipe.rate(user2, score = 5)

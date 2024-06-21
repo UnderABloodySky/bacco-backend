@@ -1,63 +1,87 @@
 version: 2.1
 
 executors:
-  java-executor:
+  kotlin-executor:
     docker:
-      - image: circleci/openjdk:17-jdk
-    working_directory: ~/repo
-
-  neo4j-executor:
-    docker:
-      - image: neo4j:latest
-    working_directory: ~/repo
+      - image: cimg/openjdk:17.0
 
 jobs:
-  setup-db:
-    executor: neo4j-executor
+  build-and-test:
+    executor: kotlin-executor
     steps:
       - checkout
-      - setup_remote_docker
+
+      # Configuración de Neo4j en CircleCI
+      - setup_remote_docker:
+          version: 20.10.7
+
       - run:
           name: Start Neo4j
           command: |
-            docker run -d --name neo4j -p 7687:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:latest
-      - run:
-          name: Wait for Neo4j
-          command: sleep 20  # Wait for Neo4j to be fully up and running
+            docker run -d --name neo4j -p 7687:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:5.18.1
 
-  build:
-    executor: java-executor
-    steps:
-      - checkout
       - run:
-          name: Install dependencies
-          command: ./gradlew dependencies
-      - run:
-          name: Build project
-          command: ./gradlew build
+          name: Wait for Neo4j to be fully up and running
+          command: |
+            echo "Waiting for Neo4j to be fully up and running..."
+            for i in {1..120}; do
+              if docker exec neo4j curl -s http://localhost:7474/browser/; then
+                echo "Neo4j is up and running."
+                break
+              fi
+              echo "Waiting..."
+              sleep 5
+            done
+            docker logs neo4j
 
-  test:
-    executor: java-executor
-    steps:
-      - checkout
       - run:
-          name: Copy Neo4j config
-          command: echo "spring.neo4j.uri=bolt://localhost:7687" >> src/main/resources/application-test.properties
+          name: Check Neo4j logs
+          command: docker logs neo4j | grep "Remote interface available at"
+
       - run:
-          name: Wait for Neo4j
-          command: sleep 20  # Ensure Neo4j is ready before running tests
+          name: Setup environment
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y lib32stdc++6
+
       - run:
-          name: Run tests
-          command: ./gradlew test
+          name: Change permissions of gradlew
+          command: sudo chmod +x ./gradlew
+
+      - run:
+          name: Ensure properties file exists
+          command: |
+            if [ ! -f src/test/resources/application-test.properties ]; then
+              echo "Creating src/test/resources/application-test.properties"
+              mkdir -p src/test/resources
+              touch src/test/resources/application-test.properties
+            fi
+
+      - run:
+          name: Update application-test.properties
+          command: |
+            echo "spring.data.neo4j.database=test" > src/test/resources/application-test.properties
+            echo "spring.neo4j.uri=bolt://localhost:7687" >> src/test/resources/application-test.properties
+            echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
+            echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
+            echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
+            echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
+            echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
+
+      - run:
+          name: Run tests with detailed logging
+          command: |
+            ./gradlew test --warning-mode all \
+              --info --debug \
+              -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG \
+              -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
+
+      - store_artifacts:
+          path: build/reports/tests/test
+          destination: test-reports
 
 workflows:
   version: 2
   build-and-test:
     jobs:
-      - setup-db
-      - build:
-          requires:
-            - setup-db
-      - test:
-          requires:
-            - build
+      - build-and-test
