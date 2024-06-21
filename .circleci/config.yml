@@ -17,12 +17,12 @@ jobs:
       - run:
           name: Start Neo4j Dev
           command: |
-            docker run -d --name neo4j-dev -p 7687:7687 -e NEO4J_AUTH=neo4j/devpassword neo4j:5.18.1
+            docker run -d --name neo4j-dev -p 7687:7687 -e NEO4J_AUTH=neo4j/devpassword neo4j:5.12.0
 
       - run:
           name: Start Neo4j Test
           command: |
-            docker run -d --name neo4j-test -p 7688:7687 -e NEO4J_AUTH=neo4j/testpassword neo4j:5.18.1
+            docker run -d --name neo4j-test -p 7688:7687 -e NEO4J_AUTH=neo4j/testpassword neo4j:5.12.1
 
       - run:
           name: Wait for Neo4j Dev to be fully up and running
@@ -65,6 +65,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y lib32stdc++6
+            sudo apt-get upgrade
 
       - run:
           name: Change permissions of gradlew
