@@ -29,36 +29,36 @@ jobs:
           command: |
             echo "Waiting for Neo4j Dev to be fully up and running..."
             for i in {1..120}; do
-              if docker exec neo4j-dev curl -s http://localhost:7474/browser/; then
+              if docker exec dev curl -s http://localhost:7474/browser/; then
                 echo "Neo4j Dev is up and running."
                 break
               fi
               echo "Waiting..."
               sleep 5
             done
-            docker logs neo4j-dev
+            docker logs dev
 
       - run:
           name: Wait for Neo4j Test to be fully up and running
           command: |
             echo "Waiting for Neo4j Test to be fully up and running..."
             for i in {1..120}; do
-              if docker exec neo4j-test curl -s http://localhost:7474/browser/; then
+              if docker exec test curl -s http://localhost:7474/browser/; then
                 echo "Neo4j Test is up and running."
                 break
               fi
               echo "Waiting..."
               sleep 5
             done
-            docker logs neo4j-test
+            docker logs test
 
       - run:
           name: Check Neo4j Dev logs
-          command: docker logs neo4j-dev | grep "Remote interface available at"
+          command: docker logs dev | grep "Remote interface available at"
 
       - run:
           name: Check Neo4j Test logs
-          command: docker logs neo4j-test | grep "Remote interface available at"
+          command: docker logs test | grep "Remote interface available at"
 
       - run:
           name: Setup environment
@@ -85,7 +85,7 @@ jobs:
           command: |
             echo "spring.neo4j.uri=bolt://localhost:7688" > src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
-            echo "spring.neo4j.authentication.password=testpassword" >> src/test/resources/application-test.properties
+            echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
@@ -93,21 +93,33 @@ jobs:
       - run:
           name: Ensure properties file exists for dev
           command: |
-            if [ ! -f src/main/resources/application-dev.properties ]; then
-              echo "Creating src/main/resources/application-dev.properties"
+            if [ ! -f src/main/resources/application.properties ]; then
+              echo "Creating src/main/resources/application.properties"
               mkdir -p src/main/resources
-              touch src/main/resources/application-dev.properties
+              touch src/main/resources/application.properties
             fi
 
       - run:
           name: Update application-dev.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application-dev.properties
-            echo "spring.neo4j.authentication.username=neo4j" >> src/main/resources/application-dev.properties
-            echo "spring.neo4j.authentication.password=devpassword" >> src/main/resources/application-dev.properties
-            echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application-dev.properties
-            echo "spring.servlet.multipart.max-request-size=20MB" >> src/main/resources/application-dev.properties
-            echo "spring.profiles.active=dev" >> src/main/resources/application-dev.properties
+            echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application.properties
+            echo "spring.neo4j.authentication.username=neo4j" >> src/main/resources/application.properties
+            echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
+            echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
+            echo "spring.servlet.multipart.max-request-size=20MB" >> src/main/resources/application.properties
+            echo "spring.profiles.active=dev" >> src/main/resources/application.properties
+
+      - run:
+          name: List files before compile
+          command: ls -R src/
+
+      - run:
+          name: Compile the project
+          command: ./gradlew compileKotlin
+
+      - run:
+          name: List files after compile
+          command: ls -R build/
 
       - run:
           name: Run tests with detailed logging
@@ -122,6 +134,7 @@ jobs:
           destination: test-reports
 
 workflows:
+  version: 2
   build-and-test:
     jobs:
       - build-and-test
