@@ -113,8 +113,67 @@ class Neo4jSeeder(
             caranchito.beverages.add(RecipeBeverageRelationship(beverage = ron))
             caranchito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
+            val fernetPomelo = Recipe(name = "Fernet Pomelo", description = "Un trago refrescante y amargo, ideal para una tarde de verano", imagePath = "")
+            fernetPomelo.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            fernetPomelo.ingredients.add(RecipeIngredientRelationship(ingredient = pomelo))
+            fernetPomelo.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val ganciaFrutillaMenta = Recipe(name = "Gancia Frutilla mentolada", description = "Una combinación dulce y refrescante con un toque de menta", imagePath = "")
+            ganciaFrutillaMenta.beverages.add(RecipeBeverageRelationship(beverage = gancia))
+            ganciaFrutillaMenta.ingredients.add(RecipeIngredientRelationship(ingredient = frutilla))
+            ganciaFrutillaMenta.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
+            ganciaFrutillaMenta.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val ronLimonado = Recipe(name = "Ron Limonado", description = "Un clásico ron con un toque cítrico y refrescante", imagePath = "")
+            ronLimonado.beverages.add(RecipeBeverageRelationship(beverage = ron))
+            ronLimonado.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+            ronLimonado.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
+            ronLimonado.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val tintillo = Recipe(name = "Tintilloo con Frutos Rojos", description = "Un trago elegante con la mezcla perfecta de vino tinto y frutas", imagePath = "")
+            tintillo.beverages.add(RecipeBeverageRelationship(beverage = vino))
+            tintillo.ingredients.add(RecipeIngredientRelationship(ingredient = arandanos))
+            tintillo.ingredients.add(RecipeIngredientRelationship(ingredient = frutilla))
+            tintillo.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val whiskeyGinger = Recipe(name = "Whiskey Ginger", description = "Un clásico trago con la combinación perfecta de whiskey y jengibre", imagePath = "")
+            whiskeyGinger.beverages.add(RecipeBeverageRelationship(beverage = whiskey))
+            whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = jengibre))
+            whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val licorMenta = Recipe(name = "Licor mentolado", description = "Un trago refrescante y simple, perfecto para una noche relajante", imagePath = "")
+            whiskeyGinger.beverages.add(RecipeBeverageRelationship(beverage = licor))
+            whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
+            whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val naranjuMentolado = Recipe(name = "Naranju menta & picante", description = "Un trago con un toque cítrico y un final picante.", imagePath = "")
+            naranjuMentolado.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            naranjuMentolado.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
+            naranjuMentolado.ingredients.add(RecipeIngredientRelationship(ingredient = pimienta))
+            naranjuMentolado.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val vinoEspeciado = Recipe(name ="Vino especiado", description = "Un viaje nordico" , imagePath = "" )
+            vinoEspeciado.beverages.add(RecipeBeverageRelationship(beverage = vino))
+            vinoEspeciado.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
+            vinoEspeciado.ingredients.add(RecipeIngredientRelationship(ingredient = pimienta))
+            vinoEspeciado.ingredients.add(RecipeIngredientRelationship(ingredient = hibiscus))
+            vinoEspeciado.ingredients.add(RecipeIngredientRelationship(ingredient = naranja))
+
+            val ganciaPepinada = Recipe(name ="Pepinada", description = "Un trago fresco y ligero, perfecto para cualquier ocasión" , imagePath = "")
+            ganciaPepinada.beverages.add(RecipeBeverageRelationship(beverage = gancia))
+            ganciaPepinada.ingredients.add(RecipeIngredientRelationship(ingredient = pepino))
+            ganciaPepinada.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+            ganciaPepinada.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val mojito = Recipe(name = "Mojito", description = "From Cuba with love", imagePath = "")
+            mojito.beverages.add(RecipeBeverageRelationship(beverage = ron))
+            mojito.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
+            mojito.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
+            mojito.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+            mojito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
             val recipes = listOf(soloAperitivo, aperitivoCervezaYFernet, aperitivoYCerveza,
-                fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada)
+                fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada, fernetPomelo, ganciaFrutillaMenta, ronLimonado, tintillo, whiskeyGinger, licorMenta, naranjuMentolado, vinoEspeciado, ganciaPepinada, mojito)
 
             recipeRepository.saveAll(recipes)
 
