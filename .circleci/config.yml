@@ -83,4 +83,11 @@ jobs:
               -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
 
       - store_artifacts:
-          path: b
+          path: build/reports/tests/test
+          destination: test-reports
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build-and-test
