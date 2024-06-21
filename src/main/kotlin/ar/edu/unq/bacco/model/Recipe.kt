@@ -1,7 +1,6 @@
 package ar.edu.unq.bacco.model
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import org.springframework.data.neo4j.core.schema.GeneratedValue
@@ -35,8 +34,8 @@ class Recipe (
     @Relationship(type = "RATED", direction = Relationship.Direction.OUTGOING)
     val ratings: MutableSet<Rating> = mutableSetOf()) {
 
-    fun rate(user: User, score: Int): Rating {
-        if (score in 0..5) {
+    fun rate(user: User, score: Double): Rating {
+        if (score in 0.0..5.0) {
             val existingRating = ratings.find { it.user.id == user.id }
             if (existingRating != null) {
                 existingRating.score = score

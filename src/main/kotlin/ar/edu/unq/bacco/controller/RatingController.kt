@@ -15,7 +15,7 @@ class RatingController @Autowired constructor (private var ratingService: Rating
     fun rateRecipe(
         @PathVariable recipeId: Long,
         @PathVariable userId: Long,
-        @RequestParam score: Int
+        @RequestParam score: Double
     ): ResponseEntity<Rating> {
         return ResponseEntity(ratingService.rateRecipe(recipeId, userId, score), HttpStatus.CREATED)
     }
