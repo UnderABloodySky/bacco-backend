@@ -91,6 +91,15 @@ jobs:
             echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
 
       - run:
+          name: Ensure properties file exists for dev
+          command: |
+            if [ ! -f src/main/resources/application-dev.properties ]; then
+              echo "Creating src/main/resources/application-dev.properties"
+              mkdir -p src/main/resources
+              touch src/main/resources/application-dev.properties
+            fi
+
+      - run:
           name: Update application-dev.properties
           command: |
             echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application-dev.properties
@@ -113,7 +122,6 @@ jobs:
           destination: test-reports
 
 workflows:
-  version: 2
   build-and-test:
     jobs:
       - build-and-test
