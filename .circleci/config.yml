@@ -19,14 +19,14 @@ jobs:
           command: |
             docker run -d --name dev -p 7474:7474 -p 7687:7687 neo4j:5.12.0
             sleep 10
-            docker exec dev bin/cypher-shell -u neo4j -p neo4j "CALL dbms.changePassword('bacco4321');"
+            docker exec dev bin/cypher-shell -u neo4j -p neo4j "ALTER CURRENT USER SET PASSWORD FROM 'neo4j' TO 'bacco4321';"
 
       - run:
           name: Start Neo4j Test
           command: |
             docker run -d --name test -p 7484:7474 -p 7688:7687 neo4j:5.12.0
             sleep 10
-            docker exec test bin/cypher-shell -u neo4j -p neo4j "CALL dbms.changePassword('bacco4321');"
+            docker exec test bin/cypher-shell -u neo4j -p neo4j "ALTER CURRENT USER SET PASSWORD FROM 'neo4j' TO 'bacco4321';"
 
       - run:
           name: Wait for Neo4j Dev to be fully up and running
