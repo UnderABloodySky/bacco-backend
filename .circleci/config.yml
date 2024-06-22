@@ -29,26 +29,28 @@ jobs:
           command: |
             echo "Waiting for Neo4j Dev to be fully up and running..."
             for i in {1..120}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
+              if curl -s http://localhost:7474/browser/; then
                 echo "Neo4j Dev is up and running."
                 break
               fi
               echo "Waiting..."
               sleep 5
             done
+            docker logs dev
 
       - run:
           name: Wait for Neo4j Test to be fully up and running
           command: |
             echo "Waiting for Neo4j Test to be fully up and running..."
             for i in {1..120}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7688/browser/; then
+              if curl -s http://localhost:7688/browser/; then
                 echo "Neo4j Test is up and running."
                 break
               fi
               echo "Waiting..."
               sleep 5
             done
+            docker logs test
 
       - persist_to_workspace:
           root: /home/circleci
