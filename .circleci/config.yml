@@ -25,32 +25,16 @@ jobs:
             docker run -d --name test -p 7688:7687 -e NEO4J_AUTH=neo4j/bacco4321 neo4j:5.12.0
 
       - run:
-          name: Wait for Neo4j Dev to be fully up and running
-          command: |
-            echo "Waiting for Neo4j Dev to be fully up and running..."
-            for i in {1..120}; do
-              if docker exec dev curl -s http://localhost:7474/browser/; then
-                echo "Neo4j Dev is up and running."
-                break
-              fi
-              echo "Waiting..."
-              sleep 5
-            done
-            docker logs dev
+          name: List Docker containers
+          command: docker ps -a
 
       - run:
-          name: Wait for Neo4j Test to be fully up and running
-          command: |
-            echo "Waiting for Neo4j Test to be fully up and running..."
-            for i in {1..120}; do
-              if docker exec test curl -s http://localhost:7474/browser/; then
-                echo "Neo4j Test is up and running."
-                break
-              fi
-              echo "Waiting..."
-              sleep 5
-            done
-            docker logs test
+          name: Check Neo4j Dev Logs
+          command: docker logs dev
+
+      - run:
+          name: Check Neo4j Test Logs
+          command: docker logs test
 
       - persist_to_workspace:
           root: /home/circleci
@@ -150,13 +134,13 @@ jobs:
           name: Verify connection to Neo4j Test
           command: |
             echo "Verifying connection to Neo4j Test..."
-            curl -i -u neo4j:bacco4321 http://localhost:7688/browser/
+            docker exec test curl -i -u neo4j:bacco4321 http://localhost:7474/browser/
 
       - run:
           name: Verify connection to Neo4j Dev
           command: |
             echo "Verifying connection to Neo4j Dev..."
-            curl -i -u neo4j:bacco4321 http://localhost:7687/browser/
+            docker exec dev curl -i -u neo4j:bacco4321 http://localhost:7474/browser/
 
       - run:
           name: Run tests with detailed logging
