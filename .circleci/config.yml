@@ -15,18 +15,19 @@ jobs:
           version: 20.10.7
 
       - run:
+          name: Create initial password file for Neo4j
+          command: |
+            echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
+
+      - run:
           name: Start Neo4j Dev
           command: |
-            docker run -d --name dev -p 7474:7474 -p 7687:7687 neo4j:5.12.0
-            sleep 10
-            docker exec dev bin/cypher-shell -u neo4j -p neo4j "ALTER CURRENT USER SET PASSWORD FROM 'neo4j' TO 'bacco4321';"
+            docker run -d --name dev --env-file initial-password.env -p 7474:7474 -p 7687:7687 neo4j:5.12.0
 
       - run:
           name: Start Neo4j Test
           command: |
-            docker run -d --name test -p 7484:7474 -p 7688:7687 neo4j:5.12.0
-            sleep 10
-            docker exec test bin/cypher-shell -u neo4j -p neo4j "ALTER CURRENT USER SET PASSWORD FROM 'neo4j' TO 'bacco4321';"
+            docker run -d --name test --env-file initial-password.env -p 7484:7474 -p 7688:7687 neo4j:5.12.0
 
       - run:
           name: Wait for Neo4j Dev to be fully up and running
