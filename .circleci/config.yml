@@ -25,6 +25,8 @@ jobs:
             sleep 10
             docker ps -a
             docker logs dev
+            docker inspect dev
+            docker exec dev netstat -tuln
 
       - run:
           name: Start Neo4j Test
@@ -33,6 +35,8 @@ jobs:
             sleep 10
             docker ps -a
             docker logs test
+            docker inspect test
+            docker exec test netstat -tuln
 
       - run:
           name: Wait for Neo4j Dev to be fully up and running
