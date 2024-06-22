@@ -6,7 +6,7 @@ executors:
       - image: cimg/openjdk:17.0
 
 jobs:
-  build-and-test:
+  setup:
     executor: kotlin-executor
     steps:
       - checkout
@@ -52,13 +52,16 @@ jobs:
             done
             docker logs test
 
-      - run:
-          name: Check Neo4j Dev logs
-          command: docker logs dev | grep "Remote interface available at"
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - project
 
-      - run:
-          name: Check Neo4j Test logs
-          command: docker logs test | grep "Remote interface available at"
+  build:
+    executor: kotlin-executor
+    steps:
+      - attach_workspace:
+          at: /home/circleci
 
       - run:
           name: Setup environment
@@ -70,6 +73,11 @@ jobs:
       - run:
           name: Change permissions of gradlew
           command: sudo chmod +x ./gradlew
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
 
       - run:
           name: Ensure properties file exists
@@ -117,6 +125,23 @@ jobs:
           name: Compile the project
           command: ./gradlew compileKotlin
 
+      - save_cache:
+          paths:
+            - ~/.gradle/caches/
+            - ~/.gradle/wrapper/
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - project
+
+  test:
+    executor: kotlin-executor
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+
       - run:
           name: List files after compile
           command: ls -R build/
@@ -146,4 +171,10 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - build-and-test
+      - setup
+      - build:
+          requires:
+            - setup
+      - test:
+          requires:
+            - build
