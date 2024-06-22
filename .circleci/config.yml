@@ -27,24 +27,16 @@ jobs:
       - run:
           name: Start Neo4j Test
           command: |
-            docker run -d --name test --env-file initial-password.env -p 7484:7474 -p 7688:7687 neo4j:5.12.0
+            docker run -d --name test --env-file initial-password.env -p 7475:7474 -p 7688:7687 neo4j:5.12.0
 
       - run:
           name: Wait for Neo4j Dev to be fully up and running
           command: |
             echo "Waiting for Neo4j Dev to be fully up and running..."
             for i in {1..180}; do
-              echo "Checking port 7474..."
-              if nc -zv localhost 7474; then
-                echo "Port 7474 is open, checking Neo4j..."
-                if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
-                  echo "Neo4j Dev is up and running."
-                  break
-                else
-                  echo "Neo4j Dev not ready yet."
-                fi
-              else
-                echo "Port 7474 is not open yet."
+              if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
+                echo "Neo4j Dev is up and running."
+                break
               fi
               echo "Waiting..."
               sleep 5
@@ -56,17 +48,9 @@ jobs:
           command: |
             echo "Waiting for Neo4j Test to be fully up and running..."
             for i in {1..180}; do
-              echo "Checking port 7484..."
-              if nc -zv localhost 7484; then
-                echo "Port 7484 is open, checking Neo4j..."
-                if curl -s -u neo4j:bacco4321 http://localhost:7484/browser/; then
-                  echo "Neo4j Test is up and running."
-                  break
-                else
-                  echo "Neo4j Test not ready yet."
-                fi
-              else
-                echo "Port 7484 is not open yet."
+              if curl -s -u neo4j:bacco4321 http://localhost:7475/browser/; then
+                echo "Neo4j Test is up and running."
+                break
               fi
               echo "Waiting..."
               sleep 5
@@ -88,7 +72,7 @@ jobs:
           name: Setup environment
           command: |
             sudo apt-get update
-            sudo apt-get install -y lib32stdc++6 netcat
+            sudo apt-get install -y lib32stdc++6
             sudo apt-get upgrade
 
       - run:
@@ -172,17 +156,9 @@ jobs:
           command: |
             echo "Verifying connection to Neo4j Test..."
             for i in {1..180}; do
-              echo "Checking port 7484..."
-              if nc -zv localhost 7484; then
-                echo "Port 7484 is open, checking Neo4j..."
-                if curl -s -u neo4j:bacco4321 http://localhost:7484/browser/; then
-                  echo "Connection to Neo4j Test is successful."
-                  break
-                else
-                  echo "Neo4j Test not ready yet."
-                fi
-              else
-                echo "Port 7484 is not open yet."
+              if curl -s -u neo4j:bacco4321 http://localhost:7475/browser/; then
+                echo "Connection to Neo4j Test is successful."
+                break
               fi
               echo "Waiting..."
               sleep 5
@@ -193,17 +169,9 @@ jobs:
           command: |
             echo "Verifying connection to Neo4j Dev..."
             for i in {1..180}; do
-              echo "Checking port 7474..."
-              if nc -zv localhost 7474; then
-                echo "Port 7474 is open, checking Neo4j..."
-                if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
-                  echo "Connection to Neo4j Dev is successful."
-                  break
-                else
-                  echo "Neo4j Dev not ready yet."
-                fi
-              else
-                echo "Port 7474 is not open yet."
+              if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
+                echo "Connection to Neo4j Dev is successful."
+                break
               fi
               echo "Waiting..."
               sleep 5
