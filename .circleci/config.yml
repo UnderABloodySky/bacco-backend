@@ -128,14 +128,15 @@ jobs:
             curl -i -u neo4j:bacco4321 http://localhost:7688/browser/
 
       - run:
-          name: Verify connection to Neo4j dev
+          name: Verify connection to Neo4j Dev
           command: |
-            echo "Verifying connection to Neo4j dev..."
+            echo "Verifying connection to Neo4j Dev..."
             curl -i -u neo4j:bacco4321 http://localhost:7687/browser/
 
       - run:
           name: Run tests with detailed logging
-            ./gradlew test --warning-mode all --info --debug
+          command: |
+            ./gradlew test --warning-mode all --info --debug -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
 
       - store_artifacts:
           path: build/reports/tests/test
