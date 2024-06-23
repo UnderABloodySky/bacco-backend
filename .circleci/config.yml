@@ -21,30 +21,32 @@ jobs:
       - run:
           name: Start Neo4j Dev
           command: |
-            docker run -d --name dev --env-file initial-password.env -p 7474:7474 -p 7687:7687 neo4j:5.12.0
-            sleep 10
+            docker run -d --name dev --env-file initial-password.env -p 7476:7474 -p 7689:7687 neo4j:5.12.0
+            sleep 60
             docker ps -a
             docker logs dev
+            docker inspect dev
 
       - run:
           name: Start Neo4j Test
           command: |
-            docker run -d --name test --env-file initial-password.env -p 7475:7474 -p 7688:7687 neo4j:5.12.0
-            sleep 10
+            docker run -d --name test --env-file initial-password.env -p 7477:7474 -p 7690:7687 neo4j:5.12.0
+            sleep 60
             docker ps -a
             docker logs test
+            docker inspect test
 
       - run:
           name: Wait for Neo4j Dev to be fully up and running
           command: |
             echo "Waiting for Neo4j Dev to be fully up and running..."
             for i in {1..180}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
+              if curl -s -u neo4j:bacco4321 http://localhost:7476/browser/; then
                 echo "Neo4j Dev is up and running."
                 break
               fi
-              echo "Waiting..."
-              sleep 5
+              echo "Waiting... $i"
+              sleep 10
             done
             docker logs dev
 
@@ -53,14 +55,22 @@ jobs:
           command: |
             echo "Waiting for Neo4j Test to be fully up and running..."
             for i in {1..180}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7475/browser/; then
+              if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
                 echo "Neo4j Test is up and running."
                 break
               fi
-              echo "Waiting..."
-              sleep 5
+              echo "Waiting... $i"
+              sleep 10
             done
             docker logs test
+
+      - run:
+          name: Verificar archivo application-test.properties
+          command: cat src/test/resources/application-test.properties
+
+      - run:
+          name: Verificar archivo application.properties
+          command: cat src/main/resources/application.properties
 
       - persist_to_workspace:
           root: /home/circleci
@@ -78,6 +88,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y lib32stdc++6
+            sudo apt-get install -y cypher-shell
             sudo apt-get upgrade
 
       - run:
@@ -101,7 +112,7 @@ jobs:
       - run:
           name: Update application-test.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7688" > src/test/resources/application-test.properties
+            echo "spring.neo4j.uri=bolt://localhost:7690" > src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
@@ -120,7 +131,7 @@ jobs:
       - run:
           name: Update application-dev.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application.properties
+            echo "spring.neo4j.uri=bolt://localhost:7689" > src/main/resources/application.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/main/resources/application.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
@@ -161,12 +172,12 @@ jobs:
           command: |
             echo "Verifying connection to Neo4j Test..."
             for i in {1..180}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7475/browser/; then
+              if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
                 echo "Connection to Neo4j Test is successful."
                 break
               fi
-              echo "Waiting..."
-              sleep 5
+              echo "Waiting... $i"
+              sleep 10
             done
 
       - run:
@@ -174,13 +185,23 @@ jobs:
           command: |
             echo "Verifying connection to Neo4j Dev..."
             for i in {1..180}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
+              if curl -s -u neo4j:bacco4321 http://localhost:7476/browser/; then
                 echo "Connection to Neo4j Dev is successful."
                 break
               fi
-              echo "Waiting..."
-              sleep 5
+              echo "Waiting... $i"
+              sleep 10
             done
+
+      - run:
+          name: Verify Neo4j connection with cypher-shell (Dev)
+          command: |
+            docker exec dev cypher-shell -u neo4j -p bacco4321 -d system "RETURN 1"
+
+      - run:
+          name: Verify Neo4j connection with cypher-shell (Test)
+          command: |
+            docker exec test cypher-shell -u neo4j -p bacco4321 -d system "RETURN 1"
 
       - run:
           name: Run tests with detailed logging
