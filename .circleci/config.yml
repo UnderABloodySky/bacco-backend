@@ -19,11 +19,11 @@ jobs:
           command: echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
 
       - run:
-          name: Verificar archivo application-test.properties
+          name: Verify application-test.properties
           command: cat src/test/resources/application-test.properties
 
       - run:
-          name: Verificar archivo application.properties
+          name: Verify application.properties
           command: cat src/main/resources/application.properties
 
       - persist_to_workspace:
@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Ensure properties file exists for dev
           command: |
-            if [ ! -f src/main/resources/application.properties ]; then
+            if [ ! -f src/main/resources/application.properties]; then
               echo "Creating src/main/resources/application.properties"
               mkdir -p src/main/resources
               touch src/main/resources/application.properties
@@ -165,4 +165,26 @@ jobs:
       - run:
           name: Verify Neo4j connection with cypher-shell
           command: |
-            docker exec test cypher-shell -u neo4j -p bacco
+            docker exec test cypher-shell -u neo4j -p bacco4321 -d system "RETURN 42"
+            docker logs test
+
+      - run:
+          name: Run tests with detailed logging
+          command: |
+            ./gradlew test --warning-mode all --info --debug -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
+
+      - store_artifacts:
+          path: build/reports/tests/test
+          destination: test-reports
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - setup
+      - build:
+          requires:
+            - setup
+      - test:
+          requires:
+            - build
