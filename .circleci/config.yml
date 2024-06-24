@@ -15,17 +15,13 @@ jobs:
           version: 20.10.7
 
       - run:
-          name: Start Docker service
-          command: sudo service docker start
-
-      - run:
           name: Create initial password file for Neo4j
           command: echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
 
       - run:
           name: Start Neo4j
           command: |
-            docker run -d --name test --env-file initial-password.env -p 7477:7474 -p 7687:7687 neo4j:5.12.0
+            sudo docker run -d --name test --env-file initial-password.env -p 7477:7474 -p 7687:7687 neo4j:5.12.0
             sleep 90
             docker ps -a
             docker logs test
