@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Ensure properties file exists for dev
           command: |
-            if [ ! -f src/main/resources/application.properties]; then
+            if [ ! -f src/main/resources/application.properties ]; then
               echo "Creating src/main/resources/application.properties"
               mkdir -p src/main/resources
               touch src/main/resources/application.properties
@@ -134,7 +134,7 @@ jobs:
           name: Wait for Neo4j to be fully up and running
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
-            for i in {1..240}; do
+            for i in {1..300}; do  # Incrementando el tiempo de espera a 300 intentos
               if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
                 echo "Neo4j is up and running."
                 break
@@ -152,7 +152,7 @@ jobs:
           name: Verify connection to Neo4j
           command: |
             echo "Verifying connection to Neo4j..."
-            for i in {1..240}; do
+            for i in {1..300}; do  # Incrementando el tiempo de espera a 300 intentos
               if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
                 echo "Connection to Neo4j is successful."
                 break
