@@ -153,12 +153,6 @@ jobs:
           command: ls -R build/
 
       - run:
-          name: Verify Neo4j connection with cypher-shell
-          command: |
-            docker exec test cypher-shell -u neo4j -p bacco4321 -d system "RETURN 42"
-            docker logs test
-
-      - run:
           name: Run tests with detailed logging
           command: |
             ./gradlew test --warning-mode all --info --debug -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
