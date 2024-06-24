@@ -66,10 +66,6 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y lib32stdc++6
             sudo apt-get upgrade
-            wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
-            echo 'deb https://debian.neo4j.com stable 5' | sudo tee /etc/apt/sources.list.d/neo4j.list
-            sudo apt-get update
-            sudo apt-get install -y cypher-shell
 
       - run:
           name: Change permissions of gradlew
