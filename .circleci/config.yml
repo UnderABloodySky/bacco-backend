@@ -19,36 +19,27 @@ jobs:
           command: echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
 
       - run:
-          name: Start Neo4j Dev
+          name: Start Neo4j
           command: |
-            docker run -d --name dev --env-file initial-password.env -p 7476:7474 -p 7689:7687 neo4j:5.12.0
+            docker run -d --name neo4j_instance --env-file initial-password.env -p 7477:7474 -p 7687:7687 neo4j:5.12.0
             sleep 60
             docker ps -a
-            docker logs dev
-            docker inspect dev
+            docker logs neo4j_instance
+            docker inspect neo4j_instance
 
       - run:
-          name: Start Neo4j Test
+          name: Wait for Neo4j to be fully up and running
           command: |
-            docker run -d --name test --env-file initial-password.env -p 7477:7474 -p 7690:7687 neo4j:5.12.0
-            sleep 60
-            docker ps -a
-            docker logs test
-            docker inspect test
-
-      - run:
-          name: Wait for Neo4j Test to be fully up and running
-          command: |
-            echo "Waiting for Neo4j Test to be fully up and running..."
+            echo "Waiting for Neo4j to be fully up and running..."
             for i in {1..180}; do
               if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
-                echo "Neo4j Test is up and running."
+                echo "Neo4j is up and running."
                 break
               fi
               echo "Waiting... $i"
               sleep 10
             done
-            docker logs test
+            docker logs neo4j_instance
 
       - run:
           name: Verificar archivo application-test.properties
@@ -98,7 +89,7 @@ jobs:
       - run:
           name: Update application-test.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7690" > src/test/resources/application-test.properties
+            echo "spring.neo4j.uri=bolt://localhost:7687" > src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
@@ -115,9 +106,9 @@ jobs:
             fi
 
       - run:
-          name: Update application-dev.properties
+          name: Update application.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7689" > src/main/resources/application.properties
+            echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/main/resources/application.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
@@ -154,26 +145,22 @@ jobs:
           command: ls -R build/
 
       - run:
-          name: Verify connection to Neo4j Test
+          name: Verify connection to Neo4j
           command: |
-            echo "Verifying connection to Neo4j Test..."
+            echo "Verifying connection to Neo4j..."
             for i in {1..200}; do
               if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
-                echo "Connection to Neo4j Test is successful."
+                echo "Connection to Neo4j is successful."
                 break
               fi
               echo "Waiting... $i"
               sleep 12
             done
-      - run:
-          name: Verify Neo4j connection with cypher-shell (Test)
-          command: |
-            docker exec dev cypher-shell -u neo4j -p bacco4321 -d system "RETURN 42"
 
       - run:
-          name: Verify Neo4j connection with cypher-shell (Test)
+          name: Verify Neo4j connection with cypher-shell
           command: |
-            docker exec test cypher-shell -u neo4j -p bacco4321 -d system "RETURN 1"
+            docker exec neo4j_instance cypher-shell -u neo4j -p bacco4321 -d system "RETURN 42"
 
       - run:
           name: Run tests with detailed logging
