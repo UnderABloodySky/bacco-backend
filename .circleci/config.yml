@@ -133,3 +133,55 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - project
+
+  test:
+    executor: kotlin-executor
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+
+      - run:
+          name: List files after compile
+          command: ls -R build/
+
+      - run:
+          name: Verify connection to Neo4j
+          command: |
+            echo "Verifying connection to Neo4j..."
+            for i in {1..200}; do
+              if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
+                echo "Connection to Neo4j is successful."
+                break
+              fi
+              echo "Waiting... $i"
+              sleep 12
+            done
+
+      - run:
+          name: Verify Neo4j connection with cypher-shell
+          command: |
+            docker exec test cypher-shell -u neo4j -p bacco4321 -d system "RETURN 42"
+
+      - run:
+          name: Run tests with detailed logging
+          command: |
+            ./gradlew test --warning-mode all --info --debug -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
+
+      - store_artifacts:
+          path: build/reports/tests/test
+          destination: test-reports
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - setup
+      - build:
+          requires:
+            - setup
+      - test:
+          requires:
+            - build
