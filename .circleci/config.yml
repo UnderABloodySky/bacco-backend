@@ -25,7 +25,7 @@ jobs:
       - run:
           name: Start Neo4j
           command: |
-            sudo docker run -d --name test --env-file initial-password.env -p 7477:7474 -p 7687:7687 neo4j:5.12.0
+            docker run -d --name test --env-file initial-password.env -p 7477:7474 -p 7687:7687 neo4j:5.12.0
             sleep 90
             docker ps -a
             docker logs test
@@ -161,10 +161,14 @@ jobs:
             done
 
       - run:
+          name: Verify Neo4j connection with cypher-shell
+          command: |
+            docker exec test cypher-shell -u neo4j -p bacco4321 -d system "RETURN 42"
+
+      - run:
           name: Run tests with detailed logging
           command: |
-            ./gradlew test
-            
+            ./gradlew test --warning-mode all --info --debug -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE
 
       - store_artifacts:
           path: build/reports/tests/test
