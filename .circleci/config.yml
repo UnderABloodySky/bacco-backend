@@ -153,20 +153,6 @@ jobs:
           command: ls -R build/
 
       - run:
-          name: Verify connection to Neo4j
-          command: |
-            echo "Verifying connection to Neo4j..."
-            for i in {1..300}; do  # Incrementando el tiempo de espera a 300 intentos
-              if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
-                echo "Connection to Neo4j is successful."
-                break
-              fi
-              echo "Waiting... $i"
-              sleep 10
-            done
-            docker logs test
-
-      - run:
           name: Verify Neo4j connection with cypher-shell
           command: |
             docker exec test cypher-shell -u neo4j -p bacco4321 -d system "RETURN 42"
