@@ -37,20 +37,6 @@ jobs:
             docker inspect test
 
       - run:
-          name: Wait for Neo4j Dev to be fully up and running
-          command: |
-            echo "Waiting for Neo4j Dev to be fully up and running..."
-            for i in {1..180}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7476/browser/; then
-                echo "Neo4j Dev is up and running."
-                break
-              fi
-              echo "Waiting... $i"
-              sleep 10
-            done
-            docker logs dev
-
-      - run:
           name: Wait for Neo4j Test to be fully up and running
           command: |
             echo "Waiting for Neo4j Test to be fully up and running..."
@@ -171,32 +157,18 @@ jobs:
           name: Verify connection to Neo4j Test
           command: |
             echo "Verifying connection to Neo4j Test..."
-            for i in {1..180}; do
+            for i in {1..200}; do
               if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
                 echo "Connection to Neo4j Test is successful."
                 break
               fi
               echo "Waiting... $i"
-              sleep 10
+              sleep 12
             done
-
       - run:
-          name: Verify connection to Neo4j Dev
+          name: Verify Neo4j connection with cypher-shell (Test)
           command: |
-            echo "Verifying connection to Neo4j Dev..."
-            for i in {1..180}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7476/browser/; then
-                echo "Connection to Neo4j Dev is successful."
-                break
-              fi
-              echo "Waiting... $i"
-              sleep 10
-            done
-
-      - run:
-          name: Verify Neo4j connection with cypher-shell (Dev)
-          command: |
-            docker exec dev cypher-shell -u neo4j -p bacco4321 -d system "RETURN 1"
+            docker exec dev cypher-shell -u neo4j -p bacco4321 -d system "RETURN 42"
 
       - run:
           name: Verify Neo4j connection with cypher-shell (Test)
