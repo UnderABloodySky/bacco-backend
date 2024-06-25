@@ -8,3 +8,8 @@ services:
       - "7687:7687"
     environment:
       NEO4J_AUTH: "neo4j/bacco4321"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7474"]
+      interval: 30s
+      timeout: 10s
+      retries: 5

@@ -77,7 +77,7 @@ jobs:
             echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-request-size=20MB" >> src/main/resources/application.properties
-            echo "spring.profiles.active=dev" >> src/test/resources/application.properties
+            echo "spring.profiles.active=dev" >> src/main/resources/application.properties
 
       - run:
           name: Verify application-test.properties
