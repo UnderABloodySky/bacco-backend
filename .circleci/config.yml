@@ -157,7 +157,7 @@ jobs:
       - run:
           name: Run tests with detailed logging
           command: |
-            sudo ./gradlew test  
+            sudo ./gradlew test --scan --warning-mode all
 
       - store_artifacts:
           path: build/reports/tests/test
