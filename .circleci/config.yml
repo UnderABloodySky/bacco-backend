@@ -128,7 +128,7 @@ jobs:
                 echo "Neo4j is up and running in 7474."
                 break
               fi
-              if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
+              if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
                 echo "Neo4j is up and running in 7477."
                 break
               fi
