@@ -144,7 +144,7 @@ jobs:
       - run:
           name: Run tests with detailed logging
           command: |
-            sudo ./gradlew test --warning-mode all --info --debug -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE      
+            sudo ./gradlew test --warning-mode all --info --debug 
 
       - store_artifacts:
           path: build/reports/tests/test
