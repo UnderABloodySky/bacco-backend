@@ -62,7 +62,7 @@ jobs:
       - run:
           name: Update application-test.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7687" > src/test/resources/application-test.properties
+            echo "spring.neo4j.uri=bolt://0.0.0.0:7687" > src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
@@ -72,7 +72,7 @@ jobs:
       - run:
           name: Update application.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application.properties
+            echo "spring.neo4j.uri=bolt://0.0.0.0:7687" > src/main/resources/application.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/main/resources/application.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
@@ -149,7 +149,7 @@ jobs:
             docker inspect test
             echo "======================================================="
             echo "docker exec:"
-            ocker exec -it test /bin/bash
+            docker exec -it test /bin/bash
             echo "======================================================="
 
       - run:
