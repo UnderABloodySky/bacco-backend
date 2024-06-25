@@ -135,7 +135,22 @@ jobs:
               echo "Waiting... $i"
               sleep 10
             done
+            echo "docker logs:"
             docker logs test
+
+      - run:
+          name: Inspect Neo4j
+          command: |
+            echo "docker logs:"
+            docker logs test
+            echo "======================================================="
+            echo "docker inspect:"
+            echo "======================================================="
+            docker inspect test
+            echo "======================================================="
+            echo "docker exec:"
+            ocker exec -it test /bin/bash
+            echo "======================================================="
 
       - run:
           name: List files after compile
@@ -144,7 +159,7 @@ jobs:
       - run:
           name: Run tests with detailed logging
           command: |
-            sudo ./gradlew test --warning-mode all --info --debug 
+            sudo ./gradlew test  
 
       - store_artifacts:
           path: build/reports/tests/test
