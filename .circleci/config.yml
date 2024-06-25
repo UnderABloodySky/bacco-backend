@@ -145,15 +145,6 @@ jobs:
           name: List files after compile
           command: ls -R build/
 
-      - run:
-          name: Verificar conexión con Neo4j usando curl
-          command: |
-            curl -s -u neo4j:bacco4321 http://localhost:7477/browser/
-            if [ $? -ne 0 ]; then
-              echo "Failed to connect to Neo4j"
-              exit 1
-            fi
-            echo "Successfully connected to Neo4j"
 
       - run:
           name: Verify Neo4j connection with cypher-shell
