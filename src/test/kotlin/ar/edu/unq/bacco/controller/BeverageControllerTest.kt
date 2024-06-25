@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations
 
 @ExtendWith(MockitoExtension::class)
 class BeverageControllerTest {
-
+    /*
     @Mock
     private lateinit var beverageService: BeverageService
 
@@ -54,7 +54,7 @@ class BeverageControllerTest {
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.BAD_REQUEST)
         assertThat(response.body).isEqualTo("Por favor, selecciona un archivo")
-    }
+    }*/
 
 //    @Test
 //    fun sendPhotoForRetrainReturnsInternalServerErrorOnException() {

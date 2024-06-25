@@ -19,14 +19,6 @@ jobs:
           name: Create initial password file for Neo4j
           command: echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
 
-      - run:
-          name: Verify application-test.properties
-          command: cat src/test/resources/application-test.properties
-
-      - run:
-          name: Verify application.properties
-          command: cat src/main/resources/application.properties
-
       - persist_to_workspace:
           root: /home/circleci
           paths:
@@ -55,22 +47,13 @@ jobs:
             - v1-dependencies-
 
       - run:
-          name: Ensure properties file exists
+          name: Ensure properties file exists for tests
           command: |
             if [ ! -f src/test/resources/application-test.properties ]; then
               echo "Creating src/test/resources/application-test.properties"
               mkdir -p src/test/resources
               touch src/test/resources/application-test.properties
             fi
-
-      - run:
-          name: Update application-test.properties
-          command: |
-            echo "spring.neo4j.uri=bolt://localhost:7687" > src/test/resources/application-test.properties
-            echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
-            echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
-            echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
-            echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
 
       - run:
           name: Ensure properties file exists for dev
@@ -82,6 +65,16 @@ jobs:
             fi
 
       - run:
+          name: Update application-test.properties
+          command: |
+            echo "spring.neo4j.uri=bolt://localhost:7687" > src/test/resources/application-test.properties
+            echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
+            echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
+            echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
+            echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
+
+
+      - run:
           name: Update application.properties
           command: |
             echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application.properties
@@ -89,6 +82,14 @@ jobs:
             echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-request-size=20MB" >> src/main/resources/application.properties
+
+      - run:
+          name: Verify application-test.properties
+          command: cat src/test/resources/application-test.properties
+
+      - run:
+          name: Verify application.properties
+          command: cat src/main/resources/application.properties
 
       - run:
           name: List files before compile
@@ -133,7 +134,11 @@ jobs:
             echo "Waiting for Neo4j to be fully up and running..."
             for i in {1..300}; do  # Incrementando el tiempo de espera a 300 intentos
               if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
-                echo "Neo4j is up and running."
+                echo "Neo4j is up and running in 7474."
+                break
+              fi
+              if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
+                echo "Neo4j is up and running in 7477."
                 break
               fi
               echo "Waiting... $i"
@@ -148,7 +153,7 @@ jobs:
       - run:
           name: Run tests with detailed logging
           command: |
-            ./gradlew test 
+            sudo ./gradlew test --warning-mode all --info --debug -Dorg.slf4j.simple.SimpleLogger.LEVEL=DEBUG -Dorg.springframework.core.log.LogMessage.LEVEL_TRACE      
 
       - store_artifacts:
           path: build/reports/tests/test

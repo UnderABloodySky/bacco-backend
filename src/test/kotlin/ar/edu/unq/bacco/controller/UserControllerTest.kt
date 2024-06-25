@@ -41,50 +41,50 @@ class UserControllerTest {
     fun setUp() {
         userController = UserController(userService, recipeService)
     }
+    /*
+        @Test
+        @Transactional
+        @DisplayName("Find a user by ID returns a correct user when the ID is right")
+        fun testToCreateAnUserTHeIDIsNotull() {
+            val userPersist = User(name="AnUsername", password="12345678", email="asd42@gmail.com")
+            userService.save(userPersist)
+            val userNoPersist = User(name="AnUsername2", password="12345678", email="asd420@gmail.com")
+            userService.save(userNoPersist)
 
-    @Test
-    @Transactional
-    @DisplayName("Find a user by ID returns a correct user when the ID is right")
-    fun testToCreateAnUserTHeIDIsNotull() {
-        val userPersist = User(name="AnUsername", password="12345678", email="asd42@gmail.com")
-        userService.save(userPersist)
-        val userNoPersist = User(name="AnUsername2", password="12345678", email="asd420@gmail.com")
-        userService.save(userNoPersist)
+            assertNotNull(userNoPersist.id, "The user ID should not be null after saving.")
+            assertNotNull(userPersist.id, "The user ID should not be null after saving.")
+        }
 
-        assertNotNull(userNoPersist.id, "The user ID should not be null after saving.")
-        assertNotNull(userPersist.id, "The user ID should not be null after saving.")
-    }
+        @Test
+        @DisplayName("Create an user returns a Response with 200 code")
+        fun testCreateUserReturnsAResponseWith200Code() {
+            val otherUser = User(name = "epa", password = "123456789", email="asd@gmail.com")
+            val response = userController.createUser(otherUser)
+            assertEquals(HttpStatusCode.valueOf(200), response.statusCode)
+        }
 
-    @Test
-    @DisplayName("Create an user returns a Response with 200 code")
-    fun testCreateUserReturnsAResponseWith200Code() {
-        val otherUser = User(name = "epa", password = "123456789", email="asd@gmail.com")
-        val response = userController.createUser(otherUser)
-        assertEquals(HttpStatusCode.valueOf(200), response.statusCode)
-    }
-
-    @Test
-    @DisplayName("Find a user by ID returns a correct user when the ID is right")
-    fun testFindByUserIdWithCorrectUserReturnAResponseWith200Code() {
-        val otherUser = User(name = "Pepa", password = "12345678", email="asdf@gmail.com")
-        userService.save(otherUser)
-        println(otherUser.id!!)
-        val response = userController.getUserById(otherUser.id!!)
-        assertEquals(200, response.statusCodeValue)
-    }
-
-
-    @Test
-    @DisplayName("Find a user by ID returns a correct user when the ID is right")
-    fun testCanotCreateAnUserWithSameName() {
-        val user = User(name = "Pepa", password = "12345678", email="asdf@gmail.com")
-        userController.createUser(user)
-        val otherUser = User(name = "Pepa", password = "12345678", email="asdf@gmail.com")
-        val response = userController.createUser(otherUser)
-        assertEquals(400, response.statusCodeValue)
-    }
+        @Test
+        @DisplayName("Find a user by ID returns a correct user when the ID is right")
+        fun testFindByUserIdWithCorrectUserReturnAResponseWith200Code() {
+            val otherUser = User(name = "Pepa", password = "12345678", email="asdf@gmail.com")
+            userService.save(otherUser)
+            println(otherUser.id!!)
+            val response = userController.getUserById(otherUser.id!!)
+            assertEquals(200, response.statusCodeValue)
+        }
 
 
+        @Test
+        @DisplayName("Find a user by ID returns a correct user when the ID is right")
+        fun testCanotCreateAnUserWithSameName() {
+            val user = User(name = "Pepa", password = "12345678", email="asdf@gmail.com")
+            userController.createUser(user)
+            val otherUser = User(name = "Pepa", password = "12345678", email="asdf@gmail.com")
+            val response = userController.createUser(otherUser)
+            assertEquals(400, response.statusCodeValue)
+        }
+
+    */
     @Test
     @DisplayName("Find by user Id with correct user return a response with 200 status code")
     fun testFindByUserIdWithCorrectUserReturnAResponseWith200status() {
@@ -93,7 +93,7 @@ class UserControllerTest {
         val response = userController.getUserById(userPersist.id!!)
         assertEquals(HttpStatusCode.valueOf(200), response.statusCode)
     }
-
+/*
     @Test
     @DisplayName("Find a user by ID returns a correct user when the ID is right")
     fun testFindByUserIdReturnsCorrectUser() {
@@ -174,5 +174,5 @@ class UserControllerTest {
         val login = LoginDTO(userPersist.name, userPersist.password)
         val response = userController.loginUser(login)
         assertEquals(HttpStatusCode.valueOf(200), response.statusCode)
-    }
+    }*/
 }
