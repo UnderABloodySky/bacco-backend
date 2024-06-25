@@ -62,18 +62,17 @@ jobs:
       - run:
           name: Update application-test.properties
           command: |
-            echo "spring.neo4j.uri=bolt://0.0.0.0:7687" > src/test/resources/application-test.properties
+            echo "spring.neo4j.uri=bolt://localhost:7687" > src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
 
-
       - run:
           name: Update application.properties
           command: |
-            echo "spring.neo4j.uri=bolt://0.0.0.0:7687" > src/main/resources/application.properties
+            echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/main/resources/application.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
@@ -96,8 +95,6 @@ jobs:
           name: Compile the project
           command: ./gradlew compileKotlin
 
-
-
       - persist_to_workspace:
           root: /home/circleci
           paths:
@@ -119,25 +116,20 @@ jobs:
       - run:
           name: Start Neo4j
           command: |
-            sudo docker run -d --name test --env-file initial-password.env -p 7477:7477 -p 7687:7687 neo4j:5.12.0
+            sudo docker run -d --name test --env-file initial-password.env -p 7474:7474 -p 7687:7687 neo4j:5.12.0
 
       - run:
           name: Wait for Neo4j to be fully up and running
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
-            for i in {1..40}; do  # Incrementando el tiempo de espera a 300 intentos
-              if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
-                echo "Neo4j is up and running in 7474."
-                break
-              fi
-              if curl -s -u neo4j:bacco4321 http://localhost:7477/browser/; then
-                echo "Neo4j is up and running in 7477."
+            for i in {1..40}; do
+              if curl -s -u neo4j:bacco4321 http://localhost:7474; then
+                echo "Neo4j is up and running."
                 break
               fi
               echo "Waiting... $i"
               sleep 10
             done
-            echo "docker logs:"
             docker logs test
 
       - run:
@@ -150,7 +142,6 @@ jobs:
             echo "======================================================="
             docker inspect test
             echo "======================================================="
-
 
       - run:
           name: List files after compile
