@@ -42,6 +42,12 @@ jobs:
           command: sudo chmod +x ./gradlew
 
       - run:
+          name: Remove existing properties files
+          command: |
+            rm -f src/test/resources/application-test.properties
+            rm -f src/main/resources/application.properties
+
+      - run:
           name: Ensure properties file exists for tests
           command: |
             if [ ! -f src/test/resources/application-test.properties ]; then
