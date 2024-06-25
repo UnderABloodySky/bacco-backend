@@ -123,7 +123,7 @@ jobs:
           name: Wait for Neo4j to be fully up and running
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
-            for i in {1..300}; do  # Incrementando el tiempo de espera a 300 intentos
+            for i in {1..40}; do  # Incrementando el tiempo de espera a 300 intentos
               if curl -s -u neo4j:bacco4321 http://localhost:7474/browser/; then
                 echo "Neo4j is up and running in 7474."
                 break
