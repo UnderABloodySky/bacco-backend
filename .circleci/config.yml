@@ -41,11 +41,6 @@ jobs:
           name: Change permissions of gradlew
           command: sudo chmod +x ./gradlew
 
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            - v1-dependencies-
-
       - run:
           name: Ensure properties file exists for tests
           command: |
@@ -99,11 +94,7 @@ jobs:
           name: Compile the project
           command: ./gradlew compileKotlin
 
-      - save_cache:
-          paths:
-            - ~/.gradle/caches/
-            - ~/.gradle/wrapper/
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+
 
       - persist_to_workspace:
           root: /home/circleci

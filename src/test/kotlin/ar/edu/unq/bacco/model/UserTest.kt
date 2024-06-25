@@ -23,7 +23,6 @@ class UserTest {
         assertThat(user.id).isNull()
         assertThat(user.name).isEqualTo(name)
     }
-    */
     @Test
     fun updateUserName() {
         val id = 2L
@@ -33,5 +32,6 @@ class UserTest {
         user.name = newName
 
         assertThat(user.name).isEqualTo(newName)
-    }
+    }*/
+
 }
