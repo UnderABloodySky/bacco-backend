@@ -148,9 +148,7 @@ jobs:
             echo "======================================================="
             docker inspect test
             echo "======================================================="
-            echo "docker exec:"
-            docker exec -it test /bin/bash
-            echo "======================================================="
+
 
       - run:
           name: List files after compile
