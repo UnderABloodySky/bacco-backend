@@ -148,7 +148,7 @@ jobs:
               echo "Waiting... $i"
               sleep 12
             done
-            docker-compose -f docker-compose.yml logs neo4j
+            sudo docker-compose -f docker-compose.yml logs neo4j
 
       - run:
           name: Check Docker Compose services status
@@ -206,10 +206,17 @@ jobs:
           command: |
             echo "======================================================="
             echo "docker exec"
-            echo "======================================================="     
-            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7474"
-            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7687"
-            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7473"
+            echo "======================================================="
+            NEO4J_CONTAINER_ID=$(sudo docker-compose -f docker-compose.yml ps -q neo4j)
+            if [ -n "$NEO4J_CONTAINER_ID" ] && [ "$(sudo docker inspect -f '{{.State.Running}}' $NEO4J_CONTAINER_ID)" = "true" ]; then
+              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7474"
+              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7687"
+              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7473"
+            else
+              echo "Error: Neo4j container is not running."
+              exit 1
+            fi
+
       - run:
           name: Verify Neo4j connectivity from host
           command: curl -u neo4j:bacco4321 http://project-neo4j:7687
