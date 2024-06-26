@@ -144,12 +144,13 @@ jobs:
                 echo "Neo4j is up and running in 7687."
                 break
               fi
-            if curl -s -u neo4j:bacco4321 http://localhost:7474; then
-              echo "Neo4j is up and running in 7474."
-              break
-            fi
-            echo "Waiting... $i"
-             docker-compose -f docker-compose.yml logs neo4j
+              if curl -s -u neo4j:bacco4321 http://localhost:7474; then
+                echo "Neo4j is up and running in 7474."
+                break
+              fi
+              echo "Waiting... $i"
+            done
+            docker-compose -f docker-compose.yml logs neo4j
 
       - run:
           name: Check Docker Compose services status
