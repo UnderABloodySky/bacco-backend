@@ -190,15 +190,6 @@ jobs:
             fi
 
       - run:
-          name: Inspect Neo4j 2
-          command: |
-            echo "======================================================="
-            echo "docker exec"
-            echo "======================================================="     
-            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7474"
-            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7687"
-            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7473"
-      - run:
           name: Verify Neo4j connectivity from host
           command: curl -u neo4j:bacco4321 http://project-neo4j:7687
 
