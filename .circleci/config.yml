@@ -172,12 +172,17 @@ jobs:
             echo "docker inspect:"
             echo "======================================================="
             NEO4J_CONTAINER_ID=$(sudo docker-compose -f docker-compose.yml ps -q neo4j)
-            sudo docker inspect $NEO4J_CONTAINER_ID
+            if [ -z "$NEO4J_CONTAINER_ID" ]; then
+              echo "Error: Neo4j container ID not found."
+            else
+              sudo docker inspect $NEO4J_CONTAINER_ID
+            fi
             echo "======================================================="
             echo "docker ps:"
             echo "======================================================="
             sudo docker ps
             echo "======================================================="
+
 
       - run:
           name: Start Neo4j container if not started
