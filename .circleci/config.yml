@@ -147,9 +147,6 @@ jobs:
               echo "Waiting... $i"
               sleep 10
             done
-            sudo mkdir -p /var/lib/apt/lists/partial
-            sudo chmod 755 /var/lib/apt/lists/partial
-            sudo docker-compose -f docker-compose.yml logs neo4j
 
       - run:
           name: Check Docker Compose services status
@@ -158,20 +155,21 @@ jobs:
 
       - run:
           name: Docker compose inspect
-          command: | 
+          command: |
             sudo docker ps
             sudo docker-compose ps
 
       - run:
           name: Inspect Neo4j
           command: |
-            
+            sudo mkdir -p /var/lib/apt/lists/partial
+            sudo chmod 755 /var/lib/apt/lists/partial
             echo "docker logs:"
             sudo docker-compose -f docker-compose.yml logs neo4j
             echo "======================================================="
             echo "docker inspect:"
             echo "======================================================="
-            sudo docker inspect $(docker-compose -f docker-compose.yml ps -q neo4j)
+            sudo docker inspect $(sudo docker-compose -f docker-compose.yml ps -q neo4j)
             echo "======================================================="
             echo "docker ps:"
             echo "======================================================="
