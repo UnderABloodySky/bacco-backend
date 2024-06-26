@@ -129,14 +129,10 @@ jobs:
           command: sudo docker-compose -f docker-compose.yml up -d neo4j
 
       - run:
-          name: Wait for Neo4j to start x1
-          command: sleep 20
-
-      - run:
           name: Wait for Neo4j to be fully up and running
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
-            for i in {1..42}; do
+            for i in {1..40}; do
               if curl -s -u neo4j:bacco4321 http://localhost:7687; then
                 echo "Neo4j is up and running in 7687."
                 break
@@ -146,9 +142,9 @@ jobs:
                 break
               fi
               echo "Waiting... $i"
-              sleep 12
+              sleep 10  # Esperar 10 segundos antes de intentar nuevamente
             done
-            sudo docker-compose -f docker-compose.yml logs neo4j
+            docker-compose -f docker-compose.yml logs neo4j
 
       - run:
           name: Check Docker Compose services status
@@ -162,21 +158,7 @@ jobs:
             sudo docker-compose ps
 
       - run:
-          name: Wait for Neo4j to start x2
-          command: sleep 20
-
-      - run:
-          name: Start Neo4j container if not started
-          command: |
-            if sudo docker ps | grep -q project-neo4j; then
-              echo "Neo4j container is already running."
-            else
-              echo "Starting Neo4j container..."
-              sudo docker-compose -f docker-compose.yml up -d neo4j
-            fi
-
-      - run:
-          name: Wait
+          name: Wait for Neo4j to start
           command: sleep 20
 
       - run:
@@ -189,12 +171,8 @@ jobs:
             echo "======================================================="
             echo "docker inspect:"
             echo "======================================================="
-            NEO4J_CONTAINER_ID=$(sudo docker-compose -f docker-compose.yml ps -q neo4j)
-            if [ -z "$NEO4J_CONTAINER_ID" ]; then
-              echo "Error: Neo4j container ID not found."
-            else
-              sudo docker inspect $NEO4J_CONTAINER_ID
-            fi
+            NEO4J_CONTAINER_ID=$(docker-compose -f docker-compose.yml ps -q neo4j)
+            sudo docker inspect $NEO4J_CONTAINER_ID
             echo "======================================================="
             echo "docker ps:"
             echo "======================================================="
@@ -212,32 +190,21 @@ jobs:
             fi
 
       - run:
-          name: Wait
-          command: sleep 20
-
-      - run:
           name: Inspect Neo4j 2
           command: |
             echo "======================================================="
             echo "docker exec"
-            echo "======================================================="
-            NEO4J_CONTAINER_ID=$(sudo docker-compose -f docker-compose.yml ps -q neo4j)
-            if [ -n "$NEO4J_CONTAINER_ID" ] && [ "$(sudo docker inspect -f '{{.State.Running}}' $NEO4J_CONTAINER_ID)" = "true" ]; then
-              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://localhost:7474"
-              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://localhost:7687"
-              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://localhost:7473"
-            else
-              echo "Error: Neo4j container is not running."
-              exit 1
-            fi
+            echo "======================================================="     
+            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7474"
+            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7687"
+            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7473"
+      - run:
+          name: Verify Neo4j connectivity from host
+          command: curl -u neo4j:bacco4321 http://project-neo4j:7687
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7687
-
-      - run:
-          name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7474
+          command: curl -u neo4j:bacco4321 http://project-neo4j:7474
 
       - run:
           name: List files after compile
