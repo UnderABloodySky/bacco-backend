@@ -171,6 +171,21 @@ jobs:
             echo "======================================================="
             docker inspect $(docker-compose -f docker-compose.yml ps -q neo4j)
             echo "======================================================="
+            echo "docker ps:"
+            echo "======================================================="
+            docker ps
+            echo "======================================================="
+            echo "docker exec"
+            echo "======================================================="
+
+      - run:
+          name: Inspect Neo4j 2
+          command: |
+            echo "======================================================="
+            echo "docker exec"
+            echo "======================================================="     
+            docker exec -it project-neo4j-1 bash
+            curl -u neo4j:bacco4321 http://localhost:7474
 
       - run:
           name: List files after compile
@@ -179,7 +194,15 @@ jobs:
       - run:
           name: Run tests with detailed logging
           command: |
-            sudo ./gradlew test --scan --warning-mode all
+            sudo ./gradlew build test --scan --warning-mode all
+
+      - run:
+          name: Verify Neo4j connectivity from host
+          command: curl -u neo4j:bacco4321 http://localhost:7687
+
+      - run:
+          name: Verify Neo4j connectivity from host
+          ommand: curl -u neo4j:bacco4321 http://localhost:7474
 
       - store_artifacts:
           path: build/reports/tests/test

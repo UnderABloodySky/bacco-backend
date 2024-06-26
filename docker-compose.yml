@@ -6,6 +6,7 @@ services:
       - "7474:7474"
       - "7473:7473"
       - "7687:7687"
+    command: /bin/bash -c "apt-get update && apt-get install -y curl && /startup/docker-entrypoint.sh neo4j"
     environment:
       NEO4J_AUTH: "neo4j/bacco4321"
     healthcheck:
@@ -13,3 +14,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
+networks:
+  neo4j-network:
+
