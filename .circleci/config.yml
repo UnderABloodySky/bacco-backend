@@ -164,6 +164,10 @@ jobs:
             sudo docker-compose ps
 
       - run:
+          name: Wait for Neo4j to start
+          command: sleep 20
+
+      - run:
           name: Inspect Neo4j
           command: |
             sudo mkdir -p /var/lib/apt/lists/partial
