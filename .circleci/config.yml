@@ -166,6 +166,20 @@ jobs:
           command: sleep 20
 
       - run:
+          name: Start Neo4j container if not started
+          command: |
+            if sudo docker ps | grep -q project-neo4j; then
+              echo "Neo4j container is already running."
+            else
+              echo "Starting Neo4j container..."
+              sudo docker-compose -f docker-compose.yml up -d neo4j
+            fi
+
+      - run:
+          name: Wait
+          command: sleep 20
+
+      - run:
           name: Inspect Neo4j
           command: |
             sudo mkdir -p /var/lib/apt/lists/partial
@@ -209,9 +223,9 @@ jobs:
             echo "======================================================="
             NEO4J_CONTAINER_ID=$(sudo docker-compose -f docker-compose.yml ps -q neo4j)
             if [ -n "$NEO4J_CONTAINER_ID" ] && [ "$(sudo docker inspect -f '{{.State.Running}}' $NEO4J_CONTAINER_ID)" = "true" ]; then
-              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7474"
-              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7687"
-              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7473"
+              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://localhost:7474"
+              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://localhost:7687"
+              sudo docker exec -it $NEO4J_CONTAINER_ID bash -c "curl -u neo4j:bacco4321 http://localhost:7473"
             else
               echo "Error: Neo4j container is not running."
               exit 1
@@ -219,11 +233,11 @@ jobs:
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://project-neo4j:7687
+          command: curl -u neo4j:bacco4321 http://localhost:7687
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://project-neo4j:7474
+          command: curl -u neo4j:bacco4321 http://localhost:7474
 
       - run:
           name: List files after compile
