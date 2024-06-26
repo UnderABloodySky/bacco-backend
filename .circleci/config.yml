@@ -50,24 +50,6 @@ jobs:
             rm -f src/main/resources/application.properties
 
       - run:
-          name: Ensure properties file exists for tests
-          command: |
-            if [ ! -f src/test/resources/application-test.properties ]; then
-              echo "Creating src/test/resources/application-test.properties"
-              mkdir -p src/test/resources
-              touch src/test/resources/application-test.properties
-            fi
-
-      - run:
-          name: Ensure properties file exists for dev
-          command: |
-            if [ ! -f src/main/resources/application.properties ]; then
-              echo "Creating src/main/resources/application.properties"
-              mkdir -p src/main/resources
-              touch src/main/resources/application.properties
-            fi
-
-      - run:
           name: Verify existence of application-test.properties
           command: |
             ls -l src/test/resources/application-test.properties
@@ -84,6 +66,24 @@ jobs:
           command: |
             ls -l src/test/resources/
             ls -l src/main/resources/
+
+      - run:
+          name: Ensure properties file exists for tests
+          command: |
+            if [ ! -f src/test/resources/application-test.properties ]; then
+              echo "Creating src/test/resources/application-test.properties"
+              mkdir -p src/test/resources
+              touch src/test/resources/application-test.properties
+            fi
+
+      - run:
+          name: Ensure properties file exists for dev
+          command: |
+            if [ ! -f src/main/resources/application.properties ]; then
+              echo "Creating src/main/resources/application.properties"
+              mkdir -p src/main/resources
+              touch src/main/resources/application.properties
+            fi
 
       - run:
           name: Verify application-test.properties
