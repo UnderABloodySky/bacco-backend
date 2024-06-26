@@ -190,6 +190,29 @@ jobs:
             fi
 
       - run:
+          name: Wait for Neo4j to be healthy
+          command: |
+            echo "Waiting for Neo4j to be healthy..."
+            for i in {1..40}; do
+              STATUS=$(sudo docker inspect --format='{{.State.Health.Status}}' project-neo4j)
+              if [ "$STATUS" = "healthy" ]; then
+                echo "Neo4j is healthy."
+                break
+              fi
+              echo "Current status: $STATUS"
+              sleep 12
+            done
+            if [ "$STATUS" != "healthy" ]; then
+              echo "Neo4j did not become healthy in time."
+              exit 1
+            fi
+
+      - run:
+          name: Check Docker Compose services status
+          command: |
+            sudo docker-compose -f docker-compose.yml ps
+
+      - run:
           name: Verify Neo4j connectivity from host
           command: curl -u neo4j:bacco4321 http://localhost:7687
 

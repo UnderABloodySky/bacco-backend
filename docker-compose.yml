@@ -10,10 +10,12 @@ services:
     environment:
       NEO4J_AUTH: neo4j/bacco4321
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:7474"]
+      test: ["CMD", "curl", "-u", "neo4j:bacco4321", "http://localhost:7474"]
       interval: 30s
       timeout: 10s
       retries: 5
+    volumes:
+      - neo4j-data:/data
     networks:
       - project_default
 
