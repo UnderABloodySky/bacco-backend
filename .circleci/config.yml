@@ -105,6 +105,7 @@ jobs:
           root: /home/circleci
           paths:
             - .
+
   test:
     executor: kotlin-executor
     steps:
@@ -116,8 +117,7 @@ jobs:
 
       - run:
           name: Start Neo4j with Docker Compose
-          command: |
-            docker-compose -f docker-compose.yml up -d neo4j
+          command: docker-compose -f docker-compose.yml up -d neo4j
 
       - run:
           name: Wait for Neo4j to be fully up and running
@@ -156,7 +156,6 @@ jobs:
       - store_artifacts:
           path: build/reports/tests/test
           destination: test-reports
-
 
 workflows:
   version: 2
