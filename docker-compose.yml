@@ -2,22 +2,21 @@ version: '3.8'
 services:
   neo4j:
     image: neo4j:5.12.0
+    container_name: project-neo4j
     ports:
       - "7474:7474"
       - "7473:7473"
       - "7687:7687"
-    command: /bin/bash -c "apt-get update && apt-get install -y curl && /startup/docker-entrypoint.sh neo4j"
     environment:
-      NEO4J_AUTH: "neo4j/bacco4321"
-    networks:
-      - project_default
+      NEO4J_AUTH: neo4j/bacco4321
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:7474"]
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - project_default
 
 networks:
   project_default:
     driver: bridge
-

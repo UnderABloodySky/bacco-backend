@@ -74,17 +74,9 @@ jobs:
             ls -l src/main/resources/application.properties
 
       - run:
-          name: Verify application-test.properties
-          command: cat src/test/resources/application-test.properties
-
-      - run:
-          name: Verify application.properties
-          command: cat src/main/resources/application.properties
-
-      - run:
           name: Update application-test.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7687" > src/test/resources/application-test.properties
+            echo "spring.neo4j.uri=bolt://project-neo4j:7687" > src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
@@ -94,7 +86,7 @@ jobs:
       - run:
           name: Update application.properties
           command: |
-            echo "spring.neo4j.uri=bolt://localhost:7687" > src/main/resources/application.properties
+            echo "spring.neo4j.uri=bolt://project-neo4j:7687" > src/main/resources/application.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/main/resources/application.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
@@ -191,8 +183,7 @@ jobs:
             echo "======================================================="
             echo "docker exec"
             echo "======================================================="     
-            sudo docker exec -it project-neo4j-1 bash
-            sudo curl -u neo4j:bacco4321 http://localhost:7474
+            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://localhost:7474"
 
       - run:
           name: Verify Neo4j connectivity from host
