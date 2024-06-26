@@ -194,15 +194,16 @@ jobs:
             echo "======================================================="
             echo "docker exec"
             echo "======================================================="     
-            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://localhost:7474"
+            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7474"
+            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7687"
+            sudo docker exec -it project-neo4j bash -c "curl -u neo4j:bacco4321 http://project-neo4j:7473"
+      - run:
+          name: Verify Neo4j connectivity from host
+          command: curl -u neo4j:bacco4321 http://project-neo4j:7687
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7687
-
-      - run:
-          name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7474
+          command: curl -u neo4j:bacco4321 http://project-neo4j:7474
 
       - run:
           name: List files after compile
