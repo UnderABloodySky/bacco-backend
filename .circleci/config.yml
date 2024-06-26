@@ -129,10 +129,14 @@ jobs:
           command: sudo docker-compose -f docker-compose.yml up -d neo4j
 
       - run:
+          name: Wait for Neo4j to start x1
+          command: sleep 20
+
+      - run:
           name: Wait for Neo4j to be fully up and running
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
-            for i in {1..40}; do
+            for i in {1..42}; do
               if curl -s -u neo4j:bacco4321 http://localhost:7687; then
                 echo "Neo4j is up and running in 7687."
                 break
@@ -142,7 +146,7 @@ jobs:
                 break
               fi
               echo "Waiting... $i"
-              sleep 10  # Esperar 10 segundos antes de intentar nuevamente
+              sleep 12
             done
             docker-compose -f docker-compose.yml logs neo4j
 
@@ -158,7 +162,7 @@ jobs:
             sudo docker-compose ps
 
       - run:
-          name: Wait for Neo4j to start
+          name: Wait for Neo4j to start x2
           command: sleep 20
 
       - run:
@@ -183,7 +187,6 @@ jobs:
             sudo docker ps
             echo "======================================================="
 
-
       - run:
           name: Start Neo4j container if not started
           command: |
@@ -193,6 +196,10 @@ jobs:
               echo "Starting Neo4j container..."
               sudo docker-compose -f docker-compose.yml up -d neo4j
             fi
+
+      - run:
+          name: Wait
+          command: sleep 20
 
       - run:
           name: Inspect Neo4j 2
