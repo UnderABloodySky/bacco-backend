@@ -17,6 +17,15 @@ services:
     networks:
       - project_default
 
+  check_network:
+    image: alpine
+    command: sh -c "ifconfig | grep project_default"
+    depends_on:
+      - neo4j
+    networks:
+      - project_default
+
+
 networks:
   project_default:
     driver: bridge
