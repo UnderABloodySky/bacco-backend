@@ -68,19 +68,19 @@ jobs:
             fi
 
       - run:
-          name: Verificar existencia de application-test.properties
+          name: Verify existence of application-test.properties
           command: |
             ls -l src/test/resources/application-test.properties
             ls -l src/main/resources/application.properties
 
       - run:
-          name: Eliminar archivos properties si existen
+          name: Delete properties files if they exist
           command: |
             rm -f src/test/resources/application-test.properties
             rm -f src/main/resources/application.properties
 
       - run:
-          name: Verificar que los archivos fueron eliminados
+          name: Verify that the files were deleted
           command: |
             ls -l src/test/resources/
             ls -l src/main/resources/
@@ -175,8 +175,6 @@ jobs:
             echo "======================================================="
             docker ps
             echo "======================================================="
-            echo "docker exec"
-            echo "======================================================="
 
       - run:
           name: Inspect Neo4j 2
@@ -188,6 +186,14 @@ jobs:
             curl -u neo4j:bacco4321 http://localhost:7474
 
       - run:
+          name: Verify Neo4j connectivity from host
+          command: curl -u neo4j:bacco4321 http://localhost:7687
+
+      - run:
+          name: Verify Neo4j connectivity from host
+          command: curl -u neo4j:bacco4321 http://localhost:7474
+
+      - run:
           name: List files after compile
           command: ls -R build/
 
@@ -195,14 +201,6 @@ jobs:
           name: Run tests with detailed logging
           command: |
             sudo ./gradlew build test --scan --warning-mode all
-
-      - run:
-          name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7687
-
-      - run:
-          name: Verify Neo4j connectivity from host
-          Command: curl -u neo4j:bacco4321 http://localhost:7474
 
       - store_artifacts:
           path: build/reports/tests/test
