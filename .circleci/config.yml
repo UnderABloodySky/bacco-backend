@@ -133,7 +133,7 @@ jobs:
 
       - run:
           name: Start Neo4j with Docker Compose
-          command: docker-compose -f docker-compose.yml up -d neo4j
+          command: sudo docker-compose -f docker-compose.yml up -d neo4j
 
       - run:
           name: Wait for Neo4j to be fully up and running
@@ -147,12 +147,15 @@ jobs:
               echo "Waiting... $i"
               sleep 10
             done
-            docker-compose -f docker-compose.yml logs neo4j
+            sudo docker-compose -f docker-compose.yml logs neo4j
 
       - run:
           name: Inspect Neo4j
           command: |
+            sudo mkdir -p /var/lib/apt/lists/partial
+            sudo chmod 755 /var/lib/apt/lists/partial
             echo "docker logs:"
+            sudo docker-compose -f docker-compose.yml logs neo4j
             echo "======================================================="
             echo "docker inspect:"
             echo "======================================================="
