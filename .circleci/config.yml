@@ -50,24 +50,6 @@ jobs:
             rm -f src/main/resources/application.properties
 
       - run:
-          name: Verify existence of application-test.properties
-          command: |
-            ls -l src/test/resources/application-test.properties
-            ls -l src/main/resources/application.properties
-
-      - run:
-          name: Delete properties files if they exist
-          command: |
-            rm -f src/test/resources/application-test.properties
-            rm -f src/main/resources/application.properties
-
-      - run:
-          name: Verify that the files were deleted
-          command: |
-            ls -l src/test/resources/
-            ls -l src/main/resources/
-
-      - run:
           name: Ensure properties file exists for tests
           command: |
             if [ ! -f src/test/resources/application-test.properties ]; then
@@ -84,6 +66,12 @@ jobs:
               mkdir -p src/main/resources
               touch src/main/resources/application.properties
             fi
+
+      - run:
+          name: Verify existence of application-test.properties
+          command: |
+            ls -l src/test/resources/application-test.properties
+            ls -l src/main/resources/application.properties
 
       - run:
           name: Verify application-test.properties
