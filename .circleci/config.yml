@@ -153,7 +153,6 @@ jobs:
           name: Inspect Neo4j
           command: |
             echo "docker logs:"
-            sudo docker-compose -f docker-compose.yml logs neo4j
             echo "======================================================="
             echo "docker inspect:"
             echo "======================================================="
