@@ -190,6 +190,14 @@ jobs:
             fi
 
       - run:
+          name: Verify Neo4j connectivity from host
+          command: curl -u neo4j:bacco4321 http://localhost:7687
+
+      - run:
+          name: Verify Neo4j connectivity from host
+          command: curl -u neo4j:bacco4321 http://localhost:7474
+
+      - run:
           name: List files after compile
           command: ls -R build/
 
