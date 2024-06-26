@@ -153,15 +153,15 @@ jobs:
           name: Inspect Neo4j
           command: |
             echo "docker logs:"
-            docker-compose -f docker-compose.yml logs neo4j
+            sudo docker-compose -f docker-compose.yml logs neo4j
             echo "======================================================="
             echo "docker inspect:"
             echo "======================================================="
-            docker inspect $(docker-compose -f docker-compose.yml ps -q neo4j)
+            sudo docker inspect $(docker-compose -f docker-compose.yml ps -q neo4j)
             echo "======================================================="
             echo "docker ps:"
             echo "======================================================="
-            docker ps
+            sudo docker ps
             echo "======================================================="
 
       - run:
@@ -170,8 +170,8 @@ jobs:
             echo "======================================================="
             echo "docker exec"
             echo "======================================================="     
-            docker exec -it project-neo4j-1 bash
-            curl -u neo4j:bacco4321 http://localhost:7474
+            sudo docker exec -it project-neo4j-1 bash
+            sudo curl -u neo4j:bacco4321 http://localhost:7474
 
       - run:
           name: Verify Neo4j connectivity from host
