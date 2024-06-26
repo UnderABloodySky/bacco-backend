@@ -17,7 +17,9 @@ jobs:
 
       - run:
           name: Create initial password file for Neo4j
-          command: echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
+          command: |
+            echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
+            ls -l
 
       - persist_to_workspace:
           root: /home/circleci
@@ -64,6 +66,32 @@ jobs:
               mkdir -p src/main/resources
               touch src/main/resources/application.properties
             fi
+
+      - run:
+          name: Verificar existencia de application-test.properties
+          command: |
+            ls -l src/test/resources/application-test.properties
+            ls -l src/main/resources/application.properties
+
+      - run:
+          name: Eliminar archivos properties si existen
+          command: |
+            rm -f src/test/resources/application-test.properties
+            rm -f src/main/resources/application.properties
+
+      - run:
+          name: Verificar que los archivos fueron eliminados
+          command: |
+            ls -l src/test/resources/
+            ls -l src/main/resources/
+
+      - run:
+          name: Verify application-test.properties
+          command: cat src/test/resources/application-test.properties
+
+      - run:
+          name: Verify application.properties
+          command: cat src/main/resources/application.properties
 
       - run:
           name: Update application-test.properties
