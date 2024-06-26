@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension::class)
-@Transactional
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @DisplayName("UserController - Test: ")
 class UserControllerTest {
@@ -43,7 +42,6 @@ class UserControllerTest {
     }
     /*
         @Test
-        @Transactional
         @DisplayName("Find a user by ID returns a correct user when the ID is right")
         fun testToCreateAnUserTHeIDIsNotull() {
             val userPersist = User(name="AnUsername", password="12345678", email="asd42@gmail.com")
