@@ -37,6 +37,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y lib32stdc++6
+            sudo apt-get install -y curl
             sudo apt-get upgrade
 
       - run:
