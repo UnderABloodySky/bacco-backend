@@ -141,6 +141,7 @@ jobs:
                 break
               fi
               echo "Waiting... $i"
+              sleep 10  # Esperar 10 segundos antes de intentar nuevamente
             done
             docker-compose -f docker-compose.yml logs neo4j
 
@@ -176,6 +177,16 @@ jobs:
             echo "======================================================="
             sudo docker ps
             echo "======================================================="
+
+      - run:
+          name: Start Neo4j container if not started
+          command: |
+            if sudo docker ps | grep -q project-neo4j; then
+              echo "Neo4j container is already running."
+            else
+              echo "Starting Neo4j container..."
+              sudo docker-compose -f docker-compose.yml up -d neo4j
+            fi
 
       - run:
           name: Inspect Neo4j 2
