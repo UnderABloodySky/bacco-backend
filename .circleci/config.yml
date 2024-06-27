@@ -19,9 +19,9 @@ jobs:
           name: Install cypher-shell
           command: |
             wget -qO - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
-            echo "deb https://debian.neo4j.com stable 4.x" | sudo tee /etc/apt/sources.list.d/neo4j.list
+            echo "deb https://debian.neo4j.com stable" | sudo tee /etc/apt/sources.list.d/neo4j.list
             sudo apt-get update
-            sudo apt-get install -y neo4j-client
+            sudo apt-get install -y cypher-shell 
 
       - run:
           name: Create initial password file for Neo4j
@@ -200,7 +200,6 @@ jobs:
       - run:
           name: Verify Neo4j connectivity via Bolt
           command: cypher-shell -a bolt://project-neo4j:7687 -u neo4j -p bacco4321 "RETURN 1"
-
 
       - run:
           name: Wait for Neo4j to be healthy
