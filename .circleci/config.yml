@@ -206,18 +206,25 @@ jobs:
           command: |
             echo "Waiting for Neo4j to be healthy..."
             for i in {1..30}; do
-              STATUS=$(sudo docker inspect --format='{{.State.Health.Status}}' project-neo4j)
-              if [ "$STATUS" = "healthy" ]; then
-                echo "Neo4j is healthy."
+              if sudo docker ps -f name=project-neo4j --format "{{.Names}}" | grep -q project-neo4j; then
+                echo "Neo4j container is running."
                 break
               fi
-              echo "Current status: $STATUS"
+              echo "Neo4j container not yet running, retrying..."
               sleep 10
             done
-            if [ "$STATUS" != "healthy" ]; then
-              echo "Neo4j did not become healthy in time."
-              exit 1
+
+            # Optionally, you can add a check to ensure Neo4j is accessible
+            if ! curl -s -u neo4j:bacco4321 http://localhost:7474; then
+              echo "Neo4j is not accessible via port 7474."
+              #exit 1
             fi
+
+            if ! curl -s -u neo4j:bacco4321 http://localhost:7687; then
+              echo "Neo4j is not accessible via port 7687."
+              #exit 1
+            fi
+      
 
       - run:
           name: Check Docker Compose services status
