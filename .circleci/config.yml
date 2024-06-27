@@ -244,7 +244,7 @@ jobs:
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 neo4j://project-neo4j:7687
+          command: curl -u neo4j:bacco4321 bolt://project-neo4j:7687
 
       - run:
           name: Verify Neo4j connectivity from host
