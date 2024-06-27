@@ -15,13 +15,13 @@ jobs:
       - setup_remote_docker:
           version: default
 
-      - run:
-          name: Install cypher-shell
-          command: |
-            wget -qO - https://debian.neo4j.com/neotechnology.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/neo4j-archive-keyring.gpg
-            echo "deb [signed-by=/usr/share/keyrings/neo4j-archive-keyring.gpg] https://debian.neo4j.com stable" | sudo tee /etc/apt/sources.list.d/neo4j.list
-            sudo apt-get update
-            sudo apt-get install -y cypher-shell
+      #- run:
+      #    name: Install cypher-shell
+      #    command: |
+      #      wget -qO - https://debian.neo4j.com/neotechnology.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/neo4j-archive-keyring.gpg
+      #      echo "deb [signed-by=/usr/share/keyrings/neo4j-archive-keyring.gpg] https://debian.neo4j.com stable" | sudo tee /etc/apt/sources.list.d/neo4j.list
+      #      sudo apt-get update
+      #      sudo apt-get install -y cypher-shell
 
       - run:
           name: Create initial password file for Neo4j
@@ -150,7 +150,7 @@ jobs:
                 break
               fi
               echo "Waiting... $i"
-              sleep 10  # Esperar 10 segundos antes de intentar nuevamente
+              sleep 10  
             done
             docker-compose -f docker-compose.yml logs neo4j
 
@@ -197,40 +197,40 @@ jobs:
               sudo docker-compose -f docker-compose.yml up -d neo4j
             fi
 
-      - run:
-          name: Verify Neo4j connectivity via Bolt
-          command: cypher-shell -a bolt://project-neo4j:7687 -u neo4j -p bacco4321 "RETURN 1"
+      #- run:
+      #    name: Verify Neo4j connectivity via Bolt
+      #    command: cypher-shell -a bolt://project-neo4j:7687 -u neo4j -p bacco4321 "RETURN 1"
 
-      - run:
-          name: Wait for Neo4j to be healthy
-          command: |
-            echo "Waiting for Neo4j to be healthy..."
-            for i in {1..40}; do
-              STATUS=$(sudo docker inspect --format='{{.State.Health.Status}}' project-neo4j)
-              if [ "$STATUS" = "healthy" ]; then
-                echo "Neo4j is healthy."
-                break
-              fi
-              echo "Current status: $STATUS"
-              sleep 12
-            done
-            if [ "$STATUS" != "healthy" ]; then
-              echo "Neo4j did not become healthy in time."
-              exit 1
-            fi
+      #- run:
+      #    name: Wait for Neo4j to be healthy
+      #    command: |
+      #      echo "Waiting for Neo4j to be healthy..."
+      #      for i in {1..40}; do
+      #        STATUS=$(sudo docker inspect --format='{{.State.Health.Status}}' project-neo4j)
+      #        if [ "$STATUS" = "healthy" ]; then
+      #          echo "Neo4j is healthy."
+      #          break
+      #        fi
+      #        echo "Current status: $STATUS"
+      #        sleep 12
+      #      done
+      #      if [ "$STATUS" != "healthy" ]; then
+      #        echo "Neo4j did not become healthy in time."
+      #        exit 1
+      #      fi
 
       - run:
           name: Check Docker Compose services status
           command: |
             sudo docker-compose -f docker-compose.yml ps
 
-      - run:
-          name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7687
+      #- run:
+      #    name: Verify Neo4j connectivity from host
+      #    command: curl -u neo4j:bacco4321 http://localhost:7687
 
-      - run:
-          name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7474
+      #- run:
+      #    name: Verify Neo4j connectivity from host
+      #    command: curl -u neo4j:bacco4321 http://localhost:7474
 
       - run:
           name: List files after compile

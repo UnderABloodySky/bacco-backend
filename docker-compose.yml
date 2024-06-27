@@ -4,7 +4,8 @@ services:
     image: neo4j:5.12.0
     container_name: project-neo4j
     ports:
-      - "7474:7474"
+      - "7474:7474"#
+      # - "7473:7473"
       - "7687:7687"
     environment:
       NEO4J_AUTH: neo4j/bacco4321
@@ -14,16 +15,16 @@ services:
     #  interval: 30s
     #  timeout: 10s
     #  retries: 5
-    networks:
-      - project_default
+    #networks:
+    #  - project_default
 
-  #check_network:
-  #  image: alpine
-  #  command: sh -c "ifconfig | grep project_default"
-  #  depends_on:
-  #    - neo4j
-  #  networks:
-  #    - project_default
+#  check_network:
+#    image: alpine
+#    command: sh -c "ifconfig | grep project_default"
+#    depends_on:
+#      - neo4j
+#    networks:
+ #     - project_default
 
 
 networks:
