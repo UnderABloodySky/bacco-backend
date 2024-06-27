@@ -209,6 +209,10 @@ jobs:
               sudo docker-compose -f docker-compose.yml up -d neo4j
             fi
 
+      - run:
+          name: Ping Neo4j
+          command: docker-compose exec test ping project-neo4j
+
       #- run:
       #    name: Verify Neo4j connectivity via Bolt
       #    command: cypher-shell -a bolt://project-neo4j:7687 -u neo4j -p bacco4321 "RETURN 1"
