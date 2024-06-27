@@ -18,10 +18,10 @@ jobs:
       - run:
           name: Install cypher-shell
           command: |
-            wget -qO - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
-            echo "deb https://debian.neo4j.com stable" | sudo tee /etc/apt/sources.list.d/neo4j.list
+            wget -qO - https://debian.neo4j.com/neotechnology.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/neo4j-archive-keyring.gpg
+            echo "deb [signed-by=/usr/share/keyrings/neo4j-archive-keyring.gpg] https://debian.neo4j.com stable 4.x" | sudo tee /etc/apt/sources.list.d/neo4j.list
             sudo apt-get update
-            sudo apt-get install -y cypher-shell 
+            sudo apt-get install -y cypher-shell
 
       - run:
           name: Create initial password file for Neo4j
