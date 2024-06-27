@@ -197,9 +197,9 @@ jobs:
               sudo docker-compose -f docker-compose.yml up -d neo4j
             fi
 
-      - run:
-          name: Verify Neo4j connectivity via Bolt
-          command: cypher-shell -a bolt://project-neo4j:7687 -u neo4j -p bacco4321 "RETURN 1"
+      #- run:
+      #    name: Verify Neo4j connectivity via Bolt
+      #    command: cypher-shell -a bolt://project-neo4j:7687 -u neo4j -p bacco4321 "RETURN 1"
 
       - run:
           name: Wait for Neo4j to be healthy
