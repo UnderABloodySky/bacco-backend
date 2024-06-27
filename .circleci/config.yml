@@ -85,7 +85,7 @@ jobs:
       - run:
           name: Update application-test.properties
           command: |
-            echo "spring.neo4j.uri=bolt://project-neo4j:7687" > src/test/resources/application-test.properties
+            echo "spring.neo4j.uri=bolt:neo4j://project-neo4j:7687" > src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
@@ -95,7 +95,7 @@ jobs:
       - run:
           name: Update application.properties
           command: |
-            echo "spring.neo4j.uri=bolt://project-neo4j:7687" > src/main/resources/application.properties
+            echo "spring.neo4j.uri=bolt:neo4j://project-neo4j:7687" > src/main/resources/application.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/main/resources/application.properties
             echo "spring.neo4j.authentication.password=bacco4321" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
@@ -244,11 +244,11 @@ jobs:
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://project-neo4j:7687
+          command: curl -u neo4j:bacco4321 http:neo4j://project-neo4j:7687
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://project-neo4j:7474
+          command: curl -u neo4j:bacco4321 http:neo4j://project-neo4j:7474
 
       - run:
           name: List files after compile
