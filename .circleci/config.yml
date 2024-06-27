@@ -232,6 +232,11 @@ jobs:
               echo "Neo4j is not accessible via port 7473."
               #exit 1
             fi
+            
+            if curl -s -u neo4j:bacco4321 http://project-neo4j:7473; then
+              echo "Neo4j is not accessible via port 7473."
+              #exit 1
+            fi
 
       - run:
           name: Check Docker Compose services status
