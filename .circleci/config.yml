@@ -218,7 +218,6 @@ jobs:
               sleep 10
             done
 
-            # Optionally, you can add a check to ensure Neo4j is accessible
             if ! curl -s -u neo4j:bacco4321 http://project-neo4j:7474; then
               echo "Neo4j is not accessible via port 7474."
               #exit 1
@@ -228,7 +227,11 @@ jobs:
               echo "Neo4j is not accessible via port 7687."
               #exit 1
             fi
-      
+            
+            if ! curl -s -u neo4j:bacco4321 http://project-neo4j:7473; then
+              echo "Neo4j is not accessible via port 7473."
+              #exit 1
+            fi
 
       - run:
           name: Check Docker Compose services status
