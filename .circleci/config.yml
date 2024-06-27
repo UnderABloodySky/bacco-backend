@@ -137,6 +137,10 @@ jobs:
           command: docker network create project_default
 
       - run:
+          name: Run Test Container
+          command: docker-compose run test
+
+      - run:
           name: Start Neo4j with Docker Compose
           command: sudo docker-compose -f docker-compose.yml up -d neo4j
 
@@ -230,11 +234,6 @@ jobs:
             
             if ! curl -s -u neo4j:bacco4321 http://project-neo4j:7473; then
               echo "Neo4j is not accessible via port 7473."
-              #exit 1
-            fi
-            
-            if curl -s -u neo4j:bacco4321 http://project-neo4j:7473; then
-              echo "A) Neo4j is not accessible via port 7473."
               #exit 1
             fi
 

@@ -18,6 +18,14 @@ services:
     networks:
       - project_default
 
+  test:
+      image: appropriate/curl
+      depends_on:
+        - neo4j
+      command: [ "sh", "-c", "sleep 30 && curl -u neo4j:bacco4321 http://project-neo4j:7474" ]
+      networks:
+      - project_default
+
 #  check_network:
 #    image: alpine
 #    command: sh -c "ifconfig | grep project_default"
