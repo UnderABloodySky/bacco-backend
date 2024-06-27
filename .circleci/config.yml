@@ -133,6 +133,10 @@ jobs:
           version: default
 
       - run:
+          name: Create Docker Network
+          command: docker network create project_default
+
+      - run:
           name: Start Neo4j with Docker Compose
           command: sudo docker-compose -f docker-compose.yml up -d neo4j
 
@@ -141,11 +145,11 @@ jobs:
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
             for i in {1..20}; do
-              if curl -s -u neo4j:bacco4321 http://localhost:7687; then
+              if curl -s -u neo4j:bacco4321 http://project-neo4j:7687; then
                 echo "Neo4j is up and running in 7687."
                 break
               fi
-              if curl -s -u neo4j:bacco4321 http://localhost:7474; then
+              if curl -s -u neo4j:bacco4321 http://project-neo4j:7474; then
                 echo "Neo4j is up and running in 7474."
                 break
               fi
@@ -215,12 +219,12 @@ jobs:
             done
 
             # Optionally, you can add a check to ensure Neo4j is accessible
-            if ! curl -s -u neo4j:bacco4321 http://localhost:7474; then
+            if ! curl -s -u neo4j:bacco4321 http://project-neo4j:7474; then
               echo "Neo4j is not accessible via port 7474."
               #exit 1
             fi
 
-            if ! curl -s -u neo4j:bacco4321 http://localhost:7687; then
+            if ! curl -s -u neo4j:bacco4321 http://project-neo4j:7687; then
               echo "Neo4j is not accessible via port 7687."
               #exit 1
             fi
@@ -233,11 +237,11 @@ jobs:
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7687
+          command: curl -u neo4j:bacco4321 http://project-neo4j:7687
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http://localhost:7474
+          command: curl -u neo4j:bacco4321 http://project-neo4j:7474
 
       - run:
           name: List files after compile
