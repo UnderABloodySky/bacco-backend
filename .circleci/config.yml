@@ -244,11 +244,11 @@ jobs:
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http:neo4j://project-neo4j:7687
+          command: curl -u neo4j:bacco4321 neo4j://project-neo4j:7687
 
       - run:
           name: Verify Neo4j connectivity from host
-          command: curl -u neo4j:bacco4321 http:neo4j://project-neo4j:7474
+          command: curl -u neo4j:bacco4321 eo4j://project-neo4j:7474
 
       - run:
           name: List files after compile
