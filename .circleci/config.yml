@@ -14,13 +14,14 @@ jobs:
 
       - setup_remote_docker:
           version: default
+
       - run:
           name: Install cypher-shell
           command: |
-            wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
-            echo 'deb https://debian.neo4j.com stable 4.x' | sudo tee /etc/apt/sources.list.d/neo4j.list
+            wget -qO - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
+            echo "deb https://debian.neo4j.com stable 4.x" | sudo tee /etc/apt/sources.list.d/neo4j.list
             sudo apt-get update
-            sudo apt-get install -y cypher-shell
+            sudo apt-get install -y neo4j-client
 
       - run:
           name: Create initial password file for Neo4j
