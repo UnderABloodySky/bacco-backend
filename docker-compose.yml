@@ -15,8 +15,8 @@ services:
     #  interval: 30s
     #  timeout: 10s
     #  retries: 5
-    #networks:
-    #  - project_default
+    networks:
+      - project_default
 
 #  check_network:
 #    image: alpine
