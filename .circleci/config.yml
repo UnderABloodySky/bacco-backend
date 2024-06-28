@@ -11,16 +11,11 @@ jobs:
     executor: kotlin-executor
     steps:
       - checkout
-
       - setup_remote_docker:
           version: default
-
       - run:
           name: Create initial password file for Neo4j
-          command: |
-            echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
-            ls -l
-
+          command: echo "NEO4J_AUTH=neo4j/bacco4321" > initial-password.env
       - persist_to_workspace:
           root: /home/circleci
           paths:
@@ -31,49 +26,24 @@ jobs:
     steps:
       - attach_workspace:
           at: /home/circleci
-
       - run:
           name: Setup environment
           command: |
             sudo apt-get update
-            sudo apt-get install -y lib32stdc++6
-            sudo apt-get install -y curl
-            sudo apt-get upgrade
-
+            sudo apt-get install -y lib32stdc++6 curl
       - run:
           name: Change permissions of gradlew
           command: sudo chmod +x ./gradlew
-
-      - run:
-          name: Remove existing properties files
-          command: |
-            rm -f src/test/resources/application-test.properties
-            rm -f src/main/resources/application.properties
-
       - run:
           name: Ensure properties file exists for tests
           command: |
-            if [ ! -f src/test/resources/application-test.properties ]; then
-              echo "Creating src/test/resources/application-test.properties"
-              mkdir -p src/test/resources
-              touch src/test/resources/application-test.properties
-            fi
-
+            mkdir -p src/test/resources
+            touch src/test/resources/application-test.properties
       - run:
           name: Ensure properties file exists for dev
           command: |
-            if [ ! -f src/main/resources/application.properties ]; then
-              echo "Creating src/main/resources/application.properties"
-              mkdir -p src/main/resources
-              touch src/main/resources/application.properties
-            fi
-
-      - run:
-          name: Verify existence of application-test.properties
-          command: |
-            ls -l src/test/resources/application-test.properties
-            ls -l src/main/resources/application.properties
-
+            mkdir -p src/main/resources
+            touch src/main/resources/application.properties
       - run:
           name: Update application-test.properties
           command: |
@@ -83,7 +53,6 @@ jobs:
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
-
       - run:
           name: Update application.properties
           command: |
@@ -93,23 +62,9 @@ jobs:
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/main/resources/application.properties
             echo "spring.servlet.multipart.max-request-size=20MB" >> src/main/resources/application.properties
             echo "spring.profiles.active=dev" >> src/main/resources/application.properties
-
-      - run:
-          name: Verify application-test.properties
-          command: cat src/test/resources/application-test.properties
-
-      - run:
-          name: Verify application.properties
-          command: cat src/main/resources/application.properties
-
-      - run:
-          name: List files before compile
-          command: ls -R src/
-
       - run:
           name: Compile the project
           command: ./gradlew compileKotlin
-
       - persist_to_workspace:
           root: /home/circleci
           paths:
@@ -120,218 +75,35 @@ jobs:
     steps:
       - attach_workspace:
           at: /home/circleci
-
       - setup_remote_docker:
           version: default
-
       - run:
           name: Create Docker Network
           command: sudo docker network create project_default
-
       - run:
           name: Start Neo4j with Docker Compose
           command: sudo docker-compose -f docker-compose.yml up -d neo4j
-
-      - run:
-          name: Run Test Container
-          command: sudo docker-compose run test
-
-      - run:
-          name: Docker compose inspect
-          command: |
-            sudo docker ps
-            sudo docker-compose ps
-
-      - run:
-          name: Get Docker container ID 2
-          command: |
-            CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
-            echo "Container ID is $CONTAINER_ID"
-
-      - run:
-          name: bacco?
-          command:  sudo docker ps -q -f name=bacco
-
-      - run:
-          name: List docker networks
-          command: sudo docker network ls
-
-      - run:
-          name: List docker network hosts
-          command: sudo docker network inspect project_default
-
-      - run:
-          name: Inspect executor
-          command: |
-            CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
-            echo "Container ID is $CONTAINER_ID"
-            sudo docker inspect $CONTAINER_ID
-
-
-      - run:
-          name: List all cont and networks
-          command: sudo docker ps -a
-
-      - run:
-          name: Current network of kotlin executor
-          command: |
-            CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
-            echo "Container ID is $CONTAINER_ID"
-            sudo docker inspect -f '{{json .NetworkSettings.Networks}}' $CONTAINER_ID
-
-      #- run:
-      #    name: Disconnect kotlin executor
-      #    command: |
-      #      CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
-      #      echo "Container ID is $CONTAINER_ID"
-      #      sudo docker network disconnect --force $(sudo docker network ls -q) $CONTAINER_ID
-
-
-      #- run:
-      #    name: Connect Neo4j to network
-      #    command: sudo docker network connect project_default project-neo4j
-
-      - run:
-          name: Restart docker
-          command: |
-            sudo service docker stop
-            sudo service docker start
-
-      - run:
-          name: Connect Executor to network
-          command: | #sudo docker network connect project_default bacco
-            CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
-            echo "Container ID is $CONTAINER_ID"
-            sudo docker network connect project_default $CONTAINER_ID
-          #  sudo docker network connect project_default project-neo4j ya conecta en docker compos
-
-      - run:
-          name: Verify network connection
-          command: |
-            CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
-            echo "Container ID is $CONTAINER_ID"
-            sudo docker inspect $CONTAINER_ID | grep project_default
-
       - run:
           name: Wait for Neo4j to be fully up and running
           command: |
             echo "Waiting for Neo4j to be fully up and running..."
             for i in {1..20}; do
-              if curl -s -u neo4j:bacco4321 http://project-neo4j:7473; then
-                echo "Neo4j is up and running in 7473."
-                break
-              fi
-              if curl -s -u neo4j:bacco4321 http://project-neo4j:7687; then
-                echo "Neo4j is up and running in 7687."
-                break
-              fi
               if curl -s -u neo4j:bacco4321 http://project-neo4j:7474; then
-                echo "Neo4j is up and running in 7474."
+                echo "Neo4j is up and running."
                 break
               fi
               echo "Waiting... $i"
-              sleep 10  
-            done
-            docker-compose -f docker-compose.yml logs neo4j
-
-      - run:
-          name: Check Docker Compose services status
-          command: |
-            sudo docker-compose -f docker-compose.yml ps
-
-      - run:
-          name: Docker compose inspect
-          command: |
-            sudo docker ps
-            sudo docker-compose ps
-
-      - run:
-          name: Wait for Neo4j to start
-          command: sleep 20
-
-      - run:
-          name: Inspect Neo4j
-          command: |
-            sudo mkdir -p /var/lib/apt/lists/partial
-            sudo chmod 755 /var/lib/apt/lists/partial
-            echo "docker logs:"
-            sudo docker-compose -f docker-compose.yml logs neo4j
-            echo "======================================================="
-            echo "docker inspect:"
-            echo "======================================================="
-            NEO4J_CONTAINER_ID=$(docker-compose -f docker-compose.yml ps -q neo4j)
-            sudo docker inspect $NEO4J_CONTAINER_ID
-            echo "======================================================="
-            echo "docker ps:"
-            echo "======================================================="
-            sudo docker ps
-            echo "======================================================="
-
-      - run:
-          name: Start Neo4j container if not started
-          command: |
-            if sudo docker ps | grep -q project-neo4j; then
-              echo "Neo4j container is already running."
-            else
-              echo "Starting Neo4j container..."
-              sudo docker-compose -f docker-compose.yml up -d neo4j
-            fi
-
-
-      #- run:
-      #    name: Verify Neo4j connectivity via Bolt
-      #    command: cypher-shell -a bolt://project-neo4j:7687 -u neo4j -p bacco4321 "RETURN 1"
-
-      - run:
-          name: Wait for Neo4j to be healthy
-          command: |
-            echo "Waiting for Neo4j to be healthy..."
-            for i in {1..30}; do
-              if sudo docker ps -f name=project-neo4j --format "{{.Names}}" | grep -q project-neo4j; then
-                echo "Neo4j container is running."
-                break
-              fi
-              echo "Neo4j container not yet running, retrying..."
               sleep 10
             done
-
-            if ! curl -s -u neo4j:bacco4321 http://project-neo4j:7474; then
-              echo "Neo4j is not accessible via port 7474."
-              #exit 1
-            fi
-
-            if ! curl -s -u neo4j:bacco4321 http://project-neo4j:7687; then
-              echo "Neo4j is not accessible via port 7687."
-              #exit 1
-            fi
-            
-            if ! curl -s -u neo4j:bacco4321 http://project-neo4j:7473; then
-              echo "Neo4j is not accessible via port 7473."
-              #exit 1
-            fi
-
+            sudo docker-compose -f docker-compose.yml logs neo4j
       - run:
-          name: Check Docker Compose services status
+          name: Connect Executor to Network
           command: |
-            sudo docker-compose -f docker-compose.yml ps
-
-      #- run:
-      #    name: Verify Neo4j connectivity from host
-      #    command: curl -u neo4j:bacco4321 bolt://project-neo4j:7687
-
-      #- run:
-      #    name: Verify Neo4j connectivity from host
-      #    command: curl -u neo4j:bacco4321 neo4j://project-neo4j:7474
-
+            CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
+            sudo docker network connect project_default $CONTAINER_ID
       - run:
-          name: List files after compile
-          command: ls -R build/
-
-      - run:
-          name: Run tests with detailed logging
-          command: |
-            sudo ./gradlew build test --scan --warning-mode all
-
+          name: Run tests
+          command: ./gradlew test --scan --warning-mode all
       - store_artifacts:
           path: build/reports/tests/test
           destination: test-reports
