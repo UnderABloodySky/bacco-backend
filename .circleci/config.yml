@@ -132,9 +132,9 @@ jobs:
       - setup_remote_docker:
           version: default
 
-      - run:
-          name: Create Docker Network
-          command: docker network create project_default
+     # - run:
+     #     name: Create Docker Network
+     #     command: docker network create project_default
 
       - run:
           name: Start Neo4j with Docker Compose
