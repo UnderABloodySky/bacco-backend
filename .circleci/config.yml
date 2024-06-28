@@ -147,7 +147,7 @@ jobs:
       - run:
           name: Connect images to red
           command: |
-            sudo docker network connect project_default project-neo4j
+          #  sudo docker network connect project_default project-neo4j ya conecta en docker compose
             sudo docker network connect project_default nostalgic_banzai
 
       - run:
