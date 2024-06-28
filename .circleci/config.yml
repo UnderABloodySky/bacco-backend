@@ -167,6 +167,11 @@ jobs:
             echo "Container ID is $CONTAINER_ID"
             sudo docker inspect $CONTAINER_ID
 
+
+      - run:
+          name: List all cont and networks
+          command: sudo docker ps -a
+
       - run:
           name: Current network of kotlin executor
           command: |
