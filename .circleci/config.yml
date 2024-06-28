@@ -142,6 +142,11 @@ jobs:
           command: |
             sudo docker ps
             sudo docker-compose ps
+
+      - run:
+          name: bacco?
+          command:  sudo docker ps -q -f name=bacco
+
       - run:
           name: Connect images to network
           command: | #sudo docker network connect project_default bacco
