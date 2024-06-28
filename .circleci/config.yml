@@ -181,6 +181,7 @@ jobs:
       #      echo "Container ID is $CONTAINER_ID"
       #      sudo docker network disconnect --force $(sudo docker network ls -q) $CONTAINER_ID
 
+
       - run:
           name: Connect Neo4j to network
           command: sudo docker network connect project_default project-neo4j
