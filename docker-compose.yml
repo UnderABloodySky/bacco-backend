@@ -34,41 +34,6 @@ services:
 #    networks:
  #     - project_default
 
-  version: '3.8'
-  services:
-    neo4j:
-      image: neo4j:5.12.0
-      container_name: project-neo4j
-      ports:
-        - "7474:7474"#
-        - "7473:7473"
-        - "7687:7687"
-      environment:
-        NEO4J_AUTH: neo4j/bacco4321
-        #NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
-      #healthcheck:
-      #  test: ["CMD", "curl", "-u", "neo4j:bacco4321", "http://project-neo4j:7474"]
-      #  interval: 30s
-      #  timeout: 10s
-      #  retries: 5
-      networks:
-        - project_default
-
-    test:
-      image: appropriate/curl
-      depends_on:
-        - neo4j
-      command: [ "sh", "-c", "sleep 30 && curl -u neo4j:bacco4321 http://project-neo4j:7474" ]
-      networks:
-        - project_default
-
-    #  check_network:
-    #    image: alpine
-    #    command: sh -c "ifconfig | grep project_default"
-    #    depends_on:
-    #      - neo4j
-    #    networks:
-    #     - project_default
 
 networks:
   project_default:
