@@ -157,6 +157,10 @@ jobs:
           command:  sudo docker ps -q -f name=bacco
 
       - run:
+          name: List docker networks
+          command: sudo docker network ls
+
+      - run:
           name: Connect images to network
           command: | #sudo docker network connect project_default bacco
             CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
@@ -278,7 +282,7 @@ jobs:
 
       #- run:
       #    name: Verify Neo4j connectivity from host
-      #    command: curl -u neo4j:bacco4321 eo4j://project-neo4j:7474
+      #    command: curl -u neo4j:bacco4321 neo4j://project-neo4j:7474
 
       - run:
           name: List files after compile
