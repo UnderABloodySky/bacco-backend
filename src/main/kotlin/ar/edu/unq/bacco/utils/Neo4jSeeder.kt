@@ -177,13 +177,52 @@ class Neo4jSeeder(
 
             recipeRepository.saveAll(recipes)
 
-            val user0 = User(name = "HValenzuela", password="12345678", email="")
+            val user0 = User(name = "hvalenzuela", password="12345678", email="")
             val user1 = User(name = "fedecame", password="12345678", email="")
             val user2 = User(name = "test", password="12345678", email="")
             val users = listOf(user0, user1, user2)
 
             userRepository.saveAll(users)
+
+            val comment0 = Comment(content = "Lo mejor que me paso este año", user = user0)
+            val comment1 = Comment(content = "Por culpa de este trago perdi el pelo", user = user1)
+            val comment2 = Comment(content = "Esto es un comentario generico", user = user2)
+
+            val comments = listOf(comment0, comment1, comment2)
+
+            commentRepository.saveAll(comments)
+
+            ginTonic.comments.add(comment0)
+            ginTonic.comments.add(comment2)
+            fernetPomelo.comments.add(comment1)
+            fernetPomelo.comments.add(comment2)
+            cosaRara.comments.add(comment2)
+
+            val rating0 = Rating(user = user0, score = 5.0)
+            val rating1 = Rating(user = user1, score = 4.5)
+            val rating2 = Rating(user = user2, score = 5.0)
+            val rating3 = Rating(user = user0, score = 4.5)
+            val rating4 = Rating(user = user1, score = 2.5)
+
+            ginTonic.ratings.add(rating0)
+            ginTonic.ratings.add(rating1)
+
+            ginTonic.ratings.add(rating4)
+            fernandito.ratings.add(rating3)
+
+            mojito.ratings.add(rating2)
+
+            val ratings = listOf(rating0, rating1, rating2, rating3, rating4)
+            ratingRepository.saveAll(ratings)
+
+            val recipesWithRanking = listOf(ginTonic, fernandito, mojito)
+
+            val recipesWithComments = listOf(ginTonic, fernetPomelo, cosaFea)
+
+            recipeRepository.saveAll(recipesWithRanking)
+            recipeRepository.saveAll(recipesWithComments)
         }
+
         println("END POPULATION OF DB")
     }
 

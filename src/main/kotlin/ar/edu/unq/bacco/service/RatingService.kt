@@ -13,14 +13,14 @@ class RatingService @Autowired constructor(
     private var userRepository: UserRepository,
     private var ratingRepository: RatingRepository) {
 
-    fun rateRecipe(recipeId: Long, userId: Long, score: Int): Rating {
+    fun rateRecipe(recipeId: Long, userId: Long, score: Double): Rating {
         val recipe = recipeRepository.findById(recipeId)
             .orElseThrow { IllegalArgumentException("Recipe not found with id: $recipeId") }
 
         val user = userRepository.findById(userId)
             .orElseThrow { IllegalArgumentException("User not found with id: $userId") }
 
-        if(score !in 0 ..5){
+        if(score !in 0.0 ..5.0){
             throw IllegalArgumentException("Score must be between 0 and 5: $score")
         }
 

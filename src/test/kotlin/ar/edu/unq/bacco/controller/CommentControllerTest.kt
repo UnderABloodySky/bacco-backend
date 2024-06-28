@@ -38,7 +38,7 @@ class CommentControllerTest {
             recipeId = 1L
         )
 
-        val user = User(id = 1L, name = "John Doe") // Assuming User class has at least these fields
+        val user = User(id = 1L, name = "John Doe", email="", password="") // Assuming User class has at least these fields
         val comment = Comment(
             id = 1L,
             content = "Great recipe!",
@@ -68,6 +68,5 @@ class CommentControllerTest {
                 }
             """.trimIndent()))
     }*/
-
 }
 

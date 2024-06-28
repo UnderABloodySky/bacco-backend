@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-//@WebMvcTest(RatingController::class)
+@WebMvcTest(RatingController::class)
 class RatingControllerTest {
-    /*
+
 
         @Autowired
         private lateinit var mockMvc: MockMvc
@@ -23,12 +23,12 @@ class RatingControllerTest {
         @MockBean
         private lateinit var ratingService: RatingService
 
-        @Test
+        //@Test
         fun `rateRecipe should return CREATED status and the rating`() {
-            val recipeId = 1L
+            /*val recipeId = 1L
             val userId = 1L
-            val score = 5
-            val rating = Rating(user = User(name = ""), score = score)
+            val score = 5.0
+            val rating = Rating(user = User(name = "", email="", password=""), score = score)
 
             `when`(ratingService.rateRecipe(recipeId, userId, score)).thenReturn(rating)
 
@@ -41,10 +41,11 @@ class RatingControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.recipeId").value(recipeId))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value(userId))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.score").value(score))
-        }
+        */}
 
-        @Test
+        //@Test
         fun `getAverageRatingForRecipe should return OK status and the average rating`() {
+        /*
             val recipeId = 1L
             val averageRating = 4.5
 
@@ -56,6 +57,5 @@ class RatingControllerTest {
             )
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.content().string(averageRating.toString()))
-        }
-        */
+        */}
 }
