@@ -152,7 +152,7 @@ jobs:
           command: | #sudo docker network connect project_default bacco
             CONTAINER_ID=$(sudo docker ps -q -f name=bacco)
             echo "Container ID is $CONTAINER_ID"
-            sudo docker network connect project_default $CONTAINER_IDe
+            sudo docker network connect project_default $CONTAINER_ID
           #  sudo docker network connect project_default project-neo4j ya conecta en docker compos
 
 
