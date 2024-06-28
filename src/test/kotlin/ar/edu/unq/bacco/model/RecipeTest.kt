@@ -7,7 +7,6 @@
     import org.junit.jupiter.api.assertThrows
 
     class RecipeTest {
-        /*
         @Test
         fun testConstructor() {
             val recipe = Recipe(name = "Mojito", description = "Refreshing cocktail")
@@ -112,5 +111,5 @@
             recipe.rate(user2, score = 5.0)
 
             assertThat(recipe.averageRating()).isEqualTo(4.5)
-        }*/
+        }
     }

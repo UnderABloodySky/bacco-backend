@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 
 class CommentDTOTest {
-/*
     @Test
     fun `create CommentDTO with valid parameters`() {
         val content = "This is a comment"
@@ -28,5 +27,5 @@ class CommentDTOTest {
         assertThrows<NullPointerException> {
             CommentDTO(content!!, userId, recipeId)
         }
-    }*/
+    }
 }

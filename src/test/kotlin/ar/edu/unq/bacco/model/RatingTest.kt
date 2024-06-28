@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class RatingTest {
-    /*@Test
+    @Test
 
     fun createRatingWithNonNullId() {
         val user = User(id = 1L, name = "Alice", password = "", email="")
@@ -50,5 +50,5 @@ class RatingTest {
         rating.score = newScore
 
         assertThat(rating.score).isEqualTo(newScore)
-    }*/
+    }
 }

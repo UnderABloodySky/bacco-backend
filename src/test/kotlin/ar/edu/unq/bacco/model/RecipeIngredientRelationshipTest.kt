@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
 
 class RecipeIngredientRelationshipTest {
-
-    /*
     @Test
     fun createRecipeIngredientRelationshipWithNonNullId() {
         val ingredient = Ingredient(id = 1L, name = "Flour")
@@ -36,5 +34,5 @@ class RecipeIngredientRelationshipTest {
         relationship.quantity = newQuantity
 
         assertThat(relationship.quantity).isEqualTo(newQuantity)
-    }*/
+    }
 }

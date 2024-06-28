@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 
 @DisplayName("BeverageDTO's tests")
 class BeverageDTOTest {
-/*
     @Test
     fun `create BeverageDTO`() {
         val beverageName = "Coffee"
@@ -14,5 +13,5 @@ class BeverageDTOTest {
         val beverageDTO = BeverageDTO(beverageName)
 
         assertThat(beverageDTO.name).isEqualTo(beverageName)
-    }*/
+    }
 }

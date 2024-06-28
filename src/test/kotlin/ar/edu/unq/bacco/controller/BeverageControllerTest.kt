@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations
 
 @ExtendWith(MockitoExtension::class)
 class BeverageControllerTest {
-    /*
+
     @Mock
     private lateinit var beverageService: BeverageService
 
@@ -54,7 +54,7 @@ class BeverageControllerTest {
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.BAD_REQUEST)
         assertThat(response.body).isEqualTo("Por favor, selecciona un archivo")
-    }*/
+    }
 
 //    @Test
 //    fun sendPhotoForRetrainReturnsInternalServerErrorOnException() {
@@ -67,10 +67,10 @@ class BeverageControllerTest {
 //        assertThat(response.body).contains("Error al enviar la foto para reentrenamiento")
 //    }
 
-    /*
+
     @Test
     fun sendPhotoForRetrainReturnsOkOnSuccessfulUpload() {
-        val file = MockMultipartFile("file", "test.jpg", "image/jpeg", ByteArray(1))
+        /*val file = MockMultipartFile("file", "test.jpg", "image/jpeg", ByteArray(1))
         val beverage = "Cola"
 
         val mockResponse = mock(CloseableHttpResponse::class.java)
@@ -83,8 +83,9 @@ class BeverageControllerTest {
 
         assertThat(result.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(result.body).isEqualTo("Success")
+        */
     }
-*/
+
 //    @Test
 //    fun sendPhotoForRetrainReturnsInternalServerErrorOnFailedUpload() {
 //        val file = MockMultipartFile("file", "test.jpg", "image/jpeg", ByteArray(1))

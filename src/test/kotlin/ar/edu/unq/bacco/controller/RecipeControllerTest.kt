@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class RecipeControllerTest {
-/*
+
     @Autowired
     private lateinit var recipeController2: RecipeController
 
@@ -274,5 +274,5 @@ class RecipeControllerTest {
         assertInstanceOf(Beverage::class.java, beverage)
         assertEquals("RON", beverage1.name)
 
-    }*/
+    }
 }

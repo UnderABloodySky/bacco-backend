@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations
 import org.springframework.web.bind.annotation.RequestParam
 
 class IngredientControllerTest {
-/*
+
     @Mock
     lateinit var ingredientService: IngredientService
 
@@ -48,5 +48,5 @@ class IngredientControllerTest {
         val result = ingredientController.getBeveragesByName(searchName)
 
         assertEquals(emptyList<Ingredient>(), result)
-    }*/
+    }
 }

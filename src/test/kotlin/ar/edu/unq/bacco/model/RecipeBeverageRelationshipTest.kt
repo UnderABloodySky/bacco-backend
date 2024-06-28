@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
 
 class RecipeBeverageRelationshipTest {
-/*
+
     @Test
     fun createRecipeBeverageRelationshipWithNonNullId() {
         val beverage = Beverage(id = 1L, name = "Cola")
@@ -35,5 +35,5 @@ class RecipeBeverageRelationshipTest {
         relationship.measure = newMeasure
 
         assertThat(relationship.measure).isEqualTo(newMeasure)
-    }*/
+    }
 }

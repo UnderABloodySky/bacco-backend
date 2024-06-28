@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class CommentTest {
-    /*
     @Test
     fun createCommentWithNonNullId() {
         val content = "Great recipe!"
@@ -38,5 +37,4 @@ class CommentTest {
             Comment(content = content, user = null!!)
         }
     }
-    */
 }

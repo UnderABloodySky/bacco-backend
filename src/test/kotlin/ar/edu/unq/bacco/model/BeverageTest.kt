@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class BeverageTest {
-    /*
     @Test
     fun testConstructor() {
         val beverage = Beverage(name = "Coffee")
@@ -61,5 +60,5 @@ class BeverageTest {
         assertThat(beverage.name).isEqualTo(name)
         assertThat(beverage.description).isEqualTo(description)
         assertThat(beverage.imagePath).isNull()
-    }*/
+    }
 }

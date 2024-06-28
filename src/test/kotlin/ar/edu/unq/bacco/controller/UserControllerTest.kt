@@ -40,7 +40,6 @@ class UserControllerTest {
     fun setUp() {
         userController = UserController(userService, recipeService)
     }
-    /*
         @Test
         @DisplayName("Find a user by ID returns a correct user when the ID is right")
         fun testToCreateAnUserTHeIDIsNotull() {
@@ -82,7 +81,6 @@ class UserControllerTest {
             assertEquals(400, response.statusCodeValue)
         }
 
-    */
     @Test
     @DisplayName("Find by user Id with correct user return a response with 200 status code")
     fun testFindByUserIdWithCorrectUserReturnAResponseWith200status() {
@@ -91,7 +89,7 @@ class UserControllerTest {
         val response = userController.getUserById(userPersist.id!!)
         assertEquals(HttpStatusCode.valueOf(200), response.statusCode)
     }
-/*
+
     @Test
     @DisplayName("Find a user by ID returns a correct user when the ID is right")
     fun testFindByUserIdReturnsCorrectUser() {
@@ -172,5 +170,5 @@ class UserControllerTest {
         val login = LoginDTO(userPersist.name, userPersist.password)
         val response = userController.loginUser(login)
         assertEquals(HttpStatusCode.valueOf(200), response.statusCode)
-    }*/
+    }
 }

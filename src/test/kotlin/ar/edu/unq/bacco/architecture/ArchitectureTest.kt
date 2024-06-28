@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
     importOptions = [ImportOption.DoNotIncludeTests::class, ImportOption.DoNotIncludeJars::class]
 )
 class ArchitectureTest {
-/*
+
     @DisplayName("DTOs have simple name ending with DTO")
     @ArchTest
     fun testDtosHaveSimpleNameEndingWithDTO(classes: JavaClasses) {
@@ -118,5 +118,5 @@ class ArchitectureTest {
             .should().haveRawReturnType(ResponseEntity::class.java)
             .because("we do not want to couple the client code directly to the return types of the encapsulated module")
         myRule.check(classes)
-    }*/
+    }
 }

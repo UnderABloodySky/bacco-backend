@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class RecipeDTOTest {
-/*
+
     @Test
     fun `create RecipeDTO with valid parameters`() {
         val name = "Chocolate Cake"
@@ -32,6 +32,6 @@ class RecipeDTOTest {
         assertThrows<NullPointerException> {
             RecipeDTO(name!!, description, beverages, ingredients)
         }
-    }*/
+    }
 
 }

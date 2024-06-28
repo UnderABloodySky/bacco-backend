@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 
 class IngredientDTOTest {
-/*
     @Test
     fun `create IngredientDTO with valid name`() {
         // Arrange
@@ -27,5 +26,5 @@ class IngredientDTOTest {
         assertThrows<NullPointerException> {
             IngredientDTO(name!!)
         }
-    }*/
+    }
 }

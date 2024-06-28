@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
 
 class UserTest {
-/*
+
     @Test
     fun createUserWithNonNullId() {
         val id = 1L
@@ -32,6 +32,6 @@ class UserTest {
         user.name = newName
 
         assertThat(user.name).isEqualTo(newName)
-    }*/
+    }
 
 }
