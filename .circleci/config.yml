@@ -193,7 +193,9 @@ jobs:
 
       - run:
           name: Restart docker
-          command: sudo systemctl restart docker
+          command: |
+            sudo service docker stop
+            sudo service docker start
 
       - run:
           name: Connect Executor to network
