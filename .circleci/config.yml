@@ -143,6 +143,10 @@ jobs:
             sudo docker-compose ps
 
       - run:
+          name: Get Docker container ID
+          command: docker ps -a | grep openjdk
+
+      - run:
           name: bacco?
           command:  sudo docker ps -q -f
 
