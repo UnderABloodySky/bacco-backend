@@ -165,6 +165,13 @@ jobs:
           command: sudo docker network inspect project_default
 
       - run:
+          name: Inspect executor
+          command: |
+            CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
+            echo "Container ID is $CONTAINER_ID"
+            sudo docker inspect $CONTAINER_ID
+
+      - run:
           name: Connect images to network
           command: | #sudo docker network connect project_default bacco
             CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
