@@ -70,13 +70,6 @@ services:
     #    networks:
     #     - project_default
 
-  nostalgic_banzai:
-    image: cimg/openjdk:17.0  # Adjust this image as per your requirement
-    container_name: nostalgic_banzai
-    # Add other configuration as needed for nostalgic_banzai
-    networks:
-      - project_default
-
 networks:
   project_default:
     external: true
