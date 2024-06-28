@@ -132,9 +132,9 @@ jobs:
       - setup_remote_docker:
           version: default
 
-     # - run:
-     #     name: Create Docker Network
-     #     command: docker network create project_default
+      - run:
+          name: Create Docker Network
+          command: sudo docker network create project_default
 
       - run:
           name: Start Neo4j with Docker Compose
@@ -142,7 +142,13 @@ jobs:
 
       - run:
           name: Run Test Container
-          command: docker-compose run test
+          command: sudo docker-compose run test
+
+      - run:
+          name: Connect images to red
+          command: |
+            sudo docker network connect project_default project-neo4j
+            sudo docker network connect project_default nostalgic_banzai
 
       - run:
           name: Wait for Neo4j to be fully up and running
@@ -209,9 +215,6 @@ jobs:
               sudo docker-compose -f docker-compose.yml up -d neo4j
             fi
 
-      - run:
-          name: Ping Neo4j
-          command: docker-compose exec test ping project-neo4j
 
       #- run:
       #    name: Verify Neo4j connectivity via Bolt
