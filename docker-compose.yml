@@ -1,5 +1,10 @@
 version: '3.8'
 services:
+  kotlin-executor:
+    image: cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2
+    container_name: bacco
+    networks:
+      - project_default
   neo4j:
     image: neo4j:5.12.0
     container_name: project-neo4j

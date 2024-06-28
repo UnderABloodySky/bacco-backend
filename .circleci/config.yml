@@ -144,7 +144,7 @@ jobs:
 
       - run:
           name: bacco?
-          command:  sudo docker ps -q -f name=bacco
+          command:  sudo docker ps -q -f
 
       - run:
           name: Connect images to network
