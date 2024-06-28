@@ -145,10 +145,11 @@ jobs:
       - run:
           name: Connect images to network
           command: | #sudo docker network connect project_default bacco
-          #  sudo docker network connect project_default project-neo4j ya conecta en docker compos
             CONTAINER_ID=$(sudo docker ps -q -f name=bacco)
             echo "Container ID is $CONTAINER_ID"
             sudo docker network connect project_default $CONTAINER_IDe
+          #  sudo docker network connect project_default project-neo4j ya conecta en docker compos
+
 
 
       - run:
