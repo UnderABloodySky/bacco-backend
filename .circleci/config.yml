@@ -144,7 +144,7 @@ jobs:
 
       - run:
           name: Get Docker container ID
-          command: docker ps -a | grep openjdk
+          command: docker ps -a -q | grep openjdk
 
       - run:
           name: Get Docker container ID 2
@@ -160,7 +160,7 @@ jobs:
       - run:
           name: Connect images to network
           command: | #sudo docker network connect project_default bacco
-            CONTAINER_ID=$(docker ps -a | grep openjdk)
+            CONTAINER_ID=$(docker ps -a -q | grep openjdk)
             echo "Container ID is $CONTAINER_ID"
             sudo docker network connect project_default $CONTAINER_ID
           #  sudo docker network connect project_default project-neo4j ya conecta en docker compos
