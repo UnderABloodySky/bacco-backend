@@ -4,6 +4,7 @@ executors:
   kotlin-executor:
     docker:
       - image: cimg/openjdk:17.0
+        name: bacco
     resource_class: large
 
 jobs:
@@ -14,14 +15,6 @@ jobs:
 
       - setup_remote_docker:
           version: default
-
-      #- run:
-      #    name: Install cypher-shell
-      #    command: |
-      #      wget -qO - https://debian.neo4j.com/neotechnology.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/neo4j-archive-keyring.gpg
-      #      echo "deb [signed-by=/usr/share/keyrings/neo4j-archive-keyring.gpg] https://debian.neo4j.com stable" | sudo tee /etc/apt/sources.list.d/neo4j.list
-      #      sudo apt-get update
-      #      sudo apt-get install -y cypher-shell
 
       - run:
           name: Create initial password file for Neo4j
@@ -145,8 +138,13 @@ jobs:
           command: sudo docker-compose run test
 
       - run:
-          name: Connect images to red
-          command: sudo docker network connect project_default nostalgic_banzai
+          name: Docker compose inspect
+          command: |
+            sudo docker ps
+            sudo docker-compose ps
+      - run:
+          name: Connect images to network
+          command: sudo docker network connect project_default bacco
           #  sudo docker network connect project_default project-neo4j ya conecta en docker compose
 
 
