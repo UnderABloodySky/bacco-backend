@@ -81,10 +81,4 @@ class ValidatorTest {
         val user = User(name="", email="", password = "")
         assertFalse(validator.isValidadateUser(user))
     }
-
-    @Test
-    fun fail(){
-        assertEquals(2,3)
-    }
-
 }
