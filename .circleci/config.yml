@@ -178,12 +178,12 @@ jobs:
             echo "Container ID is $CONTAINER_ID"
             sudo docker inspect -f '{{json .NetworkSettings.Networks}}' $CONTAINER_ID
 
-      - run:
-          name: Disconnect kotlin executor
-          command: |
-            CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
-            echo "Container ID is $CONTAINER_ID"
-            sudo docker network disconnect 49d8dda277331d5b0adbe5638e705ca25c5d72e749c5555435a25c37c6888376 $CONTAINER_ID
+      #- run:
+      #    name: Disconnect kotlin executor
+      #    command: |
+      #      CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
+      #      echo "Container ID is $CONTAINER_ID"
+      #      sudo docker network disconnect 49d8dda277331d5b0adbe5638e705ca25c5d72e749c5555435a25c37c6888376 $CONTAINER_ID
 
       - run:
           name: Connect images to network
@@ -191,7 +191,6 @@ jobs:
             CONTAINER_ID=$(sudo docker ps -q -f ancestor=cimg/openjdk@sha256:3b3a7c21b4e94628ce8d1a460e7dca0b9ab6541bf165cfb53a22dea6d340d6d2)
             echo "Container ID is $CONTAINER_ID"
             sudo docker network connect project_default $CONTAINER_ID
-            #sudo docker network connect project_default kotlin-executor
           #  sudo docker network connect project_default project-neo4j ya conecta en docker compos
 
       - run:
