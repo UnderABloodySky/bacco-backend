@@ -103,7 +103,7 @@ jobs:
             sudo docker network connect project_default $CONTAINER_ID
       - run:
           name: Run tests
-          command: ./gradlew test --scan --warning-mode all
+          command: ./gradlew build test --scan --warning-mode all
       - store_artifacts:
           path: build/reports/tests/test
           destination: test-reports
