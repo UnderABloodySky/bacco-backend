@@ -2,8 +2,7 @@ package ar.edu.unq.bacco.utils
 
 import ar.edu.unq.bacco.model.DTO.RecipeDTO
 import ar.edu.unq.bacco.model.User
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class ValidatorTest {

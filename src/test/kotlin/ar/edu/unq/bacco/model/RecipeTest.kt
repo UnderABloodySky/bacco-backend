@@ -7,7 +7,6 @@
     import org.junit.jupiter.api.assertThrows
 
     class RecipeTest {
-
         @Test
         fun testConstructor() {
             val recipe = Recipe(name = "Mojito", description = "Refreshing cocktail")

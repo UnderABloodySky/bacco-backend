@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 
 class RatingTest {
     @Test
+
     fun createRatingWithNonNullId() {
         val user = User(id = 1L, name = "Alice", password = "", email="")
         val score = 4.0

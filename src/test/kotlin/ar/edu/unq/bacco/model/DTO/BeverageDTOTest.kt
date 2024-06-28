@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 
 @DisplayName("BeverageDTO's tests")
 class BeverageDTOTest {
-
     @Test
     fun `create BeverageDTO`() {
         val beverageName = "Coffee"
