@@ -49,7 +49,7 @@ jobs:
           command: |
             echo "spring.neo4j.uri=bolt://project-neo4j:7687" > src/test/resources/application-test.properties
             echo "spring.neo4j.authentication.username=neo4j" >> src/test/resources/application-test.properties
-            echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources.application-test.properties
+            echo "spring.neo4j.authentication.password=bacco4321" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-file-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.servlet.multipart.max-request-size=20MB" >> src/test/resources/application-test.properties
             echo "spring.profiles.active=test" >> src/test/resources/application-test.properties
