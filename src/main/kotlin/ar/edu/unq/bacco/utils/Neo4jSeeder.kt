@@ -24,13 +24,11 @@ class Neo4jSeeder(
             val cocaCola = Beverage(name = "COCACOLA", description = "La chispa que necesitas", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
             val gin = Beverage(name = "GIN", description = "La chispa que necesitas", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
             val ron = Beverage(name = "RON", description = "Una aventura caribeña en tu vaso", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
-            val cerveza = Beverage(name = "CERVEZA", description = "La tradición en cada burbuja", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
-            val aperitivo = Beverage(name = "APERITIVO", description = "El toque perfecto antes de la cena", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
             val licor = Beverage(name = "LICOR", description = "Dulce tentación en cada gota", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
             val gancia = Beverage(name="GANCIA", description = "El espíritu italiano en tu copa", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
             val whiskey = Beverage(name="WHISKEY", description = "Destilado de distinción y carácter", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
             val vino = Beverage(name="VINO", description = "Elegancia embotellada", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/beverage.jpg")
-            val beverages = listOf(fernet, aguaTonica, cocaCola, gin, ron, cerveza, aperitivo, licor, gancia, whiskey, vino)
+            val beverages = listOf(fernet, aguaTonica, cocaCola, gin, ron, licor, gancia, whiskey, vino)
 
             beverageRepository.saveAll(beverages)
 
@@ -50,35 +48,17 @@ class Neo4jSeeder(
             val frutosRojos = Ingredient(name = "FRUTOS ROJOS", description = "Vibrante y lleno de sabor", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/ingredient.jpg")
             val aceitunas = Ingredient(name = "ACEITUNAS", description = "Toque mediterráneo de autenticidad", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/ingredient.jpg")
             val hibiscus = Ingredient(name = "HIBISCUS", description = "Roja como la sangre", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/ingredient.jpg")
-            val ingredients = listOf(pimienta, hielo, sal, leche, azucar, menta, jengibre, pomelo, limon, naranja, pepino, frutilla, aceitunas, frutosRojos, arandanos, hibiscus)
+            val coco = Ingredient(name = "Coco", description = "Exotico y cremoso", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/ingredient.jpg")
+            val ingredients = listOf(coco, pimienta, hielo, sal, leche, azucar, menta, jengibre, pomelo, limon, naranja, pepino, frutilla, aceitunas, frutosRojos, arandanos, hibiscus)
 
             ingredientRepository.saveAll(ingredients)
-
-            val soloAperitivo = Recipe(name = "Solo aperitivo", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
-            soloAperitivo.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
-            soloAperitivo.ingredients.add(RecipeIngredientRelationship(ingredient = pimienta))
-            soloAperitivo.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
-
-
-            val aperitivoYCerveza = Recipe(name = "Aperitivo y cerveza", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
-            aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
-            aperitivoYCerveza.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
-            aperitivoYCerveza.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
-
-            val aperitivoCervezaYFernet = Recipe(name = "Aperitivo, cerveza y Fernet", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
-            aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
-            aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = aperitivo))
-            aperitivoCervezaYFernet.beverages.add(RecipeBeverageRelationship(beverage = fernet))
-            aperitivoCervezaYFernet.ingredients.add(RecipeIngredientRelationship(ingredient = hibiscus))
-            aperitivoCervezaYFernet.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
-            aperitivoCervezaYFernet.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
 
             val fernandito = Recipe(name = "Fernet", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/fernet.jpg")
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             fernandito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
-            val ginTonic = Recipe(name = "Gin Tonic", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
+            val ginTonic = Recipe(name = "Gin & Tonic", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = gin))
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
             ginTonic.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
@@ -89,29 +69,6 @@ class Neo4jSeeder(
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = ron))
             cubaLibre.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
             cubaLibre.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
-
-            val cosaRara = Recipe(name = "Cosa Rara y Fea", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
-            cosaRara.beverages.add(RecipeBeverageRelationship(beverage = fernet))
-            cosaRara.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
-            cosaRara.beverages.add(RecipeBeverageRelationship(beverage = gin))
-            cosaRara.beverages.add(RecipeBeverageRelationship(beverage = ron))
-            cosaRara.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
-
-            val cosaFea = Recipe(name = "Cosa Fea", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
-            cosaFea.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
-            cosaFea.beverages.add(RecipeBeverageRelationship(beverage = fernet))
-            cosaFea.beverages.add(RecipeBeverageRelationship(beverage = ron))
-            cosaFea.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
-
-            val michelada = Recipe(name = "Michelada", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
-            michelada.beverages.add(RecipeBeverageRelationship(beverage = cerveza))
-            michelada.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
-            michelada.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
-
-            val caranchito = Recipe(name = "Caranchito", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
-            caranchito.beverages.add(RecipeBeverageRelationship(beverage = vino))
-            caranchito.beverages.add(RecipeBeverageRelationship(beverage = ron))
-            caranchito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val fernetPomelo = Recipe(name = "Fernet Pomelo", description = "Un trago refrescante y amargo, ideal para una tarde de verano", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/dev/assets/imgs/recipe/fernetPomelo.jpg")
             fernetPomelo.beverages.add(RecipeBeverageRelationship(beverage = fernet))
@@ -172,8 +129,93 @@ class Neo4jSeeder(
             mojito.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
             mojito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
-            val recipes = listOf(soloAperitivo, aperitivoCervezaYFernet, aperitivoYCerveza,
-                fernandito, ginTonic, cubaLibre, cosaRara, cosaFea, michelada, fernetPomelo, ganciaFrutillaMenta, ronLimonado, tintillo, whiskeyGinger, licorMenta, naranjuMentolado, vinoEspeciado, ganciaPepinada, mojito)
+            val pinkGinTonic = Recipe(name = "Pink Gin Tonic", description = "Elegancia y un toque de dulzura.", imagePath = "")
+            pinkGinTonic.beverages.add(RecipeBeverageRelationship(beverage = gin))
+            pinkGinTonic.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
+            pinkGinTonic.ingredients.add(RecipeIngredientRelationship(ingredient = frutilla))
+            pinkGinTonic.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val coconutRum = Recipe(name = "Coconut Rum", description = "Una experiencia tropical en cada trago.", imagePath = "")
+            coconutRum.beverages.add(RecipeBeverageRelationship(beverage = ron))
+            coconutRum.ingredients.add(RecipeIngredientRelationship(ingredient = leche))
+            coconutRum.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+            coconutRum.ingredients.add(RecipeIngredientRelationship(ingredient = coco))
+            coconutRum.ingredients.add(RecipeIngredientRelationship(ingredient = pomelo))
+
+            val ganciaSpritz = Recipe(name = "Gancia Spritz", description = "El toque italiano refrescante y burbujeante.", imagePath = "")
+            ganciaSpritz.beverages.add(RecipeBeverageRelationship(beverage = gancia))
+            ganciaSpritz.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+            ganciaSpritz.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+            ganciaSpritz.ingredients.add(RecipeIngredientRelationship(ingredient = naranja))
+
+            val whiskeySour = Recipe(name = "Whiskey Sour", description = "Una mezcla perfecta de acidez y dulzura.", imagePath = "")
+            whiskeySour.beverages.add(RecipeBeverageRelationship(beverage = whiskey))
+            whiskeySour.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+            whiskeySour.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
+            whiskeySour.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val mintWhiskey = Recipe(name = "Mint Whiskey", description = "Refrescante y lleno de carácter.", imagePath = "")
+            mintWhiskey.beverages.add(RecipeBeverageRelationship(beverage = whiskey))
+            mintWhiskey.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
+            mintWhiskey.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val vinoTintoSpritz = Recipe(name = "Vino Tinto Spritz", description = "Un toque espumoso y refrescante al vino tinto.", imagePath = "")
+            vinoTintoSpritz.beverages.add(RecipeBeverageRelationship(beverage = vino))
+            vinoTintoSpritz.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
+            vinoTintoSpritz.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+            vinoTintoSpritz.ingredients.add(RecipeIngredientRelationship(ingredient = naranja))
+
+            val spicyRedWine = Recipe(name = "Spicy Red Wine", description = "Un toque picante para el clásico vino tinto.", imagePath = "")
+            spicyRedWine.beverages.add(RecipeBeverageRelationship(beverage = vino))
+            spicyRedWine.ingredients.add(RecipeIngredientRelationship(ingredient = pimienta))
+            spicyRedWine.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+            spicyRedWine.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+
+            val ginAndMenta = Recipe(name = "Gin & Menta", description = "Un trago revitalizante y fresco.", imagePath = "")
+            ginAndMenta.beverages.add(RecipeBeverageRelationship(beverage = gin))
+            ginAndMenta.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
+            ginAndMenta.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val gingerGinFizz = Recipe(name = "Ginger Gin Fizz", description = "Una explosión de sabores cítricos y picantes.", imagePath = "")
+            gingerGinFizz.beverages.add(RecipeBeverageRelationship(beverage = gin))
+            gingerGinFizz.ingredients.add(RecipeIngredientRelationship(ingredient = jengibre))
+            gingerGinFizz.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
+            gingerGinFizz.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val rumAndBerries = Recipe(name = "Rum & Berries", description = "Dulzura y frescura en un solo trago.", imagePath = "")
+            rumAndBerries.beverages.add(RecipeBeverageRelationship(beverage = ron))
+            rumAndBerries.ingredients.add(RecipeIngredientRelationship(ingredient = frutosRojos))
+            rumAndBerries.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val licorDeNaranja = Recipe(name = "Licor de Naranja", description = "El dulce encanto de la naranja.", imagePath = "")
+            licorDeNaranja.beverages.add(RecipeBeverageRelationship(beverage = licor))
+            licorDeNaranja.ingredients.add(RecipeIngredientRelationship(ingredient = naranja))
+            licorDeNaranja.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val fernetJengibre = Recipe(name = "Fernet Ginger", description = "Un trago con un toque de picante.", imagePath = "")
+            fernetJengibre.beverages.add(RecipeBeverageRelationship(beverage = fernet))
+            fernetJengibre.ingredients.add(RecipeIngredientRelationship(ingredient = jengibre))
+            fernetJengibre.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val whiskeyAndBerries = Recipe(name = "Whiskey & Berries", description = "Una mezcla de carácter y dulzura.", imagePath = "")
+            whiskeyAndBerries.beverages.add(RecipeBeverageRelationship(beverage = whiskey))
+            whiskeyAndBerries.ingredients.add(RecipeIngredientRelationship(ingredient = frutosRojos))
+            whiskeyAndBerries.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+            val vinoSpritz = Recipe(name = "Vino Spritz", description = "El vino en su versión más refrescante.", imagePath = "")
+            vinoSpritz.beverages.add(RecipeBeverageRelationship(beverage = vino))
+            vinoSpritz.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
+            vinoSpritz.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+            vinoSpritz.ingredients.add(RecipeIngredientRelationship(ingredient = pomelo))
+
+            val cucumberGin = Recipe(name = "Cucumber Gin", description = "Ligero y refrescante, perfecto para el verano.", imagePath = "")
+            cucumberGin.beverages.add(RecipeBeverageRelationship(beverage = gin))
+            cucumberGin.ingredients.add(RecipeIngredientRelationship(ingredient = pepino))
+            cucumberGin.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+
+
+
+            val recipes = listOf(pinkGinTonic, fernandito, ginTonic, cubaLibre, fernetPomelo, ganciaFrutillaMenta, ronLimonado, tintillo, whiskeyGinger, licorMenta, naranjuMentolado, vinoEspeciado, ganciaPepinada, mojito)
 
             recipeRepository.saveAll(recipes)
 
@@ -196,7 +238,6 @@ class Neo4jSeeder(
             ginTonic.comments.add(comment2)
             fernetPomelo.comments.add(comment1)
             fernetPomelo.comments.add(comment2)
-            cosaRara.comments.add(comment2)
 
             val rating0 = Rating(user = user0, score = 5.0)
             val rating1 = Rating(user = user1, score = 4.5)
@@ -217,7 +258,7 @@ class Neo4jSeeder(
 
             val recipesWithRanking = listOf(ginTonic, fernandito, mojito)
 
-            val recipesWithComments = listOf(ginTonic, fernetPomelo, cosaFea)
+            val recipesWithComments = listOf(ginTonic, fernetPomelo)
 
             recipeRepository.saveAll(recipesWithRanking)
             recipeRepository.saveAll(recipesWithComments)
