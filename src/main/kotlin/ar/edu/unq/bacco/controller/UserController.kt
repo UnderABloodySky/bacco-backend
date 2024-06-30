@@ -33,10 +33,10 @@ class UserController @Autowired constructor (private var anUserService: UserServ
         }
     }
 
-    @GetMapping("/login")
-    fun loginUser(@RequestBody request: LoginDTO): ResponseEntity<User?> {
+    @PostMapping("/login")
+    fun loginUser(@RequestBody userArg: LoginDTO): ResponseEntity<User?> {
         return try {
-            val user = anUserService.loginUser(request.name, request.password)
+            val user = anUserService.loginUser(userArg.name, userArg.password)
                 ResponseEntity(user, HttpStatus.OK)
             }
             catch (ex: InvalidCredentialsException) {
