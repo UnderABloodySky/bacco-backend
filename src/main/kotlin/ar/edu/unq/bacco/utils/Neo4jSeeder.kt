@@ -336,11 +336,11 @@ class Neo4jSeeder(
 
 
             val test = Recipe(name = "TEST", description = "TEST", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/dev/assets/imgs/recipe/recipe_62.jpg")
-            for(ing : ingredients){
+            for(ing in ingredients){
                 test.ingredients.add(RecipeIngredientRelationship(ingredient = ing))
             }
 
-            for(bev : beverages){
+            for(bev in beverages){
                 test.beverages.add(RecipeBeverageRelationship(beverage = bev))
             }
 
