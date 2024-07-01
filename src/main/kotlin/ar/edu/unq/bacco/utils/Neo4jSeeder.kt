@@ -114,9 +114,9 @@ class Neo4jSeeder(
             whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val licorMenta = Recipe(name = "Licor mentolado", description = "Un trago refrescante y simple, perfecto para una noche relajante", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/licormenta.jpg")
-            whiskeyGinger.beverages.add(RecipeBeverageRelationship(beverage = licor))
-            whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
-            whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
+            licorMenta.beverages.add(RecipeBeverageRelationship(beverage = licor))
+            licorMenta.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
+            licorMenta.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val naranjuMentolado = Recipe(name = "Naranju menta & picante", description = "Un trago con un toque cítrico y un final picante.", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe_7.jpg")
             naranjuMentolado.beverages.add(RecipeBeverageRelationship(beverage = fernet))
