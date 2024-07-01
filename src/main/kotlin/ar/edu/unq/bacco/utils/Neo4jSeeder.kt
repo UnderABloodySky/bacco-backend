@@ -73,7 +73,7 @@ class Neo4jSeeder(
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             fernandito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
-            val ginTonic = Recipe(name = "Gin & Tonic", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
+            val ginTonic = Recipe(name = "Gin & Tonic", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/gintonic.jpg")
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = gin))
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
             ginTonic.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
