@@ -29,8 +29,9 @@ class Neo4jSeeder(
             val whiskey = Beverage(name="WHISKEY", description = "Destilado de distinción y carácter", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/whiskey.jpg")
             val vino = Beverage(name="VINO", description = "Elegancia embotellada", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/vino.jpg")
             val tequila = Beverage(name="TEQUILA", description = "De Mexico para el mundo, manito", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/tequila.jpg")
+            val sprite = Beverage(name="SPRITE", description = "Citrica, burbujeante, fresca", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/sprite.jpg")
             
-            val beverages = listOf(fernet, aguaTonica, cocaCola, gin, ron, licor, gancia, whiskey, vino)
+            val beverages = listOf(tequila, fernet, aguaTonica, cocaCola, gin, ron, licor, gancia, whiskey, vino)
 
             beverageRepository.saveAll(beverages)
 
@@ -53,12 +54,9 @@ class Neo4jSeeder(
             val coco = Ingredient(name = "COCO", description = "Exotico y cremoso", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/coco.jpg")
             val albahaca = Ingredient(name = "ALBAHACA", description = "Aroma garantizado", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/albahaca.jpg")
             val romero = Ingredient(name = "ROMERO", description = "Sabor garantizado", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/romero.jpg")
-            val azucar = Ingredient(name = "AZUCAR", description = "Dulzura garantizada", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/azucar.jpg")
             val cerezas = Ingredient(name = "CEREZAS", description = "Una bomba de dulzura", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/cerezas.jpg")
-            val limon = Ingredient(name = "LIMON", description = "Citrico, fresco", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/limon.jpg")
             val manzana = Ingredient(name = "MANZANA", description = "Adan, Eva, esta fruta, vos y yo... Pensalo", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/manzana.jpg")
             val pera = Ingredient(name = "PERA", description = "Pura pulpa", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/pera.jpg")
-
             val durazno = Ingredient(name = "PERA", description = "La fruta favorita de Spinetta, cuak!", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/durazno.jpg")
             val uvas = Ingredient(name = "UVAS", description = "De ahi sale el vino, que fruta noble!", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/uvas.jpg")
             val maracuya = Ingredient(name = "MACACUYA", description = "Un viaje a Centroamerica en cada fruteria", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/maracuya.jpg")
@@ -241,7 +239,7 @@ class Neo4jSeeder(
             val margaritaFresa = Recipe(name = "Margarita de Fresa", description = "Una margarita con el sabor dulce y jugoso de las fresas frescas.", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/dev/assets/imgs/recipe/recipe_51.jpg")
             margaritaFresa.beverages.add(RecipeBeverageRelationship(beverage = tequila))
             margaritaFresa.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
-            margaritaFresa.ingredients.add(RecipeIngredientRelationship(ingredient = fresas))
+            margaritaFresa.ingredients.add(RecipeIngredientRelationship(ingredient = frutilla))
             margaritaFresa.ingredients.add(RecipeIngredientRelationship(ingredient = sal))
             margaritaFresa.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
@@ -276,21 +274,21 @@ class Neo4jSeeder(
 
             val daiquiriSandia = Recipe(name = "Daiquiri de Sandía", description = "Un daiquiri refrescante con el sabor dulce y jugoso de la sandía.", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/dev/assets/imgs/recipe/recipe_56.jpg")
             daiquiriSandia.beverages.add(RecipeBeverageRelationship(beverage = ron))
-            daiquiriSandia.beverages.add(RecipeBeverageRelationship(beverage = limon))
+            daiquiriSandia.beverages.add(RecipeBeverageRelationship(beverage = sprite))
             daiquiriSandia.ingredients.add(RecipeIngredientRelationship(ingredient = sandia))
             daiquiriSandia.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
             daiquiriSandia.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val daiquiriCereza = Recipe(name = "Daiquiri de Cereza", description = "Un daiquiri con el sabor dulce y ácido de las cerezas frescas.", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/dev/assets/imgs/recipe/recipe_57.jpg")
             daiquiriCereza.beverages.add(RecipeBeverageRelationship(beverage = ron))
-            daiquiriCereza.beverages.add(RecipeBeverageRelationship(beverage = limon))
+            daiquiriCereza.beverages.add(RecipeBeverageRelationship(beverage = sprite))
             daiquiriCereza.ingredients.add(RecipeIngredientRelationship(ingredient = cerezas))
             daiquiriCereza.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
             daiquiriCereza.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
             val daiquirimanzana = Recipe(name = "Daiquiri de Fruta de la Pasión", description = "Un daiquiri con el sabor exótico y ácido de la fruta de la pasión.", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/dev/assets/imgs/recipe/recipe_58.jpg")
             daiquirimanzana.beverages.add(RecipeBeverageRelationship(beverage = ron))
-            daiquirimanzana.beverages.add(RecipeBeverageRelationship(beverage = limon))
+            daiquirimanzana.beverages.add(RecipeBeverageRelationship(beverage = sprite))
             daiquirimanzana.ingredients.add(RecipeIngredientRelationship(ingredient = manzana))
             daiquirimanzana.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
             daiquirimanzana.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
@@ -315,7 +313,7 @@ class Neo4jSeeder(
 
             val daiquiribanana = Recipe(name = "Daiquiri de Plátano", description = "Un daiquiri con el sabor dulce y cremoso del plátano.", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/dev/assets/imgs/recipe/recipe_61.jpg")
             daiquiribanana.beverages.add(RecipeBeverageRelationship(beverage = ron))
-            daiquiribanana.beverages.add(RecipeBeverageRelationship(beverage = limon))
+            daiquiribanana.beverages.add(RecipeBeverageRelationship(beverage = sprite))
             daiquiribanana.ingredients.add(RecipeIngredientRelationship(ingredient = banana))
             daiquiribanana.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
             daiquiribanana.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
@@ -331,7 +329,7 @@ class Neo4jSeeder(
 
             val daiquiriUva = Recipe(name = "Daiquiri de Uva", description = "Un daiquiri con el sabor dulce y jugoso de las uvas frescas.", imagePath = "https://github.com/UnderABloodySky/bacco-backend/blob/dev/assets/imgs/recipe/recipe_63.jpg")
             daiquiriUva.beverages.add(RecipeBeverageRelationship(beverage = ron))
-            daiquiriUva.beverages.add(RecipeBeverageRelationship(beverage = limon))
+            daiquiriUva.beverages.add(RecipeBeverageRelationship(beverage = sprite))
             daiquiriUva.ingredients.add(RecipeIngredientRelationship(ingredient = uvas))
             daiquiriUva.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
             daiquiriUva.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
@@ -350,9 +348,9 @@ class Neo4jSeeder(
 
             recipeRepository.saveAll(recipes)
 
-            val user0 = User(name = "hvalenzuela", password="12345678", email="")
-            val user1 = User(name = "fedecame", password="12345678", email="")
-            val user2 = User(name = "test", password="12345678", email="")
+            val user0 = User(name = "hvalenzuela", password="12345678", email="valenzuelahoracioe@gmail.com")
+            val user1 = User(name = "fedecame", password="12345678", email="fedecame@gmail.com")
+            val user2 = User(name = "test1234", password="12345678", email="test@bacco.com")
             val users = listOf(user0, user1, user2)
 
             userRepository.saveAll(users)
