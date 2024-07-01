@@ -46,7 +46,7 @@ class Neo4jSeeder(
             val limon = Ingredient(name = "LIMON", description = "Acidez refrescante y cítrica", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/limon.jpg")
             val naranja = Ingredient(name = "NARANJA", description = "Dulzura cítrica y energizante", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/naranja.jpg")
             val pepino = Ingredient(name = "PEPINO", description = "Refrescante y crujiente", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/pepino.jpg")
-            val frutilla = Ingredient(name = "FRUTILLA", description = "Dulzura jugosa y deliciosa", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/frutilla.jpg")
+            val frutilla = Ingredient(name = "FRUTILLA", description = "Dulzura jugosa y deliciosa", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/frutillas.jpg")
             val arandanos = Ingredient(name = "ARANDANOS", description = "Antioxidante natural y exquisito sabor", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/arandanos.jpg")
             val frutosRojos = Ingredient(name = "FRUTOS ROJOS", description = "Vibrante y lleno de sabor", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/frutosrojos.jpg")
             val aceitunas = Ingredient(name = "ACEITUNAS", description = "Toque mediterráneo de autenticidad", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/aceitunas.jpg")
@@ -96,7 +96,7 @@ class Neo4jSeeder(
             ganciaFrutillaMenta.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
             ganciaFrutillaMenta.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
-            val ronLimonado = Recipe(name = "Ron Limonado", description = "Un clásico ron con un toque cítrico y refrescante", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/ronLiimon.jpg")
+            val ronLimonado = Recipe(name = "Ron Limonado", description = "Un clásico ron con un toque cítrico y refrescante", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe_34.jpg")
             ronLimonado.beverages.add(RecipeBeverageRelationship(beverage = ron))
             ronLimonado.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
             ronLimonado.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
@@ -118,7 +118,7 @@ class Neo4jSeeder(
             whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
             whiskeyGinger.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
-            val naranjuMentolado = Recipe(name = "Naranju menta & picante", description = "Un trago con un toque cítrico y un final picante.", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/fernetnaranja.jpg")
+            val naranjuMentolado = Recipe(name = "Naranju menta & picante", description = "Un trago con un toque cítrico y un final picante.", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe_7.jpg")
             naranjuMentolado.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             naranjuMentolado.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
             naranjuMentolado.ingredients.add(RecipeIngredientRelationship(ingredient = pimienta))
@@ -131,13 +131,13 @@ class Neo4jSeeder(
             vinoEspeciado.ingredients.add(RecipeIngredientRelationship(ingredient = hibiscus))
             vinoEspeciado.ingredients.add(RecipeIngredientRelationship(ingredient = naranja))
 
-            val ganciaPepinada = Recipe(name ="Pepinada", description = "Un trago fresco y ligero, perfecto para cualquier ocasión" , imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/pepinada.jpg")
+            val ganciaPepinada = Recipe(name ="Pepinada", description = "Un trago fresco y ligero, perfecto para cualquier ocasión" , imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe_6.jpg")
             ganciaPepinada.beverages.add(RecipeBeverageRelationship(beverage = gancia))
             ganciaPepinada.ingredients.add(RecipeIngredientRelationship(ingredient = pepino))
             ganciaPepinada.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
             ganciaPepinada.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
-            val mojito = Recipe(name = "Mojito", description = "From Cuba with love", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/mojito4.jpg")
+            val mojito = Recipe(name = "Mojito", description = "From Cuba with love", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe_.jpg")
             mojito.beverages.add(RecipeBeverageRelationship(beverage = ron))
             mojito.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
             mojito.ingredients.add(RecipeIngredientRelationship(ingredient = menta))
