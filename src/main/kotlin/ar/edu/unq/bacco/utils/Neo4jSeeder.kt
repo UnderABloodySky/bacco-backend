@@ -334,16 +334,6 @@ class Neo4jSeeder(
             daiquiriUva.ingredients.add(RecipeIngredientRelationship(ingredient = azucar))
             daiquiriUva.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
-
-            val test = Recipe(name = "TEST", description = "TEST", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe_62.jpg")
-            for(ing in ingredients){
-                test.ingredients.add(RecipeIngredientRelationship(ingredient = ing))
-            }
-
-            for(bev in beverages){
-                test.beverages.add(RecipeBeverageRelationship(beverage = bev))
-            }
-
             val recipes = listOf(test, mojitomanzana, daiquirimanzana, daiquiriCereza, daiquiriSandia, margaritaSandia, margaritaCoco, margaritaFrutasTropicales, margaritaCereza, margaritaFresa, margaritaDurazno, mojitoSandia, daiquiribanana, mojitoUva, daiquiriUva, pinkGinTonic, fernandito, ginTonic, cubaLibre, fernetPomelo, ganciaFrutillaMenta, ronLimonado, tintillo, whiskeyGinger, licorMenta, naranjuMentolado, vinoEspeciado, ganciaPepinada, mojito)
 
             recipeRepository.saveAll(recipes)
