@@ -59,7 +59,7 @@ class Neo4jSeeder(
             val pera = Ingredient(name = "PERA", description = "Pura pulpa", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/pera.jpg")
             val durazno = Ingredient(name = "PERA", description = "La fruta favorita de Spinetta, cuak!", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/durazno.jpg")
             val uvas = Ingredient(name = "UVAS", description = "De ahi sale el vino, que fruta noble!", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/uvas.jpg")
-            val maracuya = Ingredient(name = "MACACUYA", description = "Un viaje a Centroamerica en cada fruteria", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/maracuya.jpg")
+            val maracuya = Ingredient(name = "MARACUYA", description = "Un viaje a Centroamerica en cada fruteria", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/maracuya.jpg")
             val kiwi = Ingredient(name = "KIWI", description = "Aguantate la pelusa", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/kiwi.jpg")
             val sandia = Ingredient(name = "SANDIA", description = "Una de las pocas cosas buenas del verano", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/sandia.jpg")
             val banana = Ingredient(name = "BANANA", description = "De Ecuador al mundo", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/ingredient/banana.jpg")
