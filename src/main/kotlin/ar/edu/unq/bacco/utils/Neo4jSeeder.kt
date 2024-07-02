@@ -17,8 +17,6 @@ class Neo4jSeeder(
     fun seedDatabase() {
        println("START POPULATION OF DB")
         if (recipeRepository.count() == 0L && beverageRepository.count() == 0L) {
-            val description = "“Ebis vendae eaqui solupta turera prepe paron ut estron, cus as nient aut aut pa nost, consed ut reroribus ex ea dolor as secestron qui con preprae sequam ipsaeperon is ipsamus aectibustior accae perovit quas as modipsunt ut volorro beatemolenis veremporon quianda perchil es quam eum"
-
             val fernet = Beverage(name = "FERNET", description = "El sabor auténtico de Cordoba y Argentina", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/fernet.jpg")
             val aguaTonica = Beverage(name = "TONICA", description = "Refrescante y versátil", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/aguatonica.jpg")
             val cocaCola = Beverage(name = "COCACOLA", description = "La chispa que necesitas", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/cocacola.jpg")
@@ -29,7 +27,7 @@ class Neo4jSeeder(
             val whiskey = Beverage(name="WHISKEY", description = "Destilado de distinción y carácter", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/whiskey.jpg")
             val vino = Beverage(name="VINO", description = "Elegancia embotellada", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/vino.jpg")
             val tequila = Beverage(name="TEQUILA", description = "De Mexico para el mundo, manito", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/tequila.jpg")
-            val sprite = Beverage(name="SPRITE", description = "Citrica, burbujeante, fresca", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/sprite.jpg")
+            val sprite = Beverage(name="SPRITE", description = "Citrica, burbujeante, fresca", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/beverage/sevenup.jpg")
             
             val beverages = listOf(tequila, fernet, aguaTonica, cocaCola, gin, ron, licor, gancia, whiskey, vino)
 
@@ -68,18 +66,32 @@ class Neo4jSeeder(
 
             ingredientRepository.saveAll(ingredients)
 
-            val fernandito = Recipe(name = "Fernandito", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/fernet.jpg")
+            val fernandito = Recipe(name = "Fernandito", description = "El Fernet con Coca es un cóctel argentino clásico que combina Fernet, un licor amargo de hierbas, con refresco de cola. Es especialmente popular en reuniones sociales y fiestas.\nPasos\nLlenar el vaso de hielo: Toma un vaso alto (tipo highball) y llénalo con cubos de hielo.\n" +
+                    "Añadir el Fernet: Vierte 2 oz (60 ml) de Fernet sobre el hielo.\n" +
+                    "Agregar la Coca: Completa el vaso con refresco de cola, vertiéndolo lentamente para preservar las burbujas.\n" +
+                    "Mezclar suavemente: Usa una cuchara de cóctel para mezclar suavemente el Fernet y la Coca.\n" +
+                    "Servir: El Fernet con Coca está listo para disfrutar.", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/fernet.jpg")
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = fernet))
             fernandito.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             fernandito.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
 
-            val ginTonic = Recipe(name = "Gin & Tonic", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/gintonic.jpg")
+            val ginTonic = Recipe(name = "Gin & Tonic", description = "El Gin Tonic es un cóctel clásico y refrescante que combina ginebra con agua tónica. Es conocido por su simplicidad y su sabor equilibrado, que puede ser realzado con una variedad de guarniciones como limón, lima, pepino o hierbas aromáticas.\nPasos\n" +
+                    "Llenar el vaso de hielo: Toma un vaso alto (tipo highball) y llénalo completamente con cubos de hielo.\n" +
+                    "Añadir la ginebra: Vierte 2 oz (60 ml) de ginebra sobre el hielo.\n" +
+                    "Agregar la tónica: Completa el vaso con agua tónica, vertiéndola lentamente para preservar las burbujas.\n" +
+                    "Mezclar suavemente: Usa una cuchara de cóctel para mezclar suavemente la ginebra y la tónica, asegurándote de no perder demasiadas burbujas.\n" +
+                    "Decorar y servir: Adorna con una rodaja de lima o limón. Puedes añadir otros elementos como pepino, bayas de enebro o una ramita de romero para darle un toque extra de sabor y aroma.", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/gintonic.jpg")
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = gin))
             ginTonic.beverages.add(RecipeBeverageRelationship(beverage = aguaTonica))
             ginTonic.ingredients.add(RecipeIngredientRelationship(ingredient = hielo))
             ginTonic.ingredients.add(RecipeIngredientRelationship(ingredient = pepino))
 
-            val cubaLibre = Recipe(name = "Cuba Libre", description = description, imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
+            val cubaLibre = Recipe(name = "Cuba Libre", description = "El Cuba Libre es un cóctel simple y popular que combina ron con cola y un toque de lima. Este trago es refrescante y fácil de preparar, ideal para cualquier ocasión.\nPasos\nLlenar el vaso de hielo: Toma un vaso alto (tipo highball) y llénalo con cubos de hielo.\n" +
+                    "Añadir el ron: Vierte 2 oz (60 ml) de ron sobre el hielo.\n" +
+                    "Agregar el jugo de lima: Exprime el jugo de media lima sobre el ron y el hielo.\n" +
+                    "Completar con refresco de cola: Llena el vaso con refresco de cola.\n" +
+                    "Mezclar: Usa una cuchara de cóctel para mezclar suavemente los ingredientes.\n" +
+                    "Decorar y servir: Adorna con una rodaja de lima en el borde del vaso.", imagePath = "https://raw.githubusercontent.com/UnderABloodySky/bacco-backend/dev/assets/imgs/recipe/recipe.jpg")
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = cocaCola))
             cubaLibre.beverages.add(RecipeBeverageRelationship(beverage = ron))
             cubaLibre.ingredients.add(RecipeIngredientRelationship(ingredient = limon))
